@@ -56,7 +56,7 @@ For your convenience we provide you an endpoint for requesting the current state
 
 After the authorization you can query the data for the user using your app. You will get only high-level user information. Following fields will be delivered upon requesting the user information:
 
-Properties | Description | Format
+Parameter | Description | Format
 --------- | ----------- | -----------
 id   | Unique user identifier | String
 email | The user's email address that can also be used as login | String
@@ -115,7 +115,7 @@ updated_at | Last update date-time | String (date-time) ISO 8601 Date-Time
 ```
 Customer gives you much more information about the user
 
-Properties | Description | Format
+Parameter | Description | Format
 --------- | ----------- | -----------
 id   | Unique customer identifier | String
 email | The customer's email address - same as the user's email address | String
@@ -211,7 +211,7 @@ creditor_identifier | Creditor Identifier ID set if the customer wants to create
 }
 ```
 
-Properties | Description | Format
+Parameter | Description | Format
 --------- | ----------- | -----------
 id   | Unique account identifier | String
 account_number | The bank account number | String

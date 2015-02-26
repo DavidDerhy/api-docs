@@ -26,9 +26,19 @@ In most cases the application has to be reviewed before it is allowed to access 
 
 During the beta phase all applications that are able to submit payments, will have to undergo our review.
 
-## Authentication with OAuth 2
+## OAuth
+```
+  /ffffff   /ffffff              /ff     /ff      
+ /ff__  ff /ff__  ff            | ff    | ff      
+| ff  \ ff| ff  \ ff /ff   /ff /ffffff  | fffffff 
+| ff  | ff| ffffffff| ff  | ff|_  ff_/  | ff__  ff
+| ff  | ff| ff__  ff| ff  | ff  | ff    | ff  \ ff
+| ff  | ff| ff  | ff| ff  | ff  | ff /ff| ff  | ff
+|  ffffff/| ff  | ff|  ffffff/  |  ffff/| ff  | ff
+ \______/ |__/  |__/ \______/    \___/  |__/  |__/                                                          
+```
 
-The Fidor API uses the OAuth 2.0 protocol for simple and effective authorization. Before making API calls on behalf of a user, you need to fetch an API access token that grants you access to their email. Once you’ve obtained an access token, you include it with API requests as the header X-Fidor-Api-Token.
+The Fidor API uses the OAuth 2.0 protocol for simple and effective authorization. Before making API calls on behalf of a user, you need to fetch an API access token that grants you access to their email. Once you’ve obtained an access token, you include it with API requests as the header `X-Fidor-Api-Token`.
 
 ## Headers
 

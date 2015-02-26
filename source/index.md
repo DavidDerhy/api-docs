@@ -2,10 +2,10 @@
 title: Fidor API Reference
 
 toc_footers:
-  - <a href='https://apm.fidor.de'>Create an App Manager Account</a>
+  - <a href='https://apm.fidor.de'>Get API Credentials</a>
 
 includes:
-  - getting_started
+  - introduction
   - basic_data
   - money_transfers
   - errors
@@ -14,6 +14,16 @@ search: true
 ---
 
 # Fidor Banking API
+```
+  /ffffff   /ffffff  /ff      
+ /ff__  ff /ff__  ff| ff      
+| ff  \ ff| ff  \ ff| ff 
+| ffffffff| ffffff  | ff
+| ff__  ff| ff      | ff
+| ff  | ff| ff      | ff
+| ff  | ff| ff      | ff
+|__/  |__/|__/      |__/   
+```
 Welcome to the Fidor Banking API! Our API allows you to easily access your Fidor bank account, get information about your transaction history and submit various types of payments.
 
 For general introduction to our developer program please visit our [developer community](https://developer.fidor.de/)

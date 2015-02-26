@@ -40,7 +40,7 @@ Fidor offers you the possibility to transfer money to your fellow Fidor user wit
 
 You can also initiate an internal transfer to the person, who doesn't yet have an account at Fidor bank. In this case the amount will be blocked and the recipient will be notified about the transferred amount and can open an account at Fidor bank to receive the money. The amount will be blocked for 14 days. During this period of time the recipient can create an account at Fidor and the money will be credited to his account. After the expiration of 14 days, the money will be credited back to the sender's account.
 
-Properties | Description | Format
+Parameter | Description | Format
 --------- | ----------- | -----------
 account_id | Account identifier of the sender | String
 receiver | Recipient of the transfer. Possible values are: Fidor nickname, Fidor account identifier, twitter nickname, email address, mobile phone number | String
@@ -68,7 +68,7 @@ To transfer money to any country participating in SEPA (Single Euro Payments Are
 
 If you want to send money to another bank account in Germany, you don't have to provide the BIC - IBAN is enough.
 
-Properties | Description | Format
+Parameter | Description | Format
 --------- | ----------- | -----------
 account_id | Account identifier of the sender | String
 external_uid | Unique ID of the creator of the transaction. In case a uid is reused for a transaction, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transaction status is unknown | String
