@@ -24,7 +24,7 @@ search: true
 | ff  | ff| ff      | ff
 |__/  |__/|__/      |__/   
 ```
-Welcome to the Fidor Banking API! Our API allows you to easily access your Fidor bank account, get information about your transaction history and submit various types of payments.
+Welcome to the Fidor Banking API! Our API allows you to easily access your Fidor bank account, get information about your transaction history and submit various types of payments. In addition you may provide services your for Fidor customers and access their accounts if certain conditions are met.
 
 For general introduction to our developer program please visit our [developer community](https://developer.fidor.de/)
 
