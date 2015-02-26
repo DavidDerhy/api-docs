@@ -13,7 +13,7 @@ includes:
 search: true
 ---
 
-# Fidor Banking API
+# Introduction
 ```
  _           _ _             
  | |__   ___| | | ___        
