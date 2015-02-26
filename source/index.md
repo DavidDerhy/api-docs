@@ -41,10 +41,10 @@ GET | [`/customers`](#customer) | Get customer data | customer
 GET | [`/accounts`](#account) | Get customer's bank accounts | account
 POST | [`/internal_transfers`](#internal-transfer) | Send money to another fidor user |
 GET | [`/internal_transfers`](#internal-transfer) | Get all fidor-to-fidor transfers for the current user | internal transfer
-POST | [`/sepa_credit_transfers`](#sepa-credit-transfers) | Send money to another bank account through SEPA |
-GET | [`/sepa_credit_transfers`](#sepa-credit-transfers) | Get all sepa transfers for the current user | sepa credit  transfer
-POST | [`/batch_transfers`](#batch-transfers) | Send money in batch either with internal or sepa credit transfer or both |
-GET | [`/batch_transfers`](#batch_transfers) | Get all batch transfers for the current user | batch transfer
+POST | [`/sepa_credit_transfers`](#sepa-credit-transfer) | Send money to another bank account through SEPA |
+GET | [`/sepa_credit_transfers`](#sepa-credit-transfer) | Get all sepa transfers for the current user | sepa credit  transfer
+POST | [`/batch_transfers`](#batch-transfer) | Send money in batch either with internal or sepa credit transfer or both |
+GET | [`/batch_transfers`](#batch_transfer) | Get all batch transfers for the current user | batch transfer
 <!-- coming soon - more or less
 POST | [`/sepa_mandates`](#sepa_mandates) | Create sepa mandate |
 GET | [`/sepa_mandates`](#sepa_mandates) | Get all previously created sepa mandates for the current user | sepa mandate
