@@ -15,6 +15,12 @@ search: true
 
 # Fidor Banking API
 ```
+ _           _ _             
+ | |__   ___| | | ___        
+ | '_ \ / _ \ | |/ _ \       
+ | | | |  __/ | | (_) |      
+ |_| |_|\___|_|_|\___/   
+ 
   /ffffff   /ffffff  /ff      
  /ff__  ff /ff__  ff| ff      
 | ff  \ ff| ff  \ ff| ff 
