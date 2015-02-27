@@ -3,6 +3,7 @@ title: Fidor API Reference
 
 toc_footers:
   - <a href='https://apm.fidor.de'>Get API Credentials</a>
+  - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 includes:
   - introduction
@@ -15,7 +16,7 @@ search: true
 
 # Introduction
 ```
- _           _ _             
+  _          _ _             
  | |__   ___| | | ___        
  | '_ \ / _ \ | |/ _ \       
  | | | |  __/ | | (_) |      
