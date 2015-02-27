@@ -38,7 +38,70 @@ During the beta phase all applications that are able to submit payments, will ha
  \______/ |__/  |__/ \______/    \___/  |__/  |__/                                                          
 ```
 
-The Fidor API uses the OAuth 2.0 protocol for simple and effective authorization. Before making API calls on behalf of a user, you need to fetch an API access token that grants you access to their email. Once you’ve obtained an access token, you include it with API requests as the header `X-Fidor-Api-Token`.
+The Fidor API allows you to retrieve information from customer's Fidor accounts. The extent of access your app is allowed, is configured when you are setting up your application in the App Manager.
+
+In order to access the account, the account holder needs to authorize your app to allow it to access their account. This is achieved
+using [OAuth 2](https://tools.ietf.org/html/rfc6749). 
+
+From the user's perspective this works as follows:
+
+  - the user is redirected to Fidor and, in case they are not already logged in, is asked to enter username and password
+
+  - in case the user has not previously authorized your app, the user is displayed the list of permissions your application is requesting and asked to confirm that the app is allowed to access their account.
+
+  - finally, the user is redirected to your app which will be allowed to make API calls
+
+From the perspective of the application, the OAuth2 Authorization Code Grant flow needs to be implemented:
+
+  - the user is redirected via http redirect to the request authorization endpoint by your app:
+
+      `/oauth/authorize?redirect_uri=<redirect_url>&client_id=<client_id>&state=<state>&response_type=code`
+                  
+  - you will need to provide the following values:
+
+    - `redirect_url` : the url on your server the client will be redirected to once the authorization has been completed successfully or falied. This needs to be one of the redirect urls configured for your app in the app manager (see below)
+
+    - `client_id` : the client_id that has been assigned to your app (see below)
+
+    - `state` : a random state value that will be returned to you, see [OAUTH2 sec 4.1.1](https://tools.ietf.org/html/rfc6749#section-4.1.1)
+
+  - Once the Fidor server has authenticated the user and received authorization, it will redirect the user back to the `redirect_url`
+    you provided. Attached to this redirect url will be the provided `state` parameter and a `code` parameter.
+
+  - In case authorization of your app was not performed, you will receive an error response from the server as described in
+    [OAuth2 sec 4.1.2.1](https://tools.ietf.org/html/rfc6749#section-4.1.2.1)
+
+  - You MUST check the state parameter to ensure it contains the same value you sent to the  authorize endpoint. If not, you must discontinue processing at this point and should contact Fidor as this is likely an attempt to breach security.
+
+  - Extract the `code` parameter from the response and send it to the Fidor server's Access Token Request endpoint `oauth/token` as described in [OAuth2 sec 4.1.3](https://tools.ietf.org/html/rfc6749#section-4.1.3) you will need to supply the following parameters in the body of a `POST` request, using `application/x-www-form-urlencoded` encoding:
+
+      - `grant_type` : "authorization_code"
+      - `code` : the code you received via http redirect, see above
+      - `client_id` : the client_id that has been assigned to your app (see below)
+      - `client_secret` : the client_secret that has been assigned to your app (see below)
+      - `redirect_url` : the same redirect url provided in the authorization request (see above)
+
+  - The server will return either an error (described in [OAuth2 sec 5.2](https://tools.ietf.org/html/rfc6749#section-5.2) or a json
+    response containing the `access_token` and information about it.
+
+  - The access token will be of type ["Bearer"](https://tools.ietf.org/html/rfc6750) and needs to be included in the http "Authorization" header of subsequent requests to the API (see [Bearer Token Usage](https://tools.ietf.org/html/rfc6750#section-2.1))
+
+The required parameters (`client_id`, `client_secret` and the `redirect_url`) are available in the App Manager:
+
+Setting | Value
+--------- | -----------
+Client ID | 84b199c5b4cd9605
+Client Secret | 5af2806fd4ee8521250b68d0a6ab1e55
+App URL | http://localhost:4567
+Allowed IP Addresses | 
+Callback URLs | http://localhost:4567
+Terms of service URL | http://myapp.com/tos
+Customer Service URL | http://myapp.com/customer
+Customer Service Email | likeaboss@myapp.com
+
+
+<!-- ![app_manager](https://github.fidor.de/becker/mobile_oauth/raw/master/oauth_desc/app_manager.png) -->
+
 
 ## Headers
 
