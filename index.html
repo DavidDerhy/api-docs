@@ -364,7 +364,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 
 <p>Rate limits in version 1 of the API are divided into 15 minute intervals. In the version 1 of the API rate limit is 60 calls every 15 minutes, but we may adjust that over time.</p>
 
-<h3 id="http-headers-and-response-codes">HTTP Headers and Response Codes</h3>
+<h3 id="http-headers">HTTP Headers</h3>
 
 <p>For you to make a better prediction about the API rate limit for your application or user, please consider to use the <code class="prettyprint">X-RateLimit-*</code> headers.</p>
 
@@ -393,6 +393,38 @@ response containing the <code class="prettyprint">access_token</code> and inform
 <p>When an application exceeds the rate limit, the Fidor API will return an HTTP 429 “Too Many Requests” response code (HTTP Status Code Documentation).</p>
 
 <p>For your convenience we provide you an endpoint for requesting the current state of your rate limit <code class="prettyprint">GET https://api.fidor.de/rate_limit</code></p>
+
+<h2 id="pagination">Pagination</h2>
+
+<blockquote>
+<p>https://api.fidor.de/transactions?page=2&amp;per_page=100</p>
+</blockquote>
+<pre><code class="highlight plaintext">X-LIMIT → 100
+X-OFFSET → 100
+X-TOTAL → 300
+</code></pre>
+
+<p>We use the header based pagination for navigating through long lists of found entries.</p>
+
+<table><thead>
+<tr>
+<th>HTTP Header</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>X-LIMIT</td>
+<td>The per page limit of the entries shown. Default value: 50</td>
+</tr>
+<tr>
+<td>X-OFFSET</td>
+<td>The pagination offset</td>
+</tr>
+<tr>
+<td>X-TOTAL</td>
+<td>The total number of the entries</td>
+</tr>
+</tbody></table>
 
 <h2 id="user">User</h2>
 
