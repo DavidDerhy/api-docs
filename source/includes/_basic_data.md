@@ -26,7 +26,7 @@ Rate limiting in version 1 of the API is primarily considered on a per-user basi
 
 Rate limits in version 1 of the API are divided into 15 minute intervals. In the version 1 of the API rate limit is 60 calls every 15 minutes, but we may adjust that over time.
 
-###HTTP Headers and Response Codes
+###HTTP Headers
 For you to make a better prediction about the API rate limit for your application or user, please consider to use the `X-RateLimit-*` headers.
 
 We provide three context based headers for this purpose: 
@@ -40,6 +40,24 @@ X-RateLimit-Reset | The remaining window before the rate limit resets in e.g. UT
 When an application exceeds the rate limit, the Fidor API will return an HTTP 429 “Too Many Requests” response code (HTTP Status Code Documentation).
 
 For your convenience we provide you an endpoint for requesting the current state of your rate limit `GET https://api.fidor.de/rate_limit`
+
+##Pagination
+> https://api.fidor.de/transactions?page=2&per_page=100
+
+```
+X-LIMIT → 100
+X-OFFSET → 100
+X-TOTAL → 300
+```
+
+We use the header based pagination for navigating through long lists of found entries.
+
+HTTP Header | Description
+--------- | -----------
+X-LIMIT   | The per page limit of the entries shown. Default value: 50
+X-OFFSET | The pagination offset
+X-TOTAL | The total number of the entries
+
 
 ##User
 > GET https://api.fidor.de/users/current
