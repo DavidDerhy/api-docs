@@ -2,7 +2,7 @@
 We differ between different types of money transfers. In generell we distinguish between the Fidor internal transfers (Fidor to Fidor money transfer) and external transfers (SEPA, GMT, FPS, BACS etc.).
 
 ##Internal Transfer
-> POST https://api.fidor.de/internal_transfers
+> Request body
 
 ```json
 {
@@ -12,9 +12,11 @@ We differ between different types of money transfers. In generell we distinguish
   "amount" : 1,
   "subject" : "object"
 }
+```
 
+> Response body
 
-
+```
 {
   "id": "281",
   "subject": "object",
@@ -47,6 +49,19 @@ receiver | Recipient of the transfer. Possible values are: Fidor nickname, Fidor
 external_uid | Unique ID of the creator of the transaction. In case a uid is reused for a transaction, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transaction status is unknown | String
 amount | Amount of money you would like to send in in account currency, in minor units, e.g. 1EUR is represented as 100. Must be greater than 0 e.g. at least one cent in EUR | Integer
 subject | Subject of the transaction | String
+
+### HTTP Request
+`GET http://api.fidor.de/internal_transfers`  <sub>index</sub>
+
+`GET http://api.fidor.de/internal_transfers/{id}`  <sub>self</sub>
+
+`POST http://api.fidor.de/internal_transfers`  <sub>create</sub>
+
+### Example: 
+
+`POST http://api.fidor.de/internal_transfers`
+
+Request on `/internal_transfers` with the method POST.
 
 ##SEPA Credit Transfer
 > POST https://api.fidor.de/sepa_credit_transfers

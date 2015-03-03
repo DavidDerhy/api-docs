@@ -58,6 +58,8 @@ X-LIMIT   | The per page limit of the entries shown. Default value: 50
 X-OFFSET | The pagination offset
 X-TOTAL | The total number of the entries
 
+To navigate through the pages please use `page=` and `per_page=` URL parameters as stated in an example on the right pane.
+
 
 ##User
 > GET https://api.fidor.de/users/current
@@ -78,7 +80,7 @@ Parameter | Description | Format
 --------- | ----------- | -----------
 id   | Unique user identifier | String
 email | The user's email address that can also be used as login | String
-last_sing_in_at | Last time the user accessed fidor | String (date-time)  ISO 8601 Date-Time
+last_sign_in_at | Last time the user accessed fidor | String (date-time)  ISO 8601 Date-Time
 created_at | Creation date-time, never changes | String (date-time) ISO 8601 Date-Time
 updated_at | Last update date-time | String (date-time) ISO 8601 Date-Time
 
