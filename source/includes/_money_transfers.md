@@ -83,19 +83,19 @@ Request on `/internal_transfers` with the method POST.
 ```
 {
   "id": "49",
-  "account_id": "71616244",
+  "account_id": "123456789",
   "user_id": "4",
   "subject": "object",
   "amount": 1,
   "remote_name": "Walter Yoplack",
-  "remote_iban": "DE49140520002640025972",
-  "remote_bic": null,
+  "remote_iban": "AT131490022010010999",
+  "remote_bic": "SPADATW1",
   "state": "success",
   "created_at": "2015-03-04T13:47:48+01:00",
   "updated_at": "2015-03-04T13:47:48+01:00",
   "currency": "EUR",
   "transaction_id": "840",
-  "external_uid": "14"
+  "external_uid": "666"
 }
 ```
 
