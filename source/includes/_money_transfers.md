@@ -72,7 +72,7 @@ Request on `/internal_transfers` with the method POST.
   "external_uid" : "666",
   "remote_iban": "AT131490022010010999",
   "remote_bic": "SPADATW1",
-  "remote_name" : "Walter Yoplack",
+  "remote_name" : "Walter White (Heisenberg)",
   "amount" : 1,
   "subject" : "From Fidor with Love"
 }
@@ -85,9 +85,9 @@ Request on `/internal_transfers` with the method POST.
   "id": "49",
   "account_id": "123456789",
   "user_id": "4",
-  "subject": "object",
+  "subject": "Here is your dirty money, Walter!",
   "amount": 1,
-  "remote_name": "Walter Yoplack",
+  "remote_name": "Walter White (Heisenberg)",
   "remote_iban": "AT131490022010010999",
   "remote_bic": "SPADATW1",
   "state": "success",
