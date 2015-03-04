@@ -154,6 +154,13 @@ GET | [`/batch_direct_debits`](#batch_direct_debits) | Get all previously create
 
 <h2 id="approval-process">Approval Process</h2>
 
+<p>We distinguish between two types of applications:</p>
+
+<ul>
+<li>So called - &ldquo;self-serve&rdquo; applications - the ones you created for yourself to access your own account. This kind of applications will automatically get approved. You will get a notification about the your application being available in live environment and can start using it immediately</li>
+<li>The applications that may need an access to a foreign account. This type of applications will have to undergo an approval process. Before your application will go into the approval process, you will have to sign an additional agreement/contact. (Stefan Weiß  do we have something like this already?) You will get notified in every step of the approval process. </li>
+</ul>
+
 <p>In most cases the application has to be reviewed before it is allowed to access the live system. However, applications that meet the &ldquo;Self-API&rdquo; conditions can go live immediately. </p>
 
 <p>During the beta phase all applications that are able to submit payments, will have to undergo our review.</p>
@@ -324,15 +331,6 @@ response containing the <code class="prettyprint">access_token</code> and inform
 <li> e.g. number of transactions - internal/credit card etc.</li>
 <li> e.g. number of account checks (get transactions)</li>
 </ul></li>
-</ul>
-
-<h2 id="approval-process">Approval Process</h2>
-
-<p>We distinguish between two types of applications:</p>
-
-<ul>
-<li>So called - &ldquo;self-serve&rdquo; applications - the ones you created for yourself to access your own account. This kind of applications will automatically get approved. You will get a notification about the your application being available in live environment and can start using it immediately</li>
-<li>The applications that may need an access to a foreign account. This type of applications will have to undergo an approval process. Before your application will go into the approval process, you will have to sign an additional agreement/contact. (Stefan Weiß  do we have something like this already?) You will get notified in every step of the approval process. </li>
 </ul>
 
           <h1 id="basic-data">Basic Data</h1>
