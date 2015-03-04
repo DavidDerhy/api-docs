@@ -21,6 +21,7 @@ A sandbox user is created along the way. A sandbox user is required during the a
 Our sandbox environment offers you the same functionality as the API. So once developed and tested against the sandbox environment, you application will be production ready.
 
 ## Approval Process
+
 We distinguish between two types of applications:
 
 * So called - "self-serve" applications - the ones you created for yourself to access your own account. This kind of applications will automatically get approved. You will get a notification about the your application being available in live environment and can start using it immediately
