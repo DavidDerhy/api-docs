@@ -21,6 +21,10 @@ A sandbox user is created along the way. A sandbox user is required during the a
 Our sandbox environment offers you the same functionality as the API. So once developed and tested against the sandbox environment, you application will be production ready.
 
 ## Approval Process
+We distinguish between two types of applications:
+
+* So called - "self-serve" applications - the ones you created for yourself to access your own account. This kind of applications will automatically get approved. You will get a notification about the your application being available in live environment and can start using it immediately
+* The applications that may need an access to a foreign account. This type of applications will have to undergo an approval process. Before your application will go into the approval process, you will have to sign an additional agreement/contact. (Stefan Weiß  do we have something like this already?) You will get notified in every step of the approval process. 
 
 In most cases the application has to be reviewed before it is allowed to access the live system. However, applications that meet the "Self-API" conditions can go live immediately. 
 
@@ -145,9 +149,3 @@ We will provide you with statistics for your app in the near future. To give you
 * Number of requests per endpoint/app function/user
  *  e.g. number of transactions - internal/credit card etc.
  *  e.g. number of account checks (get transactions)
-
-##Approval Process
-We distinguish between two types of applications:
-
-* So called - "self-serve" applications - the ones you created for yourself to access your own account. This kind of applications will automatically get approved. You will get a notification about the your application being available in live environment and can start using it immediately
-* The applications that may need an access to a foreign account. This type of applications will have to undergo an approval process. Before your application will go into the approval process, you will have to sign an additional agreement/contact. (Stefan Weiß  do we have something like this already?) You will get notified in every step of the approval process. 
