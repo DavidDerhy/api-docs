@@ -22,7 +22,7 @@
 
 We throttle our APIs by default to ensure maximum performance for all developers.
 
-Rate limiting in version 1 of the API is primarily considered on a per-user basis — or more accurately described, per access token in your control. Rate limits are determined globally for the entire application.
+Rate limiting in version 1 of the API is considered on a per-application basis — or more accurately described, per access token in your control. Rate limits are determined globally for the entire application, i.e. we do not make a difference what API endpoint is called. So event calling the `rate_limit` endpoint is counted as a "hit". We will add more structure and detail to this endpoint as rate limiting becomes more sophisticated. 
 
 Rate limits in version 1 of the API are divided into 15 minute intervals. In the version 1 of the API rate limit is 60 calls every 15 minutes, but we may adjust that over time.
 
@@ -34,7 +34,7 @@ We provide three context based headers for this purpose:
 HTTP Header | Description
 --------- | -----------
 X-RateLimit-Limit   | The rate limit ceiling for all requests / 15-min window
-X-RateLimit-Remaining | The number of requests left for the the 15-min window
+X-RateLimit-Remaining | The number of requests left for the 15-min window
 X-RateLimit-Reset | The remaining window before the rate limit resets in e.g. UTC epoch seconds
 
 When an application exceeds the rate limit, the Fidor API will return an HTTP 429 “Too Many Requests” response code (HTTP Status Code Documentation).
