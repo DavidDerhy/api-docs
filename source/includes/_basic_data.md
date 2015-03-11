@@ -1,66 +1,5 @@
 #Basic Data
 
-##API Rate Limits
-> GET https://api.fidor.de/rate_limit
-
-```json 
-{
-    "limit": 60,
-    "remaining": 55,
-    "reset": 155
-}
-```
-
-> In case you exceeded the rate limit:
-
-```json
-{
-    "code": 429,
-    "message": "Rate limit exceeded. Please retry later."
-}
-```
-
-We throttle our APIs by default to ensure maximum performance for all developers.
-
-Rate limiting in version 1 of the API is considered on a per-application basis — or more accurately described, per access token in your control. Rate limits are determined globally for the entire application, i.e. we do not make a difference what API endpoint is called. So even calling the `rate_limit` endpoint is counted as a "hit".
-
-Rate limits in version 1 of the API are divided into 15 minute intervals. In the version 1 of the API rate limit is 60 calls every 15 minutes, but we may adjust that over time.
-
-###HTTP Headers
-For you to make a better prediction about the API rate limit for your application or user, please consider to use the `X-RateLimit-*` headers.
-
-We provide three context based headers for this purpose: 
-
-HTTP Header | Description
---------- | -----------
-X-RateLimit-Limit   | The rate limit ceiling for all requests / 15-min window
-X-RateLimit-Remaining | The number of requests left for the 15-min window
-X-RateLimit-Reset | The remaining window before the rate limit resets in e.g. UTC epoch seconds
-
-When an application exceeds the rate limit, the Fidor API will return an HTTP 429 “Too Many Requests” response code (HTTP Status Code Documentation).
-
-For your convenience we provide you an endpoint for requesting the current state of your rate limit `GET https://api.fidor.de/rate_limit`
-
-##Pagination
-> https://api.fidor.de/transactions?page=2&per_page=100
-
-```
-X-LIMIT → 100
-X-OFFSET → 100
-X-TOTAL → 300
-```
-
-We use the header based pagination for navigating through long lists of found entries.
-
-HTTP Header | Description
---------- | -----------
-X-LIMIT   | The per page limit of the entries shown. Default value: 50
-X-OFFSET | The pagination offset
-X-TOTAL | The total number of the entries
-
-To navigate through the pages please use `page=` and `per_page=` URL parameters as stated in an example on the right pane.
-
-
 ##User
 > GET https://api.fidor.de/users/current
 
@@ -270,3 +209,15 @@ For your convenience we also include the information about the customers of the 
 
 `GET https://api.fidor.de/accounts/{id}/sepa_direct_debits`
 <sub>See also: [SEPA direct debit](#sepa-direct-debit)</sub>
+
+## Transactions
+> GET https://api.fidor.de/transactions/:id
+
+```json
+{
+}
+```
+
+Parameter | Description | Format
+--------- | ----------- | -----------
+id   | Unique customer identifier | String
