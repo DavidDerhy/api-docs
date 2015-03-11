@@ -1,4 +1,4 @@
-#Money Transfers
+#Money Transfer
 We differ between different types of money transfers. In generell we distinguish between the Fidor internal transfers (Fidor to Fidor money transfer) and external transfers (SEPA, GMT, FPS, BACS etc.).
 
 ##Internal Transfer
@@ -251,11 +251,10 @@ PREVIEW: A batch transfer can contain multiple transfers which are processed asy
 
 `POST http://api.fidor.de/batch_transfers`  <sub>create</sub>
 
-##Coming Soon - SEPA Direct Debit
+##Coming Soon - Extended Money Operations
 
 In order to create a SEPA Direct Debit you have to crete a SEPA Mandate first. Not every Fidor customer is eligible for creating the SEPA Mandates. If you are interested in SEPA Direct Debits and do not have a required account for creating SEPA Mandates you will have to contact Fidor first.
 
-<!-- we're workig on like really hard - we're all sweaty 
 ### HTTP Request
 
 `GET http://api.fidor.de/sepa_direct_debits` <sub>index</sub>
@@ -280,4 +279,3 @@ In order to create a SEPA Direct Debit you have to crete a SEPA Mandate first. N
 
 `POST http://api.fidor.de/batch_direct_debits` 
 <sub>create</sub>
--->
