@@ -47,13 +47,13 @@ GET | [`/internal_transfers`](#internal-transfer) | Get all fidor-to-fidor trans
 POST | [`/sepa_credit_transfers`](#sepa-credit-transfer) | Send money to another bank account through SEPA |
 GET | [`/sepa_credit_transfers`](#sepa-credit-transfer) | Get all sepa transfers for the current user | sepa credit  transfer
 POST | [`/batch_transfers`](#batch-transfer) | Send money in batch either with internal or sepa credit transfer or both |
-GET | [`/batch_transfers`](#batch_transfer) | Get all batch transfers for the current user | batch transfer
-POST | [`/sepa_mandates`](#sepa_mandates) | Create sepa mandate |
-GET | [`/sepa_mandates`](#sepa_mandates) | Get all previously created sepa mandates for the current user | sepa mandate
-POST | [`/sepa_direct_debits`](#sepa_direct_debits) | Create sepa direct debit for a sepa mandate |
-GET | [`/sepa_direct_debits`](#sepa_direct_debits) | Get all previously created sepa direct debits for the current user | sepa direct debit
-POST | [`/batch_direct_debits`](#batch_direct_debits) | Create batch of sepa direct debits |
-GET | [`/batch_direct_debits`](#batch_direct_debits) | Get all previously created batches of sepa direct debits for the current user | batch direct debit 
+GET | [`/batch_transfers`](#batch-transfer) | Get all batch transfers for the current user | batch transfer
+POST | [`/sepa_mandates`](#sepa_mandate) | Create sepa mandate |
+GET | [`/sepa_mandates`](#sepa_mandate) | Get all previously created sepa mandates for the current user | sepa mandate
+POST | [`/sepa_direct_debits`](#sepa_direct_debit) | Create sepa direct debit for a sepa mandate |
+GET | [`/sepa_direct_debits`](#sepa_direct_debit) | Get all previously created sepa direct debits for the current user | sepa direct debit
+POST | [`/batch_direct_debits`](#batch_direct_debit) | Create batch of sepa direct debits |
+GET | [`/batch_direct_debits`](#batch_direct_debit) | Get all previously created batches of sepa direct debits for the current user | batch direct debit 
 GET | [`/overdrafts`](#overdraft) | Get the history of overdrafts taken for the current user | overdraft
 GET | [`/overdrafts/current`](#overdraft) | Get the current overdraft line for the current user | overdraft
 POST | [`/overdrafts`](#overdraft) | Request an overdraft for a certain user account | 
