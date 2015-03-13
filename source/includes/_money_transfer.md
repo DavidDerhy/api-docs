@@ -267,7 +267,7 @@ In order to create a SEPA Direct Debit you have to crete a SEPA Mandate first. N
 
 ###Creating SEPA Direct Debit
 
-##Batch Direct Debit 
+###Batch Direct Debit 
 
 *PREVIEW:* A direct debit batch contains multiple direct debits which are processed asynchronously.
 
