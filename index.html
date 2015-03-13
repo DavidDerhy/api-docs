@@ -119,53 +119,113 @@
 <td>Get all batch transfers for the current user</td>
 <td>batch transfer</td>
 </tr>
+<tr>
+<td>POST</td>
+<td><a href="#sepa_mandates"><code class="prettyprint">/sepa_mandates</code></a></td>
+<td>Create sepa mandate</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="#sepa_mandates"><code class="prettyprint">/sepa_mandates</code></a></td>
+<td>Get all previously created sepa mandates for the current user</td>
+<td>sepa mandate</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><a href="#sepa_direct_debits"><code class="prettyprint">/sepa_direct_debits</code></a></td>
+<td>Create sepa direct debit for a sepa mandate</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="#sepa_direct_debits"><code class="prettyprint">/sepa_direct_debits</code></a></td>
+<td>Get all previously created sepa direct debits for the current user</td>
+<td>sepa direct debit</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><a href="#batch_direct_debits"><code class="prettyprint">/batch_direct_debits</code></a></td>
+<td>Create batch of sepa direct debits</td>
+<td></td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="#batch_direct_debits"><code class="prettyprint">/batch_direct_debits</code></a></td>
+<td>Get all previously created batches of sepa direct debits for the current user</td>
+<td>batch direct debit</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="#overdraft"><code class="prettyprint">/overdrafts</code></a></td>
+<td>Get the history of overdrafts taken for the current user</td>
+<td>overdraft</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><a href="#overdraft"><code class="prettyprint">/overdrafts/current</code></a></td>
+<td>Get the current overdraft line for the current user</td>
+<td>overdraft</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><a href="#overdraft"><code class="prettyprint">/overdrafts</code></a></td>
+<td>Request an overdraft for a certain user account</td>
+<td></td>
+</tr>
+<tr>
+<td>PUT</td>
+<td><a href="#overdraft"><code class="prettyprint">/overdrafts/:id</code></a></td>
+<td>Deactivate the current overdraft</td>
+<td></td>
+</tr>
 </tbody></table>
-
-<!-- coming soon - more or less
-POST | [`/sepa_mandates`](#sepa_mandates) | Create sepa mandate |
-GET | [`/sepa_mandates`](#sepa_mandates) | Get all previously created sepa mandates for the current user | sepa mandate
-POST | [`/sepa_direct_debits`](#sepa_direct_debits) | Create sepa direct debit for a sepa mandate |
-GET | [`/sepa_direct_debits`](#sepa_direct_debits) | Get all previously created sepa direct debits for the current user | sepa direct debit
-POST | [`/batch_direct_debits`](#batch_direct_debits) | Create batch of sepa direct debits |
-GET | [`/batch_direct_debits`](#batch_direct_debits) | Get all previously created batches of sepa direct debits for the current user | batch direct debit 
--->
 
           <h1 id="getting-started">Getting Started</h1>
 
-<p>To participate in developer program of Fidor Bank AG you have to be a customer of Fidor Bank AG and have an account at <a href="https://fidor.de">https://fidor.de</a> or <a href="https://fidorbank.uk">https://fidorbank.uk</a></p>
+<p>Welcome to the Fidor APIs, your direct access to the functions and services of the world&rsquo;s most innovative Bank. Fidor Bank.
+To get started you just need a (free) Fidor Account.</p>
 
-<p>Every full KYC Fidor Bank customer can become a developer by agreeing to the <a href="https://apm.fidor.de/developer/terms_of_services/current">developer&rsquo;s agreement</a>. </p>
+<h2 id="create-a-fidor-account">Create a Fidor Account</h2>
 
-<p>You need to have a full account at Fidor in order to pay for services provided by Fidor TecS AG related to usage of the Fidor APIs. </p>
+<p>To create a Fidor account visit Fidor Bank webpage <a href="https://fidor.de">Fidor DE</a>, and register your account.  In order to start testing our APIs you don&rsquo;t need to be fully verified.</p>
 
-<p>The developer tools: <a href="https://developer.fidortecs.com/api-browser/">API-Browser</a>, <a href="https://github.com/fidor/fidor_schema">fidor_schema</a>, <a href="https://github.com/fidor/fidor_starter_kits">fidor_starter_kits</a>, <a href="https://apm.fidor.de/">application manager</a>, sandbox environment and <a href="https://developer.fidor.de/">developer community</a>  are provided free of charge. You only pay for API usage.</p>
+<p>Please do not confuse the Fidor Account with the Developer Community Account you need if you want to take part in the discussion in <a href="https://developer.fidor.de/community/">Developer Community Forums</a>.</p>
 
-<p>To start developing against Fidor&rsquo;s API you have to create your App first. In order to do so, please login with your Fidor bank account&rsquo;s credentials into the <a href="https://apm.fidor.de/">application manager</a>, accept the developer agreement and add new App.</p>
+<h2 id="creating-an-application">Creating an Application</h2>
 
-<h2 id="creating-an-application">Creating an application</h2>
+<p>To start using Fidor&rsquo;s API you have to register (create) your application. In order to do so, please login with your Fidor bank account&rsquo;s credentials into the <a href="https://apm.fidor.de/">Application Manager</a> and select &ldquo;Add New App&rdquo;. If you log in for the first time you have to accept the Developer Agreement first.</p>
 
-<p>Creating a new application is really easy. Visit the <a href="https://apm.fidor.de/">Application Manager</a> page, login with your banking credentials and accept the developer agreement. After that you can create as many applications as you want.</p>
+<p>After that you can create as many applications as you want. For every new application a dedicated sandbox environment (account simulation) is created. The sandbox comes with some test data, so that you can start developing your application against the sandbox immediately.</p>
 
-<p>For every new application a dedicated sandbox environment is created. The sandbox comes with some test data, so that you can start developing your application against the sandbox immediately.</p>
+<p>A sandbox user is created along the way. A sandbox user is required during the authentication against the sandbox. </p>
 
-<p>A sandbox user is created along the way. A sandbox user is required during the authentication against the sandbox.</p>
+<p>Our sandbox environment offers you the same functionality as the live API. So once developed and tested against the sandbox environment, your application will be production ready.</p>
 
-<p>Our sandbox environment offers you the same functionality as the API. So once developed and tested against the sandbox environment, you application will be production ready.</p>
+<h3 id="using-starter-kits">Using Starter Kits</h3>
 
-<h2 id="approval-process">Approval Process</h2>
-
-<p>We distinguish between two types of applications:</p>
+<p>Fidor Starter Kits have been created with an idea to help you developing your application immediately. When you create an application in the Application Manager then you immediately getting access to already configured example application. Until now we provide example application for following programming languages/frameworks:</p>
 
 <ul>
-<li>So called - &ldquo;self-serve&rdquo; applications - the ones you created for yourself to access your own account. This kind of applications will automatically get approved. You will get a notification about the your application being available in live environment and can start using it immediately</li>
-<li>The applications that may need an access to a foreign account. This type of applications will have to undergo an approval process. Before your application will go into the approval process, you will have to sign an additional agreement/contact. (Stefan Weiß  do we have something like this already?) You will get notified in every step of the approval process. </li>
+<li>ruby/sinatra</li>
+<li>php (plain)</li>
+<li>java/servlet</li>
+<li>Node.js</li>
+<li>Go</li>
 </ul>
 
-<p>In most cases the application has to be reviewed before it is allowed to access the live system. However, applications that meet the &ldquo;Self-API&rdquo; conditions can go live immediately. </p>
+<p><a href="https://github.com/fidor/fidor_starter_kits">Our starter kits</a> are also available as a ruby gem on github.</p>
 
-<p>During the beta phase all applications that are able to submit payments, will have to undergo our review.</p>
+          <h1 id="develop-and-debug">Develop and Debug</h1>
 
-<h2 id="oauth">OAuth</h2>
+<p>The developer tools: <a href="https://developer.fidortecs.com/api-browser/">API-Browser</a>, <a href="https://github.com/fidor/fidor_schema">fidor_schema</a>, <a href="https://github.com/fidor/fidor_starter_kits">fidor_starter_kits</a>, <a href="https://apm.fidor.de/">application manager</a>, sandbox environment and <a href="https://developer.fidor.de/">developer community</a>  are provided free of charge. You only pay for API usage once your application goes live.</p>
+
+<h2 id="add-and-change-scopes">Add and Change Scopes</h2>
+
+<p>Fidor APIs provide a wide range of functions and provide access to a wide range of banking services. In the Application Manager you have to decide and define the scope, i.e. the set of functions your application needs in order to work properly. 
+Here your can also select if your application only needs access to your own account or if you plan to provide the application to other people, so that the application needs access to their data and accounts.</p>
+
+<h2 id="understand-oauth">Understand OAuth</h2>
 <pre><code class="highlight plaintext">  /ffffff   /ffffff              /ff     /ff      
  /ff__  ff /ff__  ff            | ff    | ff      
 | ff  \ ff| ff  \ ff /ff   /ff /ffffff  | fffffff 
@@ -198,7 +258,7 @@ using <a href="https://tools.ietf.org/html/rfc6749">OAuth 2</a>. </p>
 <li><p>you will need to provide the following values:</p>
 
 <ul>
-<li><code class="prettyprint">redirect_url</code> : the url on your server the client will be redirected to once the authorization has been completed successfully or falied. This needs to be one of the redirect urls configured for your app in the app manager (see below)</li>
+<li><code class="prettyprint">redirect_url</code> : the url on your server the client will be redirected to once the authorization has been completed successfully or falied. This needs to be one of the redirect urls configured for your app in the Application Manager (see below)</li>
 <li><code class="prettyprint">client_id</code> : the client_id that has been assigned to your app (see below)</li>
 <li><code class="prettyprint">state</code> : a random state value that will be returned to you, see <a href="https://tools.ietf.org/html/rfc6749#section-4.1.1">OAUTH2 sec 4.1.1</a></li>
 </ul></li>
@@ -265,7 +325,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 
 <!-- ![app_manager](https://github.fidor.de/becker/mobile_oauth/raw/master/oauth_desc/app_manager.png) -->
 
-<h2 id="headers">Headers</h2>
+<h2 id="check-headers">Check Headers</h2>
 
 <p>To successfully communicate with Fidor API, you have to provide 3 headers:</p>
 
@@ -293,49 +353,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
   You must replace `ca48897797c9275d75e2d7a5bc778721` with your personal API token.
 </aside>
 
-<h2 id="starter-kits">Starter Kits</h2>
-
-<p>Fidor Starter Kits have been created with an idea to help you developing your app immediately. When you create an app in the Application Manager then you immediately getting access to already configured example apps. Until now we provide example apps for following programming languages/frameworks:</p>
-
-<ul>
-<li>ruby/sinatra</li>
-<li>php (plain)</li>
-<li>java/servlet</li>
-<li>Node.js</li>
-<li>Go</li>
-</ul>
-
-<p><a href="https://github.com/fidor/fidor_starter_kits">Our starter kits</a> are also available as a ruby gem on github.</p>
-
-<h2 id="api-logs">API Logs</h2>
-
-<p>For you to being able to see what your app is doing, we offer you the ability to see and analyze the log files directly in the App Manager. Every app you create gets an &ldquo;API Logs&rdquo; view, where you see the requests your app is doing, the traffic your app is creating etc.</p>
-
-<h2 id="team-management">Team Management</h2>
-
-<p>To help you develop your apps faster, we&rsquo;ve built the team management functionality directly into the app manager. To invite your fellow developers just open the team management view and start typing the email address or the name of the developer you would like to invite to your team. When the developer with provided email address already has an account, he can start help you with your app immediately. In other case the invited developer will be notified by an email. </p>
-
-<h2 id="statistics">Statistics</h2>
-
-<p>We will provide you with statistics for your app in the near future. To give you a little bit more of the insight, some of the statistics might be:</p>
-
-<ul>
-<li>Overall number of installs</li>
-<li>Number of &lsquo;active&rsquo; users</li>
-<li>Number of new installs in the last 30 days/7 days</li>
-<li>Number of &#39;active&rsquo; users in the last 30 days/7 days</li>
-<li>Overall number of requests</li>
-<li>Number of requests per endpoint/app function/user
-
-<ul>
-<li> e.g. number of transactions - internal/credit card etc.</li>
-<li> e.g. number of account checks (get transactions)</li>
-</ul></li>
-</ul>
-
-          <h1 id="basic-data">Basic Data</h1>
-
-<h2 id="api-rate-limits">API Rate Limits</h2>
+<h2 id="throttling-(rate-limits)">Throttling (Rate Limits)</h2>
 
 <blockquote>
 <p>GET https://api.fidor.de/rate_limit</p>
@@ -362,7 +380,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 
 <p>Rate limits in version 1 of the API are divided into 15 minute intervals. In the version 1 of the API rate limit is 60 calls every 15 minutes, but we may adjust that over time.</p>
 
-<h3 id="http-headers">HTTP Headers</h3>
+<h3 id="rate-limit-headers">Rate Limit Headers</h3>
 
 <p>For you to make a better prediction about the API rate limit for your application or user, please consider to use the <code class="prettyprint">X-RateLimit-*</code> headers.</p>
 
@@ -425,6 +443,50 @@ X-TOTAL → 300
 </tbody></table>
 
 <p>To navigate through the pages please use <code class="prettyprint">page=</code> and <code class="prettyprint">per_page=</code> URL parameters as stated in an example on the right pane.</p>
+
+<h2 id="manage-teams">Manage Teams</h2>
+
+<p>To help you develop your apps faster, we&rsquo;ve built the team management functionality directly into the Application Manager. To invite your fellow developers just open the team management view and start typing the email address or the name of the developer you would like to invite to your team. When the developer with provided email address already has an account, he can start help you with your app immediately. In other case the invited developer will be notified by an email. </p>
+
+          <h1 id="approval-and-operation">Approval and Operation</h1>
+
+<p>As soon you are happy with testing your application you can switch from &ldquo;test-mode&rdquo; to &ldquo;live-mode&rdquo;. Then your application with work with real accounts, real data and real money. </p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>Only developers that went trough the complete bank account registration process and have &ldquo;full KYC status&rdquo; can start the approval process for their applications. Please (re-)read the  <a href="https://apm.fidor.de/developer/terms_of_services/current">developer agreement</a> for additional prerequisites.</p>
+
+<h2 id="self-approval">Self Approval</h2>
+
+<p>If your application uses only a small set of functions (scope) and is set to access only your own account it may not need to be approved by Fidor. The exact scope of these &ldquo;Self-API applications&rdquo; is shown in the application manager.
+This kind of applications will automatically get approved once you submit it. You will get a notification about your application being available in live environment and can start using it immediately.</p>
+
+<h2 id="manual-approval-process">Manual Approval Process</h2>
+
+<p>Applications that need additional services (e.g. SEPA direct debit) or require access to other peoples data or accounts will go through a thorough manual review and approval process. 
+In most cases you will have to sign additional contracts before your application will be approved and go life. If you are in doubt, please contact our sales team well enough in advance.</p>
+
+<h2 id="statistics">Statistics</h2>
+
+<p>We will provide you with statistics for your application in the near future.</p>
+
+<h2 id="check-api-logs">Check API Logs</h2>
+
+<p>For you to being able to see what your application is doing, we offer you the ability to see and analyze the log files directly in the Application Manager. Every application you create gets an &ldquo;API Logs&rdquo; view, where you see the requests your application is doing, the traffic your application is creating etc.</p>
+
+<h2 id="changing-scope-of-your-application">Changing Scope of Your Application</h2>
+
+<p>Once your application is live changing the scope will result to all tokens being revoked. That means that all people that use your application have to go through the rights-granting process (OAuth) again, the next they use the application.</p>
+
+<h2 id="revoking-and-deleting-your-application">Revoking And Deleting Your Application</h2>
+
+<p>The developer that submitted the application can revoke and or delete the application. Applications that have been revoked must go through the approval process again if you want to put it back live again.</p>
+
+<h2 id="user-view:-manage-installed-applications">User view: Manage Installed Applications</h2>
+
+<p>Very soon all bank customers can see what applications they &ldquo;installed&rdquo; or &ldquo;subscribed to&rdquo; and get a detailed view on the rights they have granted to those applications. On the same page customers can &ldquo;uninstall&rdquo; applications and thus revoke rights.</p>
+
+          <h1 id="basic-data">Basic Data</h1>
 
 <h2 id="user">User</h2>
 
@@ -844,7 +906,105 @@ X-TOTAL → 300
 <p><code class="prettyprint">GET https://api.fidor.de/accounts/{id}/sepa_direct_debits</code>
 <sub>See also: <a href="#sepa-direct-debit">SEPA direct debit</a></sub></p>
 
-          <h1 id="money-transfers">Money Transfers</h1>
+<h2 id="transactions">Transactions</h2>
+
+<blockquote>
+<p>GET https://api.fidor.de/transactions/:id</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"666"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"66666666"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"transaction_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"payout_fidorpay"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"subject"</span><span class="p">:</span><span class="w"> </span><span class="s2">"\"Send money to Friends\" recipient: Walter White: Heisenberg"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">-100000</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"booking_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"725"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"booking_date"</span><span class="p">:</span><span class="w"> </span><span class="mi">2015-03-01</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"value_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-02"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"return_transaction_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-02T13:58:59+01:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-02T13:58:59+01:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EUR"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"transaction_type_details"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"internal_transfer_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"286"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"remote_account_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"71616244"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Format</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>Unique customer identifier</td>
+<td>String</td>
+</tr>
+<tr>
+<td>account_id</td>
+<td>Fidor account the transaction belongs to</td>
+<td>String</td>
+</tr>
+<tr>
+<td>transaction_type</td>
+<td>Type of the transaction</td>
+<td>String (enum)</td>
+</tr>
+<tr>
+<td>subject</td>
+<td>Transfer subject (reference)</td>
+<td>String</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>The transferred amount in account currency, in minor units, e.g. 1EUR is represented as 100. Can be negative e.g. if something was withdrawn from an account.</td>
+<td>Integer</td>
+</tr>
+<tr>
+<td>booking_code</td>
+<td>Accounting transaction code in the central banking system</td>
+<td>String</td>
+</tr>
+<tr>
+<td>booking_date</td>
+<td>Date the transaction was booked. ISO 8601 Date</td>
+<td>String (date)</td>
+</tr>
+<tr>
+<td>value_date</td>
+<td>Date the amount was credited to the account. ISO 8601 Date</td>
+<td>String (date)</td>
+</tr>
+<tr>
+<td>return_transaction_id</td>
+<td>If the transaction was marked for return, this references the new return transaction</td>
+<td>String</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>Creation date-time, never changes. ISO 8601 Date-Time e.g. &ldquo;2014-10-10T17:41:58+02:00&rdquo;</td>
+<td>Datetime</td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>Last update date-time. ISO 8601 Date-Time e.g. &ldquo;2015-02-04T04:08:54+01:00&rdquo;</td>
+<td>Datetime</td>
+</tr>
+<tr>
+<td>currency</td>
+<td>Currency of Account or Amount. ISO 4217 alpha-3 - 3 letter upcase e.g EUR</td>
+<td>String (enum)</td>
+</tr>
+<tr>
+<td>transaction_type_details</td>
+<td>Details specific to this transaction type are collected here</td>
+<td></td>
+</tr>
+</tbody></table>
+
+          <h1 id="money-transfer">Money Transfer</h1>
 
 <p>We differ between different types of money transfers. In generell we distinguish between the Fidor internal transfers (Fidor to Fidor money transfer) and external transfers (SEPA, GMT, FPS, BACS etc.).</p>
 
@@ -1172,36 +1332,34 @@ X-TOTAL → 300
 
 <p><code class="prettyprint">POST http://api.fidor.de/batch_transfers</code>  <sub>create</sub></p>
 
-<h2 id="coming-soon---sepa-direct-debit">Coming Soon - SEPA Direct Debit</h2>
+<h2 id="coming-soon---extended-money-operations">Coming Soon - Extended Money Operations</h2>
 
 <p>In order to create a SEPA Direct Debit you have to crete a SEPA Mandate first. Not every Fidor customer is eligible for creating the SEPA Mandates. If you are interested in SEPA Direct Debits and do not have a required account for creating SEPA Mandates you will have to contact Fidor first.</p>
 
-<!-- we're workig on like really hard - we're all sweaty 
-### HTTP Request
+<h3 id="http-request">HTTP Request</h3>
 
-`GET http://api.fidor.de/sepa_direct_debits` <sub>index</sub>
+<p><code class="prettyprint">GET http://api.fidor.de/sepa_direct_debits</code> <sub>index</sub></p>
 
-`GET http://api.fidor.de/sepa_direct_debits/{id}` <sub>self</sub>
+<p><code class="prettyprint">GET http://api.fidor.de/sepa_direct_debits/{id}</code> <sub>self</sub></p>
 
-`POST http://api.fidor.de/sepa_direct_debits` <sub>create</sub>
+<p><code class="prettyprint">POST http://api.fidor.de/sepa_direct_debits</code> <sub>create</sub></p>
 
-###Creating SEPA Mandate
+<h3 id="creating-sepa-mandate">Creating SEPA Mandate</h3>
 
-###Creating SEPA Direct Debit
+<h3 id="creating-sepa-direct-debit">Creating SEPA Direct Debit</h3>
 
-##Batch Direct Debit 
+<h3 id="batch-direct-debit">Batch Direct Debit</h3>
 
-*PREVIEW:* A direct debit batch contains multiple direct debits which are processed asynchronously.
+<p><em>PREVIEW:</em> A direct debit batch contains multiple direct debits which are processed asynchronously.</p>
 
-`GET http://api.fidor.de/batch_direct_debits/{id}` 
-<sub>self</sub>
+<p><code class="prettyprint">GET http://api.fidor.de/batch_direct_debits/{id}</code> 
+<sub>self</sub></p>
 
-`GET http://api.fidor.de/batch_direct_debits` 
-<sub>instances</sub>
+<p><code class="prettyprint">GET http://api.fidor.de/batch_direct_debits</code> 
+<sub>instances</sub></p>
 
-`POST http://api.fidor.de/batch_direct_debits` 
-<sub>create</sub>
-&ndash;>
+<p><code class="prettyprint">POST http://api.fidor.de/batch_direct_debits</code> 
+<sub>create</sub></p>
 
           <h1 id="errors">Errors</h1>
 
