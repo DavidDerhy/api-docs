@@ -1,42 +1,28 @@
 #Approval and Operation
+As soon you are happy with testing your application you can switch from "test-mode" to "live-mode". Then your application with work with real accounts, real data and real money. 
 
 ##Prerequisites
-[Current terms of services for developers](https://apm.fidor.de/developer/terms_of_services/current)
-
-(-see Developer AGB, e.g. full KYC account) @Stefan: please provide texts
+Only developers that went trough the complete bank account registration process and have "full KYC status" can start the approval process for their applications. Please (re-)read the  [developer agreement](https://apm.fidor.de/developer/terms_of_services/current) for additional prerequisites.
 
 ##Self Approval
-So called - "self-serve" applications - the ones you created for yourself to access your own account. This kind of applications will automatically get approved. You will get a notification about the your application being available in live environment and can start using it immediately
-
-Applications that meet the "Self-API" conditions can go live immediately.
+If your application uses only a small set of functions (scope) and is set to access only your own account it may not need to be approved by Fidor. The exact scope of these "Self-API applications" is shown in the application manager.
+This kind of applications will automatically get approved once you submit it. You will get a notification about your application being available in live environment and can start using it immediately.
 
 ##Manual Approval Process
-The applications that may need an access to a foreign account. This type of applications will have to undergo an approval process. Before your application will go into the approval process, you will have to sign an additional agreement/contact. (Stefan Weiß  do we have something like this already?) You will get notified in every step of the approval process. 
-
-In most cases the application has to be reviewed before it is allowed to access the live system.
-
-During the beta phase all applications that are able to submit payments, will have to undergo our review.
+Applications that need additional services (e.g. SEPA direct debit) or require access to other peoples data or accounts will go through a thorough manual review and approval process. 
+In most cases you will have to sign additional contracts before your application will be approved and go life. If you are in doubt, please contact our sales team well enough in advance.
 
 ##Statistics
-We will provide you with statistics for your app in the near future. To give you a little bit more of the insight, some of the statistics might be:
+We will provide you with statistics for your application in the near future.
 
-* Overall number of installs
-* Number of 'active' users
-* Number of new installs in the last 30 days/7 days
-* Number of 'active' users in the last 30 days/7 days
-* Overall number of requests
-* Number of requests per endpoint/app function/user
- *  e.g. number of transactions - internal/credit card etc.
- *  e.g. number of account checks (get transactions)
- 
 ##Check API Logs
-For you to being able to see what your app is doing, we offer you the ability to see and analyze the log files directly in the App Manager. Every app you create gets an "API Logs" view, where you see the requests your app is doing, the traffic your app is creating etc.
+For you to being able to see what your application is doing, we offer you the ability to see and analyze the log files directly in the Application Manager. Every application you create gets an "API Logs" view, where you see the requests your application is doing, the traffic your application is creating etc.
 
 ## Changing Scope of Your Application
- @Stefan: please provide texts
+Once your application is live changing the scope will result to all tokens being revoked. That means that all people that use your application have to go through the rights-granting process (OAuth) again, the next they use the application.
 
-## Revoking and Deleting Your Application
- @Stefan: please provide texts
+## Revoking And Deleting Your Application
+The developer that submitted the application can revoke and or delete the application. Applications that have been revoked must go through the approval process again if you want to put it back live again.
 
-## User view: Manage installed Apps
- @Stefan: please provide texts
+## User view: Manage Installed Applications
+Very soon all bank customers can see what applications they "installed" or "subscribed to" and get a detailed view on the rights they have granted to those applications. On the same page customers can "uninstall" applications and thus revoke rights.

@@ -1,6 +1,10 @@
 #Develop and Debug
+
+The developer tools: [API-Browser](https://developer.fidortecs.com/api-browser/), [fidor_schema](https://github.com/fidor/fidor_schema), [fidor_starter_kits](https://github.com/fidor/fidor_starter_kits), [application manager](https://apm.fidor.de/), sandbox environment and [developer community](https://developer.fidor.de/)  are provided free of charge. You only pay for API usage once your application goes live.
+
 ##Add and Change Scopes
- @Stefan: please provide texts
+Fidor APIs provide a wide range of functions and provide access to a wide range of banking services. In the Application Manager you have to decide and define the scope, i.e. the set of functions your application needs in order to work properly. 
+Here your can also select if your application only needs access to your own account or if you plan to provide the application to other people, so that the application needs access to their data and accounts.
  
 ##Understand OAuth
 ```
@@ -35,7 +39,7 @@ From the perspective of the application, the OAuth2 Authorization Code Grant flo
                   
   - you will need to provide the following values:
 
-    - `redirect_url` : the url on your server the client will be redirected to once the authorization has been completed successfully or falied. This needs to be one of the redirect urls configured for your app in the app manager (see below)
+    - `redirect_url` : the url on your server the client will be redirected to once the authorization has been completed successfully or falied. This needs to be one of the redirect urls configured for your app in the Application Manager (see below)
 
     - `client_id` : the client_id that has been assigned to your app (see below)
 
@@ -152,4 +156,4 @@ X-TOTAL | The total number of the entries
 To navigate through the pages please use `page=` and `per_page=` URL parameters as stated in an example on the right pane.
 
 ##Manage Teams
-To help you develop your apps faster, we've built the team management functionality directly into the app manager. To invite your fellow developers just open the team management view and start typing the email address or the name of the developer you would like to invite to your team. When the developer with provided email address already has an account, he can start help you with your app immediately. In other case the invited developer will be notified by an email. 
+To help you develop your apps faster, we've built the team management functionality directly into the Application Manager. To invite your fellow developers just open the team management view and start typing the email address or the name of the developer you would like to invite to your team. When the developer with provided email address already has an account, he can start help you with your app immediately. In other case the invited developer will be notified by an email. 
