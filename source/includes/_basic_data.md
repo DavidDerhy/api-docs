@@ -215,9 +215,36 @@ For your convenience we also include the information about the customers of the 
 
 ```json
 {
+  "id": "666",
+  "account_id": "66666666",
+  "transaction_type": "payout_fidorpay",
+  "subject": "\"Send money to Friends\" recipient: Walter White: Heisenberg",
+  "amount": -100000,
+  "booking_code": "725",
+  "booking_date": 2015-03-01,
+  "value_date": "2015-03-02",
+  "return_transaction_id": "",
+  "created_at": "2015-03-02T13:58:59+01:00",
+  "updated_at": "2015-03-02T13:58:59+01:00",
+  "currency": "EUR",
+  "transaction_type_details": {
+    "internal_transfer_id": "286",
+    "remote_account_id": "71616244"
 }
 ```
 
 Parameter | Description | Format
 --------- | ----------- | -----------
 id   | Unique customer identifier | String
+account_id | Fidor account the transaction belongs to | String
+transaction_type | Type of the transaction | String (enum)
+subject | Transfer subject (reference) | String
+amount | The transferred amount in account currency, in minor units, e.g. 1EUR is represented as 100. Can be negative e.g. if something was withdrawn from an account. | Integer
+booking_code | Accounting transaction code in the central banking system | String
+booking_date | Date the transaction was booked. ISO 8601 Date | String (date)
+value_date | Date the amount was credited to the account. ISO 8601 Date | String (date)
+return_transaction_id | If the transaction was marked for return, this references the new return transaction | String
+created_at | Creation date-time, never changes. ISO 8601 Date-Time e.g. "2014-10-10T17:41:58+02:00" | Datetime 
+updated_at | Last update date-time. ISO 8601 Date-Time e.g. "2015-02-04T04:08:54+01:00" | Datetime
+currency | Currency of Account or Amount. ISO 4217 alpha-3 - 3 letter upcase e.g EUR | String (enum)
+transaction_type_details | Details specific to this transaction type are collected here | 
