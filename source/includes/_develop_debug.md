@@ -103,6 +103,14 @@ Customer Service Email | likeaboss@myapp.com
 
 <!-- ![app_manager](https://github.fidor.de/becker/mobile_oauth/raw/master/oauth_desc/app_manager.png) -->
 
+> **Note**: There are two environments with their respective sets of endpoints:
+
+| Environment| Login | OAuth   |
+| ------- | ---- | --- |
+| Simulation | Sandbox | Sandbox |
+| Production | Banking | AppManager |
+
+
 ##Check Headers
 To successfully communicate with Fidor API, you have to provide 3 headers:
 
