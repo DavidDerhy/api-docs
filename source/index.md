@@ -4,6 +4,7 @@ title: Fidor API Reference
 toc_footers:
   - <a href='https://apm.fidor.de'>Get API Credentials</a>
   - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
+  - <a href="https://www.fidor.de/impressum">Impressum</a>
 
 includes:
   - getting_started
@@ -35,7 +36,9 @@ search: true
 ```
 Welcome to the Fidor Banking API! Our API allows you to easily access your Fidor bank account, get information about your transaction history and submit various types of payments. In addition you may provide services your for Fidor customers and access their accounts if certain conditions are met.
 
-For general introduction to our developer program please visit our [developer community](https://developer.fidor.de/)
+For general introduction to our developer program please visit our [developer community](https://developer.fidor.de/).
+
+Here's a quick overview of our API endpoints:
 
 Method | Endpoint | Usage | Returns
 --------- | ----------- | --------- | -----------
@@ -48,4 +51,3 @@ POST | [`/sepa_credit_transfers`](#sepa-credit-transfer) | Send money to another
 GET | [`/sepa_credit_transfers`](#sepa-credit-transfer) | Get all sepa transfers for the current user | sepa credit  transfer
 POST | [`/batch_transfers`](#batch-transfer) | Send money in batch either with internal or sepa credit transfer or both |
 GET | [`/batch_transfers`](#batch-transfer) | Get all batch transfers for the current user | batch transfer
-
