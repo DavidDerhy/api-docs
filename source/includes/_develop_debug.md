@@ -1,10 +1,10 @@
 #Develop and Debug
 
-The developer tools: [API-Browser](https://developer.fidortecs.com/api-browser/), [fidor_schema](https://github.com/fidor/fidor_schema), [fidor_starter_kits](https://github.com/fidor/fidor_starter_kits), [application manager](https://apm.fidor.de/), sandbox environment and [developer community](https://developer.fidor.de/)  are provided free of charge. You only pay for API usage once your application goes live.
+The developer tools [API browser](https://developer.fidortecs.com/api-browser/), [Fidor schema](https://github.com/fidor/fidor_schema), [Fidor starter kits](https://github.com/fidor/fidor_starter_kits), [Application Manager](https://apm.fidor.de/), sandbox environment and [developer community](https://developer.fidor.de/)  are provided free of charge. You only pay for API usage once your application goes live.
 
 ##Add and Change Scopes
 Fidor APIs provide a wide range of functions and provide access to a wide range of banking services. In the Application Manager you have to decide and define the scope, i.e. the set of functions your application needs in order to work properly. 
-Here your can also select if your application only needs access to your own account or if you plan to provide the application to other people, so that the application needs access to their data and accounts.
+Here your can also select whether your application only needs access to your own account or if you plan to provide the application to other people, so that the application needs access to their data and accounts.
  
 ##Understand OAuth
 ```
@@ -18,11 +18,33 @@ Here your can also select if your application only needs access to your own acco
  \______/ |__/  |__/ \______/    \___/  |__/  |__/                                                          
 ```
 
-The Fidor API allows you to retrieve information from customer's Fidor accounts. The extent of access your app is allowed, is configured when you are setting up your application in the App Manager.
+The Fidor API allows you to retrieve information from customer's Fidor accounts. The extent of access your application is allowed, is configured when you are setting up the scope of your application in the Application Manager.
 
-In order to access the account, the account holder needs to authorize your app to allow it to access their account. This is achieved
+In order to access the account, the account holder needs to authorize your application to allow it to access their account. This is achieved
 using [OAuth 2](https://tools.ietf.org/html/rfc6749). 
-
+```sequence
+Participant Browser
+Participant App
+Participant API
+Participant AppManager
+Participant Login
+Browser->App:Request Resource
+App-->Browser:Redirect to OAuth\n(if no valid AccessToken) 
+Browser->AppManager:Request to OAuth
+AppManager-->Browser:Redirect to Authentication\n(if not logged in)
+Browser->Login:Present Credentials
+Login->Browser:Redirect to OAuth
+Browser->AppManager:Request to OAuth
+AppManager-->Browser:Redirect to App (w/ AuthCode)
+Browser->App:Call to App (w/ AuthCode)
+App->AppManager:
+AppManager->App:give AuthCode\nget AccessToken
+App->API:
+API->AppManager:
+AppManager->API:Check validity\n of AccessToken
+API->App:Retreive Ressource\nw/ AccessToken
+App->Browser:Ressource Response
+```
 From the user's perspective this works as follows:
 
   - the user is redirected to Fidor and, in case they are not already logged in, is asked to enter username and password
@@ -73,7 +95,7 @@ Setting | Value
 Client ID | 84b199c5b4cd9605
 Client Secret | 5af2806fd4ee8521250b68d0a6ab1e55
 App URL | http://localhost:4567
-Allowed IP Addresses | 
+Allowed IP Addresses | 84.32.22.12, 84.32.22.13, 84.32.22,14
 Callback URLs | http://localhost:4567
 Terms of service URL | http://myapp.com/tos
 Customer Service URL | http://myapp.com/customer
