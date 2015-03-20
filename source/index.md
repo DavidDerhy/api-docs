@@ -38,7 +38,7 @@ Welcome to the Fidor Banking API! Our API allows you to easily access your Fidor
 
 For general introduction to our developer program please visit our [developer community](https://developer.fidor.de/).
 
-Here's a quick overview of our API endpoints:
+Our API is RESTful, we use JSON format and OAuth2.0 authorization. Here's a quick overview of our API endpoints:
 
 Method | Endpoint | Usage | Returns
 --------- | ----------- | --------- | -----------
