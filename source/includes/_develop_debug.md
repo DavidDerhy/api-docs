@@ -22,29 +22,7 @@ The Fidor API allows you to retrieve information from customer's Fidor accounts.
 
 In order to access the account, the account holder needs to authorize your application to allow it to access their account. This is achieved
 using [OAuth 2](https://tools.ietf.org/html/rfc6749). 
-```sequence
-Participant Browser
-Participant App
-Participant API
-Participant AppManager
-Participant Login
-Browser->App:Request Resource
-App-->Browser:Redirect to OAuth\n(if no valid AccessToken) 
-Browser->AppManager:Request to OAuth
-AppManager-->Browser:Redirect to Authentication\n(if not logged in)
-Browser->Login:Present Credentials
-Login->Browser:Redirect to OAuth
-Browser->AppManager:Request to OAuth
-AppManager-->Browser:Redirect to App (w/ AuthCode)
-Browser->App:Call to App (w/ AuthCode)
-App->AppManager:
-AppManager->App:give AuthCode\nget AccessToken
-App->API:
-API->AppManager:
-AppManager->API:Check validity\n of AccessToken
-API->App:Retreive Ressource\nw/ AccessToken
-App->Browser:Ressource Response
-```
+
 From the user's perspective this works as follows:
 
   - the user is redirected to Fidor and, in case they are not already logged in, is asked to enter username and password
@@ -86,7 +64,7 @@ From the perspective of the application, the OAuth2 Authorization Code Grant flo
   - The server will return either an error (described in [OAuth2 sec 5.2](https://tools.ietf.org/html/rfc6749#section-5.2) or a json
     response containing the `access_token` and information about it.
 
-  - The access token will be of type ["Bearer"](https://tools.ietf.org/html/rfc6750) and needs to be included in the http "Authorization" header of subsequent requests to the API (see [Bearer Token Usage](https://tools.ietf.org/html/rfc6750#section-2.1))
+  - The access token will be of type ["Bearer"](https://tools.ietf.org/html/rfc6750) and needs to be included in the http `Authorization` header of subsequent requests to the API (see [Bearer Token Usage](https://tools.ietf.org/html/rfc6750#section-2.1))
 
 The required parameters (`client_id`, `client_secret` and the `redirect_url`) are available in the App Manager:
 
@@ -112,11 +90,15 @@ Customer Service Email | likeaboss@myapp.com
 
 
 ##Check Headers
+```bash
+curl --header "Accept:application/vnd.fidor.de; version=1,text/json" --header "Content-Type:application/json" --header "Authorization:b26a06e403f9900a0ddd45e5d6a53bf7" https://api.fidor.de/users/current
+```
+
 To successfully communicate with Fidor API, you have to provide 3 headers:
 
 Header | Value
 --------- | -----------
-X-Fidor-API-Token | ca48897797c9275d75e2d7a5bc778721
+Authorization | ca48897797c9275d75e2d7a5bc778721
 Accept | application/vnd.fidor.de; version=1,text/json
 Content-Type | application/json
 
