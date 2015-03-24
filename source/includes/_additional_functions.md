@@ -1,4 +1,23 @@
 #Overdraft
+Parameter | Description | Format
+--------- | ----------- | -----------
+id   | Unique user identifier | String
+account_id | Account identifier of the sender | String
+line | Overdraft line in account currency, in minor units, e.g. 1EUR is represented as 100. Must be greater than 0 e.g. at least one cent in EUR | Integer
+active | An identifier whether the overdraft is active or not | Boolean
+currency | Currency of Account or Amount. ISO 4217 alpha-3 - 3 letter upcase e.g EUR | String (enum)
+created_at | Creation date-time, never changes | String (date-time) ISO 8601 Date-Time
+updated_at | Last update date-time | String (date-time) ISO 8601 Date-Time
+
+
+Method    | Endpoint    | Description
+--------- | ----------- | -----------
+POST | `https://api.fidor.de/overdrafts` | To request a new overdraft
+GET | `https://api.fidor.de/overdrafts` | To get your overdraft history
+GET | `https://api.fidor.de/overdrafts/current` | To get you current overdraft
+PUT | `https://api.fidor.de/overdrafts/:id` | To deactivate your overdraft
+
+## Request an overdraft
 > POST /overdrafts
 
 ```
@@ -41,6 +60,18 @@
 }
 ```
 
+Every new fullKYC fidor customer doesn't have an overdraft but can request one. To request an overdraft you have to make a POST request to the /overdrafts endpoint - `POST https://api.fidor.de/overdrafts`
+
+Following scenarios are possible:
+
+- Your account is not overdraftable or was blacklisted
+- You're trying to request an overdraft for a wrong account
+- An overdraft was granted to you and you get the detailed information about it
+
+
+Every new fullKYC fidor customer doesn't have an overdraft but can request one. To request an overdraft you have to make a POST request to the /overdrafts endpoint - `POST https://api.fidor.de/overdrafts`
+
+## History of Overdrafts and Current Overdraft
 > GET https://api.fidor.de/overdrafts - history of your overdrafts
 
 ```
@@ -91,27 +122,43 @@
 }
 ```
 
-Every new fullKYC fidor customer doesn't have an overdraft but can request one. To request an overdraft you have to make a POST request to the /overdrafts endpoint - `POST https://api.fidor.de/overdrafts`
-
-Following scenarios are possible:
-
-- Your account is not overdraftable or was blacklisted
-- You're trying to request an overdraft for a wrong account
-- An overdraft was granted to you and you get the detailed information about it
-
 Once you were granted an overdraft you have the possibility to get the history of you previous overdrafts or your current overdraft - `GET https://api.fidor.de/overdrafts`
 
 
+## Deactivate an Overdraft
+> PUT https://api.fidor.de/overdrafts/{:id}
+
+```
+{
+  "deactivate" : true
+}
+```
+
+#Short-Term Loan
+
 Parameter | Description | Format
 --------- | ----------- | -----------
+id   | Unique user identifier | String
+account_id | Account identifier of the sender | String
+loan_amount | Overdraft line in account currency, in minor units, e.g. 1EUR is represented as 100. Must be greater than 0 e.g. at least one cent in EUR | Integer
+duration | Short Term Loan's duration | 
+fee_amount | Fee for a short term loan in account currency, in minor units, e.g. 1EUR is represented as 100. Must be greater than 0 e.g. at least one cent in EUR| Integer
+state | State of the short term loan | String
+total_amount | A total amount of a short term loan in minor units | Integer
+currency | Currency of Account or Amount. ISO 4217 alpha-3 - 3 letter upcase e.g EUR | String (enum)
+
+active | An identifier whether the overdraft is active or not | Boolean
+created_at | Creation date-time, never changes | String (date-time) ISO 8601 Date-Time
+updated_at | Last update date-time | String (date-time) ISO 8601 Date-Time
 
 
 Method    | Endpoint    | Description
 --------- | ----------- | -----------
-POST | `https://api.fidor.de/overdrafts` | to request a new overdraft
-GET | `https://api.fidor.de/overdrafts` | will get you your overdraft history
-GET | `https://api.fidor.de/current` | will show you your current overdraft line 
-PUT | `https://api.fidor.de/overdrafts/:id` | to deactivate your overdraft
+POST | `https://api.fidor.de/short_term_loans` | To request a new short term loan
+GET | `https://api.fidor.de/short_term_loans` | To get short term loan history
+GET | `https://api.fidor.de/short_term_loans/current` | To get the current short term loan
+PUT | `https://api.fidor.de/short_term_loans/:id` | To pay back current short term loan
 
+## Request a Short Term Loan
 
-#Short-Term Loan
+## History of Previously Taken Short Term Loans
