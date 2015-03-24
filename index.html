@@ -30,6 +30,8 @@
       </div>
         <ul class="toc-footer">
             <li><a href='https://apm.fidor.de'>Get API Credentials</a></li>
+            <li><a href='https://developer.fidor.de/community/forum/api-discussion/'>Get some help</a></li>
+            <li><a href="https://www.fidor.de/impressum">Imprint</a></li>
             <li><a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
         </ul>
     </div>
@@ -55,7 +57,9 @@
 
 <p>Welcome to the Fidor Banking API! Our API allows you to easily access your Fidor bank account, get information about your transaction history and submit various types of payments. In addition you may provide services your for Fidor customers and access their accounts if certain conditions are met.</p>
 
-<p>For general introduction to our developer program please visit our <a href="https://developer.fidor.de/">developer community</a></p>
+<p>For general introduction to our developer program please visit our <a href="https://developer.fidor.de/">developer community</a>.</p>
+
+<p>Our API is RESTful, we use JSON format and OAuth2.0 authorization. Here&rsquo;s a quick overview of our API endpoints:</p>
 
 <table><thead>
 <tr>
@@ -158,12 +162,12 @@ To get started you just need a (free) Fidor Account.</p>
 
           <h1 id="develop-and-debug">Develop and Debug</h1>
 
-<p>The developer tools: <a href="https://developer.fidortecs.com/api-browser/">API-Browser</a>, <a href="https://github.com/fidor/fidor_schema">fidor_schema</a>, <a href="https://github.com/fidor/fidor_starter_kits">fidor_starter_kits</a>, <a href="https://apm.fidor.de/">application manager</a>, sandbox environment and <a href="https://developer.fidor.de/">developer community</a>  are provided free of charge. You only pay for API usage once your application goes live.</p>
+<p>The developer tools <a href="https://developer.fidortecs.com/api-browser/">API browser</a>, <a href="https://github.com/fidor/fidor_schema">Fidor schema</a>, <a href="https://github.com/fidor/fidor_starter_kits">Fidor starter kits</a>, <a href="https://apm.fidor.de/">Application Manager</a>, sandbox environment and <a href="https://developer.fidor.de/">developer community</a>  are provided free of charge. You only pay for API usage once your application goes live.</p>
 
 <h2 id="add-and-change-scopes">Add and Change Scopes</h2>
 
 <p>Fidor APIs provide a wide range of functions and provide access to a wide range of banking services. In the Application Manager you have to decide and define the scope, i.e. the set of functions your application needs in order to work properly. 
-Here your can also select if your application only needs access to your own account or if you plan to provide the application to other people, so that the application needs access to their data and accounts.</p>
+Here your can also select whether your application only needs access to your own account or if you plan to provide the application to other people, so that the application needs access to their data and accounts.</p>
 
 <h2 id="understand-oauth">Understand OAuth</h2>
 <pre><code class="highlight plaintext">  /ffffff   /ffffff              /ff     /ff      
@@ -176,9 +180,9 @@ Here your can also select if your application only needs access to your own acco
  \______/ |__/  |__/ \______/    \___/  |__/  |__/                                                          
 </code></pre>
 
-<p>The Fidor API allows you to retrieve information from customer&rsquo;s Fidor accounts. The extent of access your app is allowed, is configured when you are setting up your application in the App Manager.</p>
+<p>The Fidor API allows you to retrieve information from customer&rsquo;s Fidor accounts. The extent of access your application is allowed, is configured when you are setting up the scope of your application in the Application Manager.</p>
 
-<p>In order to access the account, the account holder needs to authorize your app to allow it to access their account. This is achieved
+<p>In order to access the account, the account holder needs to authorize your application to allow it to access their account. This is achieved
 using <a href="https://tools.ietf.org/html/rfc6749">OAuth 2</a>. </p>
 
 <p>From the user&rsquo;s perspective this works as follows:</p>
@@ -218,7 +222,7 @@ you provided. Attached to this redirect url will be the provided <code class="pr
 </ul></li>
 <li><p>The server will return either an error (described in <a href="https://tools.ietf.org/html/rfc6749#section-5.2">OAuth2 sec 5.2</a> or a json
 response containing the <code class="prettyprint">access_token</code> and information about it.</p></li>
-<li><p>The access token will be of type <a href="https://tools.ietf.org/html/rfc6750">&ldquo;Bearer&rdquo;</a> and needs to be included in the http &ldquo;Authorization&rdquo; header of subsequent requests to the API (see <a href="https://tools.ietf.org/html/rfc6750#section-2.1">Bearer Token Usage</a>)</p></li>
+<li><p>The access token will be of type <a href="https://tools.ietf.org/html/rfc6750">&ldquo;Bearer&rdquo;</a> and needs to be included in the http <code class="prettyprint">Authorization</code> header of subsequent requests to the API (see <a href="https://tools.ietf.org/html/rfc6750#section-2.1">Bearer Token Usage</a>)</p></li>
 </ul>
 
 <p>The required parameters (<code class="prettyprint">client_id</code>, <code class="prettyprint">client_secret</code> and the <code class="prettyprint">redirect_url</code>) are available in the App Manager:</p>
@@ -243,7 +247,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 </tr>
 <tr>
 <td>Allowed IP Addresses</td>
-<td></td>
+<td>84.32.22.12, 84.32.22.13, 84.32.22,14</td>
 </tr>
 <tr>
 <td>Callback URLs</td>
@@ -265,7 +269,32 @@ response containing the <code class="prettyprint">access_token</code> and inform
 
 <!-- ![app_manager](https://github.fidor.de/becker/mobile_oauth/raw/master/oauth_desc/app_manager.png) -->
 
+<blockquote>
+<p><strong>Note</strong>: There are two environments with their respective sets of endpoints:</p>
+</blockquote>
+
+<table><thead>
+<tr>
+<th>Environment</th>
+<th>Login</th>
+<th>OAuth</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Simulation</td>
+<td>Sandbox</td>
+<td>Sandbox</td>
+</tr>
+<tr>
+<td>Production</td>
+<td>Banking</td>
+<td>AppManager</td>
+</tr>
+</tbody></table>
+
 <h2 id="check-headers">Check Headers</h2>
+<pre><code class="highlight shell">curl --header <span class="s2">"Accept:application/vnd.fidor.de; version=1,text/json"</span> --header <span class="s2">"Content-Type:application/json"</span> --header <span class="s2">"Authorization:b26a06e403f9900a0ddd45e5d6a53bf7"</span> https://api.fidor.de/users/current
+</code></pre>
 
 <p>To successfully communicate with Fidor API, you have to provide 3 headers:</p>
 
@@ -276,7 +305,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 </tr>
 </thead><tbody>
 <tr>
-<td>X-Fidor-API-Token</td>
+<td>Authorization</td>
 <td>ca48897797c9275d75e2d7a5bc778721</td>
 </tr>
 <tr>
@@ -1014,7 +1043,7 @@ In most cases you will have to sign additional contracts before your application
 </tr>
 <tr>
 <td>amount</td>
-<td>Amount of money you would like to send in in account currency, in minor units, e.g. 1EUR is represented as 100. Must be greater than 0 e.g. at least one cent in EUR</td>
+<td>Amount of money you would like to send in account currency, in minor units, e.g. 1EUR is represented as 100. Must be greater than 0 e.g. at least one cent in EUR</td>
 <td>Integer</td>
 </tr>
 <tr>
