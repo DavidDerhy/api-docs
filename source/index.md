@@ -3,8 +3,10 @@ title: Fidor API Reference
 
 toc_footers:
   - <a href='https://apm.fidor.de'>Get API Credentials</a>
+  - <a href='https://developer.fidor.de/community/forum/api-discussion/'>Get some help</a>
+  - <a href="https://www.fidor.de/impressum">Imprint</a>
   - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
-  - <a href="https://www.fidor.de/impressum">Impressum</a>
+  
 
 includes:
   - getting_started
