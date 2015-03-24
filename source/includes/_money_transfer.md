@@ -47,7 +47,7 @@ Parameter | Description | Format
 account_id | Account identifier of the sender | String
 receiver | Recipient of the transfer. Possible values are: Fidor nickname, Fidor account identifier, twitter nickname, email address, mobile phone number | String
 external_uid | Unique ID of the creator of the transaction. In case a uid is reused for a transaction, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transaction status is unknown | String
-amount | Amount of money you would like to send in in account currency, in minor units, e.g. 1EUR is represented as 100. Must be greater than 0 e.g. at least one cent in EUR | Integer
+amount | Amount of money you would like to send in account currency, in minor units, e.g. 1EUR is represented as 100. Must be greater than 0 e.g. at least one cent in EUR | Integer
 subject | Subject of the transaction | String
 
 ### HTTP Request
