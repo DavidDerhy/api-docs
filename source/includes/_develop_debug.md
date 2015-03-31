@@ -15,7 +15,7 @@ Here your can also select whether your application only needs access to your own
 | ff  | ff| ff__  ff| ff  | ff  | ff    | ff  \ ff
 | ff  | ff| ff  | ff| ff  | ff  | ff /ff| ff  | ff
 |  ffffff/| ff  | ff|  ffffff/  |  ffff/| ff  | ff
- \______/ |__/  |__/ \______/    \___/  |__/  |__/                                                          
+ \______/ |__/  |__/ \______/    \___/  |__/  |__/
 ```
 
 The Fidor API allows you to retrieve information from customer's Fidor accounts. The extent of access your application is allowed, is configured when you are setting up the scope of your application in the Application Manager.
@@ -68,7 +68,7 @@ From the perspective of the application, the OAuth2 Authorization Code Grant flo
 
 The required parameters (`client_id`, `client_secret` and the `redirect_url`) are available in the App Manager:
 
-Setting | Value
+Setting | Value (example)
 --------- | -----------
 Client ID | 84b199c5b4cd9605
 Client Secret | 5af2806fd4ee8521250b68d0a6ab1e55
@@ -79,9 +79,14 @@ Terms of service URL | http://myapp.com/tos
 Customer Service URL | http://myapp.com/customer
 Customer Service Email | likeaboss@myapp.com
 
+<aside class="notice">
+  **You must never share Client ID and Client Secret with other people.** If it happened unintentionally please copy the application (to get a new Client ID and Client Secret), delete the old one and use the copy.
+</aside>
+
+
 <!-- ![app_manager](https://github.fidor.de/becker/mobile_oauth/raw/master/oauth_desc/app_manager.png) -->
 
-> **Note**: There are two environments with their respective sets of endpoints:
+There are two environments with their respective sets of endpoints:
 
 | Environment| Login | OAuth   |
 | ------- | ---- | --- |
