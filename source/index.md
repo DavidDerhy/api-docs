@@ -40,7 +40,10 @@ Welcome to the Fidor Banking API! Our API allows you to easily access your Fidor
 
 For general introduction to our developer program please visit our [developer community](https://developer.fidor.de/).
 
-Our API is RESTful, we use JSON format and OAuth2.0 authorization. Here's a quick overview of our API endpoints:
+Our API is RESTful, we use JSON format and OAuth2.0 authorization. 
+
+## Endpoints
+Here's a quick overview of our API endpoints:
 
 Method | Endpoint | Usage | Returns
 --------- | ----------- | --------- | -----------
@@ -53,3 +56,16 @@ POST | [`/sepa_credit_transfers`](#sepa-credit-transfer) | Send money to another
 GET | [`/sepa_credit_transfers`](#sepa-credit-transfer) | Get all sepa transfers for the current user | sepa credit  transfer
 POST | [`/batch_transfers`](#batch-transfer) | Send money in batch either with internal or sepa credit transfer or both |
 GET | [`/batch_transfers`](#batch-transfer) | Get all batch transfers for the current user | batch transfer
+
+
+## Systems 
+To avoid confusion here's a list of the Fidor systems and URLs we will be interacting with with:
+
+URL | System
+-----| ----
+www.fidor.de | Banking homepage, you can register here
+apm.fidor.de | Application management environment for developers
+aps.fidor.de | Sandbox endpoint (test environment) 
+api.fidor.de | Production  endpoint (live environment)
+docs.fidor.de | Developer documentation (*You are here*)
+developer.fidor.de | Developer community landing page
