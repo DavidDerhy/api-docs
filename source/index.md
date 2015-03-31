@@ -56,6 +56,7 @@ POST | [`/sepa_credit_transfers`](#sepa-credit-transfer) | Send money to another
 GET | [`/sepa_credit_transfers`](#sepa-credit-transfer) | Get all sepa transfers for the current user | sepa credit  transfer
 POST | [`/batch_transfers`](#batch-transfer) | Send money in batch either with internal or sepa credit transfer or both |
 GET | [`/batch_transfers`](#batch-transfer) | Get all batch transfers for the current user | batch transfer
+GET | [`/transactions`](#transactions) | Get all transactions for the current user | transaction
 
 
 ## Systems 
