@@ -59,7 +59,11 @@
 
 <p>For general introduction to our developer program please visit our <a href="https://developer.fidor.de/">developer community</a>.</p>
 
-<p>Our API is RESTful, we use JSON format and OAuth2.0 authorization. Here&rsquo;s a quick overview of our API endpoints:</p>
+<p>Our API is RESTful, we use JSON format and OAuth2.0 authorization. </p>
+
+<h2 id="endpoints">Endpoints</h2>
+
+<p>Here&rsquo;s a quick overview of our API endpoints:</p>
 
 <table><thead>
 <tr>
@@ -125,20 +129,58 @@
 </tr>
 </tbody></table>
 
+<h2 id="systems">Systems</h2>
+
+<p>To avoid confusion here&rsquo;s a list of the Fidor systems and URLs we will be interacting with with:</p>
+
+<table><thead>
+<tr>
+<th>URL</th>
+<th>System</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>www.fidor.de</td>
+<td>Banking homepage, you can register here</td>
+</tr>
+<tr>
+<td>apm.fidor.de</td>
+<td>Application management environment for developers</td>
+</tr>
+<tr>
+<td>aps.fidor.de</td>
+<td>Sandbox endpoint (test environment)</td>
+</tr>
+<tr>
+<td>api.fidor.de</td>
+<td>Production  endpoint (live environment)</td>
+</tr>
+<tr>
+<td>docs.fidor.de</td>
+<td>Developer documentation (<em>You are here</em>)</td>
+</tr>
+<tr>
+<td>developer.fidor.de</td>
+<td>Developer community landing page</td>
+</tr>
+</tbody></table>
+
           <h1 id="getting-started">Getting Started</h1>
 
-<p>Welcome to the Fidor APIs, your direct access to the functions and services of the world&rsquo;s most innovative Bank. Fidor Bank.
+<p>Welcome to the Fidor APIs, your direct access to the functions and services of the world&rsquo;s most innovative Bank: Fidor Bank.
 To get started you just need a (free) Fidor Account.</p>
 
 <h2 id="create-a-fidor-account">Create a Fidor Account</h2>
 
-<p>To create a Fidor account visit Fidor Bank webpage <a href="https://fidor.de">Fidor DE</a>, and register your account.  In order to start testing our APIs you don&rsquo;t need to be fully verified.</p>
+<p>To create a Fidor account visit Fidor Bank&rsquo;s webpage <a href="https://www.fidor.de/registrierung">Fidor DE</a> and register for an account. Registering just a Privatkunde/retail account is sufficient for testing the API. </p>
 
-<p>Please do not confuse the Fidor Account with the Developer Community Account you need if you want to take part in the discussion in <a href="https://developer.fidor.de/community/">Developer Community Forums</a>.</p>
+<p>After verification of your email address, you are asked to enter a mobile phone number in order to receive a confirmation SMS. <strong>If you are from outside of Germany you might have problems with receiving SMS, so we suggest that you skip this step</strong> and go directly to the Application Manager https://apm.fidor.de/developer/apps </p>
 
-<h2 id="creating-an-application">Creating an Application</h2>
+<p><em>Please do not confuse the</em> Fidor Account <em>with the</em> Developer Community Account <em>you need if you want to take part in the discussion in <a href="https://developer.fidor.de/community/">Developer Community Forums</a>.</em></p>
 
-<p>To start using Fidor&rsquo;s API you have to register (create) your application. In order to do so, please login with your Fidor bank account&rsquo;s credentials into the <a href="https://apm.fidor.de/">Application Manager</a> and select &ldquo;Add New App&rdquo;. If you log in for the first time you have to accept the Developer Agreement first.</p>
+<h2 id="create-an-application">Create an Application</h2>
+
+<p>To start using Fidor&rsquo;s API you have to create (register) your application. In order to do so, please login with your Fidor bank account&rsquo;s credentials into the <a href="https://apm.fidor.de/">Application Manager</a> and select &ldquo;Add New App&rdquo;. If you log in for the first time you have to accept the Developer Agreement first.</p>
 
 <p>After that you can create as many applications as you want. For every new application a dedicated sandbox environment (account simulation) is created. The sandbox comes with some test data, so that you can start developing your application against the sandbox immediately.</p>
 
@@ -177,7 +219,7 @@ Here your can also select whether your application only needs access to your own
 | ff  | ff| ff__  ff| ff  | ff  | ff    | ff  \ ff
 | ff  | ff| ff  | ff| ff  | ff  | ff /ff| ff  | ff
 |  ffffff/| ff  | ff|  ffffff/  |  ffff/| ff  | ff
- \______/ |__/  |__/ \______/    \___/  |__/  |__/                                                          
+ \______/ |__/  |__/ \______/    \___/  |__/  |__/
 </code></pre>
 
 <p>The Fidor API allows you to retrieve information from customer&rsquo;s Fidor accounts. The extent of access your application is allowed, is configured when you are setting up the scope of your application in the Application Manager.</p>
@@ -230,7 +272,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 <table><thead>
 <tr>
 <th>Setting</th>
-<th>Value</th>
+<th>Value (example)</th>
 </tr>
 </thead><tbody>
 <tr>
@@ -267,11 +309,13 @@ response containing the <code class="prettyprint">access_token</code> and inform
 </tr>
 </tbody></table>
 
+<aside class="notice">
+  **You must never share Client ID and Client Secret with other people.** If it happened unintentionally please copy the application (to get a new Client ID and Client Secret), delete the old one and use the copy.
+</aside>
+
 <!-- ![app_manager](https://github.fidor.de/becker/mobile_oauth/raw/master/oauth_desc/app_manager.png) -->
 
-<blockquote>
-<p><strong>Note</strong>: There are two environments with their respective sets of endpoints:</p>
-</blockquote>
+<p>There are two environments with their respective sets of endpoints:</p>
 
 <table><thead>
 <tr>
@@ -1331,8 +1375,6 @@ In most cases you will have to sign additional contracts before your application
 <sub>create</sub></p>
 
           <h1 id="errors">Errors</h1>
-
-<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the `includes` folder and add them to the top of your `index.md`&rsquo;s frontmatter. Files are included in the order listed.</aside>
 
 <p>The Fidor API uses the following error codes:</p>
 
