@@ -80,7 +80,7 @@ Customer Service URL | http://myapp.com/customer
 Customer Service Email | likeaboss@myapp.com
 
 <aside class="notice">
-  **You must never share Client ID and Client Secret with other people.** If it happened unintentionally please copy the application (to get a new Client ID and Client Secret), delete the old one and use the copy.
+  You must never share Client ID and Client Secret with other people. If it happened unintentionally please copy the application (to get a new Client ID and Client Secret), delete the old one and use the copy.
 </aside>
 
 

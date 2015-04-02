@@ -3,9 +3,10 @@ title: Fidor API Reference
 
 toc_footers:
   - <a href='https://apm.fidor.de'>Get API Credentials</a>
-  - <a href='https://developer.fidor.de/community/forum/api-discussion/'>Get some help</a>
+  - <a href='https://developer.fidor.de/community/'>Developer Community</a>
   - <a href="https://www.fidor.de/impressum">Imprint</a>
   - <a href='http://github.com/tripit/slate'>Powered by Slate</a>
+
   
 
 includes:
@@ -21,12 +22,6 @@ search: true
 
 # Introduction
 ```
-  _          _ _             
- | |__   ___| | | ___        
- | '_ \ / _ \ | |/ _ \       
- | | | |  __/ | | (_) |      
- |_| |_|\___|_|_|\___/   
- 
   /ffffff   /ffffff  /ff      
  /ff__  ff /ff__  ff| ff      
 | ff  \ ff| ff  \ ff| ff 
