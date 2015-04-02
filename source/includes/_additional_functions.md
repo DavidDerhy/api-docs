@@ -1,4 +1,6 @@
 #Overdraft
+Fidor offers its customers to request an overdraft for their accounts. Overdraft is calculated based on your montly income for the last three months and your current account balance. Since your current balance may vary significantly from day to day, we will show you the overdraft line once you requested and received it.
+
 Parameter | Description | Format
 --------- | ----------- | -----------
 id   | Unique user identifier | String
@@ -133,6 +135,8 @@ Once you were granted an overdraft you have the possibility to get the history o
   "deactivate" : true
 }
 ```
+
+In case you don't need an overdraft anymore you have the possibility to deactivate it. To deactivate an overdraft you have to send a `PUT` request to the overdraft's endpoint `https://api.fidor.de/overdrafts/{:id}` with the request body containing the `"deactivate"` property set to `true`.
 
 #Short-Term Loan
 
