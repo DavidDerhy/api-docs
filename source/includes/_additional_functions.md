@@ -164,5 +164,44 @@ GET | `https://api.fidor.de/short_term_loans/current` | To get the current short
 PUT | `https://api.fidor.de/short_term_loans/:id` | To pay back current short term loan
 
 ## Request a Short Term Loan
+> POST https://api.fidor.de/short_term_loans
+
+> request body
+```
+{
+  "account_id" : "95828151"
+}
+```
+
+
+> response body
+```
+{
+    "account_id": "95828151", 
+    "created_at": "2015-04-02T15:16:21Z", 
+    "currency": "EUR", 
+    "duration": 30, 
+    "fee_amount": 600, 
+    "id": "6", 
+    "loan_amount": 10000, 
+    "redemption_amount": 0, 
+    "redemption_at": "2015-05-02T15:16:21Z", 
+    "state": "created", 
+    "updated_at": "2015-04-02T15:16:21Z"
+}
+```
 
 ## History of Previously Taken Short Term Loans
+> In case you don't have an active short_term_loan yet.
+
+```
+{
+    "code": 404, 
+    "errors": [], 
+    "message": "No currently active short term loan found"
+}
+```
+
+<aside class="notice">
+  If you haven't requested any short_term_loans yet, or requested one but not activated it yet.
+</aside>

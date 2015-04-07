@@ -79,8 +79,9 @@ Terms of service URL | http://myapp.com/tos
 Customer Service URL | http://myapp.com/customer
 Customer Service Email | likeaboss@myapp.com
 
-<aside class="notice">
-  You must never share Client ID and Client Secret with other people. If it happened unintentionally please copy the application (to get a new Client ID and Client Secret), delete the old one and use the copy.
+<aside class="warning">
+  <strong>You must never share Client ID and Client Secret with other people.</strong><br/> 
+  If it happened unintentionally please copy the application (to get a new Client ID and Client Secret), delete the old one and use the copy.
 </aside>
 
 
@@ -108,7 +109,7 @@ Accept | application/vnd.fidor.de; version=1,text/json
 Content-Type | application/json
 
 <aside class="notice">
-  You must replace `ca48897797c9275d75e2d7a5bc778721` with your personal API token.
+  You must replace <strong>ca48897797c9275d75e2d7a5bc778721</strong> with your personal API token.
 </aside>
 
 ##Throttling (Rate Limits)
