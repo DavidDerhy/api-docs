@@ -239,6 +239,10 @@ PUT | `https://api.fidor.de/short_term_loans/:id` | To pay back current short te
 }
 ```
 
+<aside class="notice">
+  If you haven't requested any short_term_loans yet, or requested one but not activated it yet.
+</aside>
+
 ## New Short Term Loan preview
 > GET https://api.fidor.de/short_term_loans/new
 
