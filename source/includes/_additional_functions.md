@@ -150,7 +150,6 @@ fee_amount | Fee for a short term loan in account currency, in minor units, e.g.
 state | State of the short term loan | String
 total_amount | A total amount of a short term loan in minor units | Integer
 currency | Currency of Account or Amount. ISO 4217 alpha-3 - 3 letter upcase e.g EUR | String (enum)
-
 active | An identifier whether the overdraft is active or not | Boolean
 created_at | Creation date-time, never changes | String (date-time) ISO 8601 Date-Time
 updated_at | Last update date-time | String (date-time) ISO 8601 Date-Time
@@ -158,41 +157,79 @@ updated_at | Last update date-time | String (date-time) ISO 8601 Date-Time
 
 Method    | Endpoint    | Description
 --------- | ----------- | -----------
+GET | `https://api.fidor.de/short_term_loans/new` | To request details about available short term loan prior to requesting one
 POST | `https://api.fidor.de/short_term_loans` | To request a new short term loan
 GET | `https://api.fidor.de/short_term_loans` | To get short term loan history
 GET | `https://api.fidor.de/short_term_loans/current` | To get the current short term loan
 PUT | `https://api.fidor.de/short_term_loans/:id` | To pay back current short term loan
 
-## Request a Short Term Loan
-> POST https://api.fidor.de/short_term_loans
+## Get the current short term loan
+> GET https://api.fidor.de/short_term_loans/current
 
-> request body
 ```
 {
-  "account_id" : "95828151"
+    "id": "6",
+    "account_id": "95828151",
+    "loan_amount": 10000,
+    "duration": 30,
+    "redemption_amount": 0,
+    "fee_amount": 600,
+    "state": "created",
+    "redemption_at": "2015-05-02T15:16:21Z",
+    "created_at": "2015-04-02T15:16:21Z",
+    "updated_at": "2015-04-02T15:16:21Z",
+    "currency": "EUR"
 }
 ```
 
+> In case you don't have an active short_term_loan.
 
-> response body
 ```
 {
-    "account_id": "95828151", 
-    "created_at": "2015-04-02T15:16:21Z", 
-    "currency": "EUR", 
-    "duration": 30, 
-    "fee_amount": 600, 
-    "id": "6", 
-    "loan_amount": 10000, 
-    "redemption_amount": 0, 
-    "redemption_at": "2015-05-02T15:16:21Z", 
-    "state": "created", 
-    "updated_at": "2015-04-02T15:16:21Z"
+    "code": 404,
+    "errors": [],
+    "message": "No currently active short term loan found"
 }
 ```
+
 
 ## History of Previously Taken Short Term Loans
-> In case you don't have an active short_term_loan yet.
+> Including currently active one
+
+```
+{
+  "data" : [
+    {
+        "id": "6",
+        "account_id": "95828151",
+        "loan_amount": 10000,
+        "duration": 30,
+        "redemption_amount": 0,
+        "fee_amount": 600,
+        "state": "paid",
+        "redemption_at": "2015-05-02T15:16:21Z",
+        "created_at": "2015-04-02T15:16:21Z",
+        "updated_at": "2015-04-02T15:16:21Z",
+        "currency": "EUR"
+    },
+    {
+        "id": "7",
+        "account_id": "95828151",
+        "loan_amount": 10000,
+        "duration": 30,
+        "redemption_amount": 0,
+        "fee_amount": 600,
+        "state": "active",
+        "redemption_at": "2015-05-02T15:16:21Z",
+        "created_at": "2015-04-02T15:16:21Z",
+        "updated_at": "2015-04-02T15:16:21Z",
+        "currency": "EUR"
+    }
+  ]
+}
+```
+
+> In case you don't have any short_term_loans yet.
 
 ```
 {
@@ -202,6 +239,96 @@ PUT | `https://api.fidor.de/short_term_loans/:id` | To pay back current short te
 }
 ```
 
-<aside class="notice">
-  If you haven't requested any short_term_loans yet, or requested one but not activated it yet.
-</aside>
+## New Short Term Loan preview
+> GET https://api.fidor.de/short_term_loans/new
+
+```
+{
+    "account_id": "95828151",
+    "loan_amount": 10000,
+    "duration": 30,
+    "fee_amount": 600,
+    "total_amount": 10600,
+    "currency": "EUR"
+}
+```
+
+> If you already have an active short term loan
+
+```
+{
+    "code": 403,
+    "errors": [],
+    "message": "You already have an active short term loan. Please pay your loan back before requesting a new one."
+}
+```
+
+> If your account is not eligible for a short term loan
+
+```
+{
+    "code": 403,
+    "errors": [],
+    "message": "Your account is not eligible for a short term loan."
+}
+```
+
+## Request a Short Term Loan
+> POST https://api.fidor.de/short_term_loans
+
+> request body
+
+```
+{
+  "account_id" : "95828151"
+}
+```
+
+> response body
+
+```
+{
+    "id": "6",
+    "account_id": "95828151",
+    "loan_amount": 10000,
+    "duration": 30,
+    "redemption_amount": 0,
+    "fee_amount": 600,
+    "state": "created",
+    "redemption_at": "2015-05-02T15:16:21Z",
+    "created_at": "2015-04-02T15:16:21Z",
+    "updated_at": "2015-04-02T15:16:21Z",
+    "currency": "EUR"
+}
+```
+
+> If there are any errors during request
+
+```
+{
+  "code": 422,
+  "errors": [
+      {
+          "field": "account_id",
+          "message": "should be the authenticated account id"
+      }
+  ]
+}
+```
+
+## Pay back current short term loan
+> PUT https://api.fidor.de/short_term_loans/:id
+
+> request body
+
+```
+{
+  "account_id" : 95828151
+}
+```
+
+> response body
+
+```
+// To be defined.
+```
