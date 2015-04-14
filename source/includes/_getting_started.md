@@ -3,9 +3,9 @@ Welcome to the Fidor APIs, your direct access to the functions and services of t
 To get started you just need a (free) Fidor Account.
 
 ## Create a Fidor Account
-To create a Fidor account visit Fidor Bank's webpage [Fidor DE](https://www.fidor.de/registrierung) and register for an account. Registering just a Privatkunde/retail account is sufficient for testing the API. 
+To create a Fidor account visit Fidor Bank's webpage [Fidor DE](https://www.fidor.de/registrierung) and register for an account. Registering just a Privatkunde/retail account is sufficient for testing the API.
 
-After verification of your email address, you are asked to enter a mobile phone number in order to receive a confirmation SMS. **If you are from outside of Germany you might have problems with receiving SMS, so we suggest that you skip this step** and go directly to the Application Manager https://apm.fidor.de/developer/apps 
+After verification of your email address, you are asked to enter a mobile phone number in order to receive a confirmation SMS. **If you are from outside of Germany you might have problems with receiving SMS, so we suggest that you skip this step** and go directly to the [Application Manager](https://apm.fidor.de/developer/apps). Moreover: To test the API you do not need to go through the complete KYC process.
 
 *Please do not confuse the* Fidor Account *with the* Developer Community Account *you need if you want to take part in the discussion in [Developer Community Forums](https://developer.fidor.de/community/).*
 
