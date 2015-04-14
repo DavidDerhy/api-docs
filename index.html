@@ -30,7 +30,7 @@
       </div>
         <ul class="toc-footer">
             <li><a href='https://apm.fidor.de'>Get API Credentials</a></li>
-            <li><a href='https://developer.fidor.de/community/forum/api-discussion/'>Get some help</a></li>
+            <li><a href='https://developer.fidor.de/community/'>Developer Community</a></li>
             <li><a href="https://www.fidor.de/impressum">Imprint</a></li>
             <li><a href='http://github.com/tripit/slate'>Powered by Slate</a></li>
         </ul>
@@ -39,13 +39,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id="introduction">Introduction</h1>
-<pre><code class="highlight plaintext">  _          _ _             
- | |__   ___| | | ___        
- | '_ \ / _ \ | |/ _ \       
- | | | |  __/ | | (_) |      
- |_| |_|\___|_|_|\___/   
-
-  /ffffff   /ffffff  /ff      
+<pre><code class="highlight plaintext">  /ffffff   /ffffff  /ff      
  /ff__  ff /ff__  ff| ff      
 | ff  \ ff| ff  \ ff| ff 
 | ffffffff| ffffff  | ff
@@ -55,7 +49,7 @@
 |__/  |__/|__/      |__/   
 </code></pre>
 
-<p>Welcome to the Fidor Banking API! Our API allows you to easily access your Fidor bank account, get information about your transaction history and submit various types of payments. In addition you may provide services your for Fidor customers and access their accounts if certain conditions are met.</p>
+<p>Welcome to the Fidor Banking API! Our API allows you to easily access your Fidor bank account, get information about your transaction history and submit various types of payments. In addition you may provide services for Fidor customers and access their accounts if certain conditions are met.</p>
 
 <p>For general introduction to our developer program please visit our <a href="https://developer.fidor.de/">developer community</a>.</p>
 
@@ -315,8 +309,9 @@ response containing the <code class="prettyprint">access_token</code> and inform
 </tr>
 </tbody></table>
 
-<aside class="notice">
-  **You must never share Client ID and Client Secret with other people.** If it happened unintentionally please copy the application (to get a new Client ID and Client Secret), delete the old one and use the copy.
+<aside class="warning">
+  <strong>You must never share Client ID and Client Secret with other people.</strong><br/> 
+  If it happened unintentionally please copy the application (to get a new Client ID and Client Secret), delete the old one and use the copy.
 </aside>
 
 <!-- ![app_manager](https://github.fidor.de/becker/mobile_oauth/raw/master/oauth_desc/app_manager.png) -->
@@ -343,7 +338,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 </tbody></table>
 
 <h2 id="check-headers">Check Headers</h2>
-<pre><code class="highlight shell">curl --header <span class="s2">"Accept:application/vnd.fidor.de; version=1,text/json"</span> --header <span class="s2">"Content-Type:application/json"</span> --header <span class="s2">"Authorization:b26a06e403f9900a0ddd45e5d6a53bf7"</span> https://api.fidor.de/users/current
+<pre><code class="highlight shell">curl --header <span class="s2">"Accept : application/vnd.fidor.de; version=1,text/json"</span> --header <span class="s2">"Content-Type : application/json"</span> --header <span class="s2">"Authorization : Bearer b26a06e403f9900a0ddd45e5d6a53bf7"</span> https://api.fidor.de/users/current
 </code></pre>
 
 <p>To successfully communicate with Fidor API, you have to provide 3 headers:</p>
@@ -356,7 +351,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 </thead><tbody>
 <tr>
 <td>Authorization</td>
-<td>ca48897797c9275d75e2d7a5bc778721</td>
+<td>Bearer ca48897797c9275d75e2d7a5bc778721</td>
 </tr>
 <tr>
 <td>Accept</td>
@@ -369,7 +364,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 </tbody></table>
 
 <aside class="notice">
-  You must replace `ca48897797c9275d75e2d7a5bc778721` with your personal API token.
+  You must replace <strong>ca48897797c9275d75e2d7a5bc778721</strong> with your personal API token.
 </aside>
 
 <h2 id="throttling-(rate-limits)">Throttling (Rate Limits)</h2>
@@ -473,23 +468,25 @@ X-TOTAL → 300
 
 <h2 id="prerequisites">Prerequisites</h2>
 
-<p>Only developers that went trough the complete bank account registration process and have &ldquo;full KYC status&rdquo; can start the approval process for their applications. Please (re-)read the  <a href="https://apm.fidor.de/developer/terms_of_services/current">developer agreement</a> for additional prerequisites.</p>
+<p>Only developers that went trough the complete bank account registration process and have a bank account (retail or business) with &ldquo;full KYC status&rdquo; can start the approval process for their applications. Please (re-)read the section 2 of <a href="https://apm.fidor.de/developer/terms_of_services/current">developer agreement</a> for additional prerequisites.</p>
 
-<h2 id="self-approval">Self Approval</h2>
+<p>Note that only the developer that created (registered) an application in the first place (application owner) can submit it for approval.</p>
+
+<h2 id="self-approval-(soon)">Self Approval (soon)</h2>
 
 <p>If your application uses only a small set of functions (scope) and is set to access only your own account it may not need to be approved by Fidor. The exact scope of these &ldquo;Self-API applications&rdquo; is shown in the application manager.
 This kind of applications will automatically get approved once you submit it. You will get a notification about your application being available in live environment and can start using it immediately.</p>
 
 <h2 id="manual-approval-process">Manual Approval Process</h2>
 
-<p>Applications that need additional services (e.g. SEPA direct debit) or require access to other peoples data or accounts will go through a thorough manual review and approval process. 
+<p>Applications that do not meet the conditions for self-approval, in particular if you need additional services (e.g. SEPA direct debit) or require access to other peoples data or accounts will go through a thorough manual review and approval process. 
 In most cases you will have to sign additional contracts before your application will be approved and go life. If you are in doubt, please contact our sales team well enough in advance.</p>
 
 <h2 id="statistics">Statistics</h2>
 
 <p>We will provide you with statistics for your application in the near future.</p>
 
-<h2 id="check-api-logs">Check API Logs</h2>
+<h2 id="check-api-logs-(soon)">Check API Logs (soon)</h2>
 
 <p>For you to being able to see what your application is doing, we offer you the ability to see and analyze the log files directly in the Application Manager. Every application you create gets an &ldquo;API Logs&rdquo; view, where you see the requests your application is doing, the traffic your application is creating etc.</p>
 
@@ -501,9 +498,9 @@ In most cases you will have to sign additional contracts before your application
 
 <p>The developer that submitted the application can revoke and or delete the application. Applications that have been revoked must go through the approval process again if you want to put it back live again.</p>
 
-<h2 id="user-view:-manage-installed-applications">User view: Manage Installed Applications</h2>
+<h2 id="user-view:-manage-installed-applications-(soon)">User view: Manage Installed Applications (soon)</h2>
 
-<p>Very soon all bank customers can see what applications they &ldquo;installed&rdquo; or &ldquo;subscribed to&rdquo; and get a detailed view on the rights they have granted to those applications. On the same page customers can &ldquo;uninstall&rdquo; applications and thus revoke rights.</p>
+<p>All bank customers can see what applications they &ldquo;installed&rdquo; or &ldquo;subscribed to&rdquo; and get a detailed view on the rights they have granted to those applications. On the same page customers can &ldquo;uninstall&rdquo; applications and thus revoke rights.</p>
 
           <h1 id="basic-data">Basic Data</h1>
 
