@@ -172,9 +172,9 @@ To get started you just need a (free) Fidor Account.</p>
 
 <h2 id="create-a-fidor-account">Create a Fidor Account</h2>
 
-<p>To create a Fidor account visit Fidor Bank&rsquo;s webpage <a href="https://www.fidor.de/registrierung">Fidor DE</a> and register for an account. Registering just a Privatkunde/retail account is sufficient for testing the API. </p>
+<p>To create a Fidor account visit Fidor Bank&rsquo;s webpage <a href="https://www.fidor.de/registrierung">Fidor DE</a> and register for an account. Registering just a Privatkunde/retail account is sufficient for testing the API.</p>
 
-<p>After verification of your email address, you are asked to enter a mobile phone number in order to receive a confirmation SMS. <strong>If you are from outside of Germany you might have problems with receiving SMS, so we suggest that you skip this step</strong> and go directly to the Application Manager https://apm.fidor.de/developer/apps </p>
+<p>After verification of your email address, you are asked to enter a mobile phone number in order to receive a confirmation SMS. <strong>If you are from outside of Germany you might have problems with receiving SMS, so we suggest that you skip this step</strong> and go directly to the <a href="https://apm.fidor.de/developer/apps">Application Manager</a>. Moreover: To test the API you do not need to go through the complete KYC process.</p>
 
 <p><em>Please do not confuse the</em> Fidor Account <em>with the</em> Developer Community Account <em>you need if you want to take part in the discussion in <a href="https://developer.fidor.de/community/">Developer Community Forums</a>.</em></p>
 
@@ -338,7 +338,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 </tbody></table>
 
 <h2 id="check-headers">Check Headers</h2>
-<pre><code class="highlight shell">curl --header <span class="s2">"Accept : application/vnd.fidor.de; version=1,text/json"</span> --header <span class="s2">"Content-Type : application/json"</span> --header <span class="s2">"Authorization : Bearer b26a06e403f9900a0ddd45e5d6a53bf7"</span> https://api.fidor.de/users/current
+<pre><code class="highlight shell">curl --header <span class="s2">"Accept : application/vnd.fidor.de; version=1,text/json"</span> --header <span class="s2">"Content-Type : application/json"</span> --header <span class="s2">"X-Fidor-API-Token : &lt;your token&gt;"</span> https://api.fidor.de/users/current
 </code></pre>
 
 <p>To successfully communicate with Fidor API, you have to provide 3 headers:</p>
@@ -350,8 +350,8 @@ response containing the <code class="prettyprint">access_token</code> and inform
 </tr>
 </thead><tbody>
 <tr>
-<td>Authorization</td>
-<td>Bearer ca48897797c9275d75e2d7a5bc778721</td>
+<td>X-Fidor-API-Token</td>
+<td>ca48897797c9275d75e2d7a5bc778721</td>
 </tr>
 <tr>
 <td>Accept</td>
@@ -364,7 +364,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 </tbody></table>
 
 <aside class="notice">
-  You must replace <strong>ca48897797c9275d75e2d7a5bc778721</strong> with your personal API token.
+  You must replace <strong>ca48897797c9275d75e2d7a5bc778721</strong> with your personal access_token
 </aside>
 
 <h2 id="throttling-(rate-limits)">Throttling (Rate Limits)</h2>
