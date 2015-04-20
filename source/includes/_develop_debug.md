@@ -110,7 +110,7 @@ Accept | application/vnd.fidor.de; version=1,text/json
 Content-Type | application/json
 
 <aside class="notice">
-  You must replace <strong>ca48897797c9275d75e2d7a5bc778721</strong> with your own API token. You get this API token during the OAuth process when you call our API for the first time (see above).
+  You must replace <strong>ca48897797c9275d75e2d7a5bc778721</strong> with your personal access_token. You get this API token during the OAuth process when you call our API for the first time (see above).
 </aside>
 
 ##Throttling (Rate Limits)
