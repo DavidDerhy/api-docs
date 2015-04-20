@@ -62,6 +62,13 @@ URL | System
 www.fidor.de | Banking homepage, you can register here
 apm.fidor.de | Application management environment for developers
 aps.fidor.de | Sandbox endpoint (test environment) 
-api.fidor.de | Production  endpoint (live environment)
+api.fidor.de | Banking production  endpoint (live environment)
 docs.fidor.de | Developer documentation (*You are here*)
 developer.fidor.de | Developer community landing page
+
+There are two environments with their respective sets of endpoints:
+
+| Environment| Login (Authentication) | OAuth (Authorization) |
+| ------- | ---- | --- |
+| Simulation | Sandbox (with sandbox accounts/logins)| Sandbox |
+| Production | Banking (with real accounts/logins) | Application manager |
