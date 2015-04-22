@@ -42,7 +42,7 @@ From the user's perspective this works as follows:
 ###Application perspective
 From the perspective of the application, the OAuth2 Authorization Code Grant flow needs to be implemented:
 
-  - the user is redirected via http redirect to the request authorization endpoint by your application:
+  - the user is redirected via http redirect to the request [authorization endpoint](#systems) by your application:
 
       `/oauth/authorize?redirect_uri=<redirect_url>&client_id=<client_id>&state=<state>&response_type=code`
 
@@ -57,18 +57,18 @@ From the perspective of the application, the OAuth2 Authorization Code Grant flo
   - Once the Fidor server has authenticated the user and received authorization, it will redirect the user back to the `redirect_url`
     you provided. Attached to this redirect url will be the provided `state` parameter and a `code` parameter.
 
-  - In case authorization of your app was not performed, you will receive an error response from the server as described in
+  - In case authorization of your app was not performed, you will receive an [error response](#errors) from the server as described in
     [OAuth2 sec 4.1.2.1](https://tools.ietf.org/html/rfc6749#section-4.1.2.1)
 
-  - You MUST check the state parameter to ensure it contains the same value you sent to the  authorize endpoint. If not, you must discontinue processing at this point and should contact Fidor as this is likely an attempt to breach security.
+  - You MUST check the state parameter to ensure it contains the same value you sent to the authorize endpoint. If not, you must discontinue processing at this point and should contact Fidor as this is likely an attempt to breach security!
 
-  - Extract the `code` parameter from the response and send it to the Fidor server's Access Token Request endpoint `oauth/token` as described in [OAuth2 sec 4.1.3](https://tools.ietf.org/html/rfc6749#section-4.1.3). You will need to supply the following parameters in the body of a `POST` request, using `application/x-www-form-urlencoded` encoding:
+  - Extract the `code` parameter from the response and send it to the Fidor server's [Access Token Request endpoint](#systems) `oauth/token` as described in [OAuth2 sec 4.1.3](https://tools.ietf.org/html/rfc6749#section-4.1.3). You will need to supply the following parameters in the body of a `POST` request, using `application/x-www-form-urlencoded` encoding:
 
       - `grant_type` : "authorization_code"
       - `code` : the code you received via http redirect (see above)
       - `client_id` : the client_id that has been assigned to your app (see below)
       - `client_secret` : the client_secret that has been assigned to your app (see below)
-      - `redirect_url` : the same redirect url provided in the authorization request (see above)
+      - `redirect_url` : the same redirect URL provided in the authorization request (see above)
 
   - The server will return either an error (described in [OAuth2 sec 5.2](https://tools.ietf.org/html/rfc6749#section-5.2) or a JSON
     response containing the `access_token` and information about it.
@@ -92,9 +92,6 @@ Customer Service Email | likeaboss@myapp.com
   <strong>You must never share Client ID and Client Secret with other people.</strong><br/>
   If it happened unintentionally please copy the application (to get a new Client ID and Client Secret), delete the old one and use the copy.
 </aside>
-
-
-<!-- ![app_manager](https://github.fidor.de/becker/mobile_oauth/raw/master/oauth_desc/app_manager.png) -->
 
 ##Check Headers
 ```bash
@@ -153,7 +150,6 @@ X-RateLimit-Reset | The remaining window before the rate limit resets in e.g. UT
 When an application exceeds the rate limit, the Fidor API will return an HTTP 429 “Too Many Requests” response code (HTTP Status Code Documentation).
 
 For your convenience we provide you an endpoint for requesting the current state of your rate limit `GET https://api.fidor.de/rate_limit`
-
 
 ##Pagination
 > https://api.fidor.de/transactions?page=2&per_page=100
