@@ -22,7 +22,7 @@ Our sandbox environment offers you the same functionality as the live API. So on
 | ff  | ff| ff__  ff| ff  | ff  | ff    | ff  \ ff
 | ff  | ff| ff  | ff| ff  | ff  | ff /ff| ff  | ff
 |  ffffff/| ff  | ff|  ffffff/  |  ffff/| ff  | ff
- \______/ |__/  |__/ \______/    \___/  |__/  |__/.
+ \______/ |__/  |__/ \______/    \___/  |__/  |__/
 ```
 
 The Fidor API offers many functions to retrieve information from your and other people's bank accounts, community accounts and much more. The extent of access your application needs, is configured when you define the *scope* of your application in the Application Manager.
