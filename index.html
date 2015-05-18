@@ -252,7 +252,7 @@ Here your can also select whether your application only needs access to your own
 | ff  | ff| ff__  ff| ff  | ff  | ff    | ff  \ ff
 | ff  | ff| ff  | ff| ff  | ff  | ff /ff| ff  | ff
 |  ffffff/| ff  | ff|  ffffff/  |  ffff/| ff  | ff
- \______/ |__/  |__/ \______/    \___/  |__/  |__/.
+ \______/ |__/  |__/ \______/    \___/  |__/  |__/
 </code></pre>
 
 <p>The Fidor API offers many functions to retrieve information from your and other people&rsquo;s bank accounts, community accounts and much more. The extent of access your application needs, is configured when you define the <em>scope</em> of your application in the Application Manager.</p>
@@ -352,7 +352,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 </aside>
 
 <h2 id="check-headers">Check Headers</h2>
-<pre><code class="highlight shell">curl --header <span class="s2">"Accept : application/vnd.fidor.de; version=1,text/json"</span> --header <span class="s2">"Content-Type : application/json"</span> --header <span class="s2">"X-Fidor-API-Token : &lt;your token&gt;"</span> https://api.fidor.de/users/current
+<pre><code class="highlight shell">curl --header <span class="s2">"Accept : application/vnd.fidor.de; version=1,text/json"</span> --header <span class="s2">"Content-Type : application/json"</span> --header <span class="s2">"Authorization : Bearer &lt;your token&gt;"</span> https://api.fidor.de/users/current
 </code></pre>
 
 <p>To successfully communicate with Fidor API, you have to provide 3 headers:</p>
@@ -364,8 +364,8 @@ response containing the <code class="prettyprint">access_token</code> and inform
 </tr>
 </thead><tbody>
 <tr>
-<td>X-Fidor-API-Token</td>
-<td>ca48897797c9275d75e2d7a5bc778721</td>
+<td>Authorization</td>
+<td>Bearer ca48897797c9275d75e2d7a5bc778721</td>
 </tr>
 <tr>
 <td>Accept</td>
