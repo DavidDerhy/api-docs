@@ -95,14 +95,14 @@ Customer Service Email | likeaboss@myapp.com
 
 ##Check Headers
 ```bash
-curl --header "Accept : application/vnd.fidor.de; version=1,text/json" --header "Content-Type : application/json" --header "X-Fidor-API-Token : <your token>" https://api.fidor.de/users/current
+curl --header "Accept : application/vnd.fidor.de; version=1,text/json" --header "Content-Type : application/json" --header "Authorization : Bearer <your token>" https://api.fidor.de/users/current
 ```
 
 To successfully communicate with Fidor API, you have to provide 3 headers:
 
 Header | Value
 --------- | -----------
-X-Fidor-API-Token | ca48897797c9275d75e2d7a5bc778721
+Authorization | Bearer ca48897797c9275d75e2d7a5bc778721
 Accept | application/vnd.fidor.de; version=1,text/json
 Content-Type | application/json
 
