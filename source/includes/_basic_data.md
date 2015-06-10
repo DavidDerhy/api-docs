@@ -217,7 +217,7 @@ For your convenience we also include the information about the customers of the 
 {
   "id": "666",
   "account_id": "66666666",
-  "transaction_type": "payout_fidorpay",
+  "transaction_type": "fidor_payout",
   "subject": "\"Send money to Friends\" recipient: Walter White: Heisenberg",
   "amount": -100000,
   "booking_code": "725",
@@ -228,8 +228,13 @@ For your convenience we also include the information about the customers of the 
   "updated_at": "2015-03-02T13:58:59+01:00",
   "currency": "EUR",
   "transaction_type_details": {
-    "internal_transfer_id": "286",
-    "remote_account_id": "71616244"
+    "internal_transfer_id": "666",
+    "remote_account_id": "66666666",
+    "remote_bic": "",
+    "remote_iban": "",
+    "remote_name": "",
+    "remote_nick": "Heisenberg",
+    "remote_subject": "Thanks for nothing"
 }
 ```
 
@@ -248,3 +253,127 @@ created_at | Creation date-time, never changes. ISO 8601 Date-Time e.g. "2014-10
 updated_at | Last update date-time. ISO 8601 Date-Time e.g. "2015-02-04T04:08:54+01:00" | Datetime
 currency | Currency of Account or Amount. ISO 4217 alpha-3 - 3 letter upcase e.g EUR | String (enum)
 transaction_type_details | Details specific to this transaction type are collected here | 
+
+##Transaction Type Details
+Different transaction type can have different details that are specific for this particular type of the transaction. Some of the transaction types don't have any specific attributes. In that case the `transaction_type_details` object stays empty.
+
+Let's take closer look at the transaction types Fidor supports right now.
+
+###Internal Transfer
+Details of the `internal_transfer` object contain extensive information about the transaction's initiator.
+
+####fidor_payin
+
+> fidor_payin
+
+```json
+"transaction_type_details": {
+  "internal_transfer_id": "666",
+  "remote_account_id": "66666666",
+  "remote_bic": "FDDODEMMXXX",
+  "remote_iban": "DE73700222000066666666",
+  "remote_name": "Walther White",
+  "remote_nick": "Heisenberg",
+  "remote_subject": "Thanks for nothing"
+}
+```
+
+In case of fidor_payin you will get more information about the sender of the payment.
+
+Parameter | Description | Format
+--------- | ----------- | -----------
+internal_transfer_id  | Unique account identifier of the transfer transaction belongs to. Refunded transactions have no id | String
+remote_account_id     | Unique account identifier of the payment's sender | String
+remote_bic            | BIC of the transaction's sender | String
+remote_iban           | IBAN of the transaction's sender | String
+remote_name           | Full name of the transaction's sender | String
+remote_nick           | Community nickname of the transaction's sender | String
+remote_subject        | Subject of the transaction | String
+
+####fidor_payout
+
+> fidor_payout
+
+```json
+"transaction_type_details": {
+  "internal_transfer_id": "666",
+  "remote_account_id": "66666666",
+  "remote_bic": "",
+  "remote_iban": "",
+  "remote_name": "",
+  "remote_nick": "Heisenberg",
+  "remote_subject": "Thanks for nothing"
+}
+```
+
+`fidor_payout` has same structure but less details because of legal reasons.
+
+Parameter | Description | Format
+--------- | ----------- | -----------
+internal_transfer_id  | Unique account identifier of the transfer transaction belongs to. Refunded transactions have no id | String
+remote_account_id     | Unique account identifier of the payment's sender | String
+remote_bic            | empty | String
+remote_iban           | empty | String
+remote_name           | empty | String
+remote_nick           | Community nickname of the transaction's sender | String
+remote_subject        | Subject of the transaction | String
+
+###Sepa Credit Transfer
+Details of the `sepa_credit_transfer` object contain extensive information about the transaction's initiator or receiver. We differentiate between the incoming `sepa_payin` and outgoing `payout` sepa transactions.
+
+####sepa_payin or payout
+
+> sepa_payin, payout
+
+```json
+"transaction_type_details": {
+  "sepa_credit_transfer_id": "66666666",
+  "remote_name": "Walther White",
+  "remote_iban": "DE08100100100666666666",
+  "remote_bic": "PBNKDEFFXXX"
+}
+```
+
+Parameter | Description | Format
+--------- | ----------- | -----------
+sepa_credit_transfer_id  | Unique account identifier of the transfer transaction belongs to. Refunded transactions have no id | String
+remote_name           | Full name of the transaction's sender/receiver | String
+remote_iban           | IBAN of the transaction's sender/receiver | String
+remote_bic            | BIC of the transaction's sender/receiver | String
+
+###Credit Card
+Details of the `sepa_credit_transfer` object contain extensive information about the transaction's initiator or receiver. We differentiate between the incoming `sepa_payin` and outgoing `payout` sepa transactions.
+
+####Transaction Types
+
+* creditcard_annual_fee
+* creditcard_atm_fee
+* creditcard_foreign_exchange_fee
+* creditcard_notification_fee
+* creditcard_order_cancellation
+* creditcard_order_fee
+* creditcard_order_withdrawal_fee
+* creditcard_payin
+* creditcard_payout
+* creditcard_preauth
+* creditcard_release
+
+> credit_card details
+
+```json
+"transaction_type_details": {
+  "cc_category": "R",
+  "cc_merchant_category": "5411",
+  "cc_merchant_name": "Metro Cash & Carry",
+  "cc_sequence": 6666666,
+  "cc_type": "00"
+}
+```
+
+Parameter | Description | Format
+--------- | ----------- | -----------
+cc_category          | CreditCard category | String
+cc_merchant_category | Category given by the merchant | String
+cc_merchant_name     | CreditCard merchant initiating the transaction | String
+cc_sequence          | Sequence links all the credit_card related transactions together | String
+cc_type              | CreditCard type | String
