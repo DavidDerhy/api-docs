@@ -3,8 +3,9 @@
 The Fidor API uses the following error codes:
 
 
-Error Code | Meaning
+Status Codes | Meaning
 ---------- | -------
+204 | We accepted your request but didn't create any transfers yet
 400 | Bad Request
 401 | Unauthorized -- Your API key is wrong
 403 | Forbidden

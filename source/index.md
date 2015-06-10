@@ -15,6 +15,7 @@ includes:
   - approval_operation
   - basic_data
   - money_transfer
+  - trust_account
   - errors
 
 search: true
