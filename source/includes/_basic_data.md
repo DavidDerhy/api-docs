@@ -267,7 +267,7 @@ Details of the `internal_transfer` object contain extensive information about th
 > fidor_payin
 
 ```json
-"transaction_type_details": {
+{
   "internal_transfer_id": "666",
   "remote_account_id": "66666666",
   "remote_bic": "FDDODEMMXXX",
@@ -295,7 +295,7 @@ remote_subject        | Subject of the transaction | String
 > fidor_payout
 
 ```json
-"transaction_type_details": {
+{
   "internal_transfer_id": "666",
   "remote_account_id": "66666666",
   "remote_bic": "",
@@ -326,7 +326,7 @@ Details of the `sepa_credit_transfer` object contain extensive information about
 > sepa_payin, payout
 
 ```json
-"transaction_type_details": {
+{
   "sepa_credit_transfer_id": "66666666",
   "remote_name": "Walther White",
   "remote_iban": "DE08100100100666666666",
@@ -361,7 +361,7 @@ Details of the `sepa_credit_transfer` object contain extensive information about
 > credit_card details
 
 ```json
-"transaction_type_details": {
+"transaction_type_details" : { 
   "cc_category": "R",
   "cc_merchant_category": "5411",
   "cc_merchant_name": "Metro Cash & Carry",

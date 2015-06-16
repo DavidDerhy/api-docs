@@ -17,7 +17,7 @@
 {
   "data": [
     {
-      "id": 38,
+      "id": "38",
       "transfer_id": "666",
       "transfer_type": "internal_transfer",
       "state": "approved",
@@ -25,7 +25,7 @@
       "updated_at": "2015-06-10T08:10:33Z"
     },
     {
-      "id": 39,
+      "id": "39",
       "transfer_id": "",
       "transfer_type": "sepa_credit_transfer",
       "state": "rejected",
@@ -33,7 +33,7 @@
       "updated_at": "2015-06-10T10:29:42Z"
     },
     {
-      "id": 40,
+      "id": "40",
       "transfer_id": "",
       "transfer_type": "sepa_credit_transfer",
       "state": "pending",
