@@ -1,6 +1,6 @@
 #Develop and Debug
 
-The developer tools [API browser](https://developer.fidortecs.com/api-browser/), [Fidor schema](https://github.com/fidor/fidor_schema), [Fidor starter kits](https://github.com/fidor/fidor_starter_kits), [Application Manager](https://apm.fidor.de/), sandbox environment and [developer community](https://developer.fidor.de/)  are provided free of charge. You only pay for API usage once your application goes live.
+The developer tools [API browser](https://developer.fidortecs.com/api-browser/), [Fidor schema](https://github.com/fidor/fidor_schema), [Fidor starter kits](https://github.com/fidor/fidor_starter_kits), [Application Manager](https://apm.fidor.de/), sandbox environment and [developer community](https://developer.fidor.de/)  are provided free of charge. You only pay for API usage once you submit your application for approval and it goes live.
 
 ##Add and Change Scopes
 Fidor APIs provide a wide range of functions and provide access to a wide range of banking services. In the Application Manager you have to decide and define the scope, i.e. the set of functions your application needs in order to work properly.
@@ -29,6 +29,14 @@ The Fidor API offers many functions to retrieve information from your and other 
 
 In order to actually access the account and retrieve the requested data, the account holder needs to authorize your application and allow it to access their account. This is achieved
 using [OAuth 2](https://tools.ietf.org/html/rfc6749).
+
+
+### Client facing apps vs. server side connection
+Fidor customers have diverse use cases for the Fidor API, ranging from payment automation without any user interaction to situations where consumers will sit in front of the computer every time they use the application. Applications run on PCs, mobile devices, on premise service and in the cloud. All that has implications on time and means of authentication and authorization.
+
+The primarily supported authentication method from Fidor is the 3 legged OAuth2 flow, that is particular useful for server based client facing apps and supports even 3rd party application providing. The following discussion and documentation is based on that mode.
+
+For applications to simply control your our own bank account via a pure server side connection we support User Credential flow (password grant type) as well. Also mobile applications need and get special treatment. Please get in contact with us via e-mail or leave a message in the approval submittion form.
 
 ###User perspective
 From the user's perspective this works as follows:
