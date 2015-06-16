@@ -56,7 +56,7 @@ GET | [`/transactions`](#transactions) | Get all transactions for the current us
 
 
 ## Systems 
-To avoid confusion here's a list of the Fidor systems and URLs we will be interacting with with:
+To avoid confusion here's a list of the Fidor systems and URLs you will be dealing with with:
 
 URL | System
 -----| ----
@@ -67,9 +67,9 @@ api.fidor.de | Banking production  endpoint (live environment)
 docs.fidor.de | Developer documentation (*You are here*)
 developer.fidor.de | Developer community landing page
 
-There are two environments with their respective sets of endpoints:
+There are two environments with their respective security services:
 
 | Environment| Login (Authentication) | OAuth (Authorization) |
 | ------- | ---- | --- |
-| Simulation | Sandbox (with sandbox accounts/logins)| Sandbox |
-| Production | Banking (with real accounts/logins) | Application manager |
+| Testing/Simulation | aps.fidor.de (with sandbox accounts/logins)| aps.fidor.de |
+| Production | banking.fidor.de (with real accounts/logins) | apm.fidor.de |

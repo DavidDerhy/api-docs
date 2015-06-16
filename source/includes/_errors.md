@@ -1,5 +1,12 @@
-# Errors
 
+
+# Errors
+```
+   /\___/\
+   \ -.- /
+   `-.^.-'
+	 /"\  
+```
 The Fidor API uses the following error codes:
 
 
