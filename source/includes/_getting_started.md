@@ -7,11 +7,11 @@ If you already have a Fidor bank account just follow the instructions on [how to
 
 If you do not have a Fidor account yet or choose to create a separate account for development visit Fidor Bank's webpage [Fidor DE](https://www.fidor.de/register) and register for an account. Registering for just a "Fidor Community Account" is sufficient for testing the API.
 
-After verification of your email address, you are asked to enter a mobile phone number and will receive a confirmation SMS with an MTan. Once you have entered the MTan you will have created a new Fidor Account. 
+You will have to provide some personal information, a valid e-mail address and a mobile number (to send you a confirmation SMS). Please follow the [illustrated step-by-step guide here](https://developer.fidor.de/kb/create-an-account/).
 
 You may extend your Fidor Account to a full blown bank account now, but you do not need to. You can do that at any time later.
 
-Once you went through these steps you can go to the [Application Manager](https://apm.fidor.de/) and 
+Once you created your account you can go to the [Application Manager](https://apm.fidor.de/) and 
 
 *Please do not confuse the* Fidor Community Account *with the* Developer Community Account *you need if you want to take part in the discussion in [Developer Community Forums](https://developer.fidor.de/community/).*
 
