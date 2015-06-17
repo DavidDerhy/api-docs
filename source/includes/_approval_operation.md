@@ -8,7 +8,6 @@ Note that only the developer that created (registered) an application in the fir
 
 *We will introduce an approval concept soon that differentiates between the developer's account and the full-KYC bank account the application needs access to. If you have such a situation we can to the appropriate setting for you.* 
 
-
 ##Approval Process
 Most applications must go through a manual approval process, in particular if you need non-AGB services (e.g. SEPA direct debit) or your application needs access to other peoples data. In some cases you will have to sign additional contracts before your application will be approved and go life. If you are in doubt, please contact our sales team well enough in advance.
 
@@ -26,6 +25,16 @@ Once the application is approved you need to change the connection details in th
 ###Self Approval (soon)
 If your application uses only a small set of functions (scope) and is set to access only your own account it may not need to be manualy approved by Fidor. The exact scope of these "Self-API applications" is shown in the application manager. This kind of applications will automatically get approved once you submit it. You will get a notification about your application being available in live environment and can start using it immediately.
 
+###Switch to Production
+Once your application have been approved you can switch from sandbox to the production system.
+
+To connect your application to production use the following URLs:
+| Function | URL |
+| ---- | ---- |
+| Production API | http://api.fidor.de |
+| Production OAuth | http://aps.fidor.de/oauth |
+
+The Application Client ID and Secret stay the same.
 
 ##Statistics
 We will provide you with statistics for your application in the near future.
@@ -34,7 +43,7 @@ We will provide you with statistics for your application in the near future.
 For you to being able to see what your application is doing, we offer you the ability to see and analyze the log files directly in the Application Manager. Every application you create gets an "API Logs" view, where you see the requests your application is doing, the traffic your application is creating etc.
 
 ## Changing Scope of Your Application
-Once your application is live changing the scope will result to all tokens being revoked. That means that all people that use your application have to go through the rights-granting process (OAuth) again, the next they use the application.
+If your application is live changing the scope will result to all tokens being revoked. That means that all people that use your application have to go through the rights-granting process (OAuth) again, the next they use the application.
 
 ## Revoking And Deleting Your Application
 The developer that submitted the application can revoke and or delete the application. Applications that have been revoked must go through the approval process again if you want to put it back live again.

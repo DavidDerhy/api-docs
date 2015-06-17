@@ -9,9 +9,16 @@ Here your can also select whether your application only needs access to your own
 ##Sandbox
 For every new application a dedicated sandbox environment (account simulation) is created. The sandbox comes with some test data, so that you can start developing your application against the sandbox immediately.
 
-Along with this simulated bank accounts a sandbox user (with login and password) is created. A sandbox user is required during the authentication against the sandbox. You can see the login credential of this sandbox user when you select the sandbox tab in the Application Manager.
+To connect your application to the sandbox use the following URLs:
+| Function | URL |
+| ---- | ---- |
+| Sandbox API | http://aps.fidor.de |
+| Sandbox OAuth | http://aps.fidor.de/oauth |
+
+Along with this simulated bank accounts a *sandbox user* (with login and password) is created. A sandbox user is required during the authentication against the sandbox. You can see the login credential of this sandbox user when you select the sandbox tab in the Application Manager.
 
 Our sandbox environment offers you the same functionality as the live API. So once developed and tested against the sandbox environment, your application will be production ready.
+
 
 ##Understand OAuth
 ```
