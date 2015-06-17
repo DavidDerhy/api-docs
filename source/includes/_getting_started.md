@@ -28,11 +28,11 @@ Every application get's a dedicated test environment (sandbox). The sandbox come
 Our sandbox offers you the same functionality as the live API. So  you can start developing your application without any risk of loosing money or unintentionally altering data.
 
 ### Using Starter Kits
-We provide you with a set of Fidor Starter Kits. They been created to help you understand how the API and the authentication works. You also can use the code smaples as starting points for your own application. 
+We provide you with a set of Fidor Starter Kits. They have been created to help you understand how the API and the authentication works. You also can use the code samples as a starting point for your own application. 
 
 They work out of the box - you just have to adjust the URL and callback URL to where you put the program. 
 
-Until now we provide example application for following programming languages/frameworks:
+Until now we provide example applications for following programming languages/frameworks:
 
 - ruby/sinatra
 - php (plain)
