@@ -131,7 +131,7 @@
 
 <h2 id="systems">Systems</h2>
 
-<p>To avoid confusion here&rsquo;s a list of the Fidor systems and URLs we will be interacting with with:</p>
+<p>To avoid confusion here&rsquo;s a list of the Fidor systems and URLs you will be dealing with with:</p>
 
 <table><thead>
 <tr>
@@ -165,7 +165,7 @@
 </tr>
 </tbody></table>
 
-<p>There are two environments with their respective sets of endpoints:</p>
+<p>There are two environments with their respective security services:</p>
 
 <table><thead>
 <tr>
@@ -175,61 +175,70 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>Simulation</td>
-<td>Sandbox (with sandbox accounts/logins)</td>
-<td>Sandbox</td>
+<td>Testing/Simulation</td>
+<td>aps.fidor.de (with sandbox accounts/logins)</td>
+<td>aps.fidor.de</td>
 </tr>
 <tr>
 <td>Production</td>
-<td>Banking (with real accounts/logins)</td>
-<td>Application manager</td>
+<td>banking.fidor.de (with real accounts/logins)</td>
+<td>apm.fidor.de</td>
 </tr>
 </tbody></table>
 
           <h1 id="getting-started">Getting Started</h1>
 
 <p>Welcome to the Fidor APIs, your direct access to the functions and services of the world&rsquo;s most innovative Bank: Fidor Bank.
-To get started you just need a (free) Fidor Account.</p>
+To get started you just need a (free) Fidor Community Account.</p>
 
 <h2 id="create-a-fidor-account">Create a Fidor Account</h2>
 
 <p>If you already have a Fidor bank account just follow the instructions on <a href="#create-an-application">how to create an application</a>.</p>
 
-<p>If you do not have a Fidor account yet, or choose to create a separate account for development visit Fidor Bank&rsquo;s webpage <a href="https://www.fidor.de/registrierung">Fidor DE</a> and register for an account. Registering for just a Privatkunde/retail account is sufficient for testing the API.</p>
+<p>If you do not have a Fidor account yet or choose to create a separate account for development visit Fidor Bank&rsquo;s webpage <a href="https://www.fidor.de/register">Fidor DE</a> and register for an account. Registering for just a &ldquo;Fidor Community Account&rdquo; is sufficient for testing the API.</p>
 
-<p>After verification of your email address, you are asked to enter a mobile phone number in order to receive a confirmation SMS. <strong>If you are from outside of Germany you might have problems with receiving SMS, so we suggest that you skip this step</strong> and go directly to the <a href="https://apm.fidor.de/developer/apps">Application Manager</a>. Moreover: To test the API you do not need to go through the complete KYC process.</p>
+<p>After verification of your email address, you are asked to enter a mobile phone number and will receive a confirmation SMS with an MTan. Once you have entered the MTan you will have created a new Fidor Account. </p>
 
-<p><em>Please do not confuse the</em> Fidor Account <em>with the</em> Developer Community Account <em>you need if you want to take part in the discussion in <a href="https://developer.fidor.de/community/">Developer Community Forums</a>.</em></p>
+<p>You may extend your Fidor Account to a full blown bank account now, but you do not need to. You can do that at any time later.</p>
 
-<h2 id="create-an-application">Create an Application</h2>
+<p>Once you went through these steps you can go to the <a href="https://apm.fidor.de/">Application Manager</a> and </p>
 
-<p>To start using Fidor&rsquo;s API you have to create (register) your application. In order to do so, please login with your Fidor bank account&rsquo;s credentials into the <a href="https://apm.fidor.de/">Application Manager</a> and select &ldquo;Add New App&rdquo;. If you log in for the first time you have to accept the Developer Agreement first.</p>
+<p><em>Please do not confuse the</em> Fidor Community Account <em>with the</em> Developer Community Account <em>you need if you want to take part in the discussion in <a href="https://developer.fidor.de/community/">Developer Community Forums</a>.</em></p>
 
-<p>After that you can create as many applications as you want. </p>
+<h2 id="add-an-application-(to-use-the-api)">Add an Application (to use the API)</h2>
+
+<p>In order to use the API, you have to tell Fidor the name, purpose and some technical information of the programm (application) on your side that will connect to the API on our side. </p>
+
+<p>Please login with your Fidor account credentials to the <a href="https://apm.fidor.de/">Application Manager</a> and select &ldquo;New App&rdquo;. If you log in for the first time you have to accept the Terms of Service first.</p>
+
+<p>You can add as many applications as you want. </p>
 
 <h3 id="sandbox">Sandbox</h3>
 
-<p>For every new application a dedicated test environment (sandbox) is created. The sandbox comes with some test data, and a dedicated sandbox user login. </p>
+<p>Every application get&rsquo;s a dedicated test environment (sandbox). The sandbox comes with some test data, and a dedicated sandbox user login. </p>
 
-<p>Our sandbox offers you the same functionality as the live API. So  you can start developing your application without any risk of loosing money or unintentionally changing data.</p>
+<p>Our sandbox offers you the same functionality as the live API. So  you can start developing your application without any risk of loosing money or unintentionally altering data.</p>
 
 <h3 id="using-starter-kits">Using Starter Kits</h3>
 
-<p>Fidor Starter Kits have been created with an idea to help you developing your application immediately. When you create an application in the Application Manager then you immediately getting access to already configured example application. Until now we provide example application for following programming languages/frameworks:</p>
+<p>We provide you with a set of Fidor Starter Kits. They been created to help you understand how the API and the authentication works. You also can use the code smaples as starting points for your own application. </p>
+
+<p>They work out of the box - you just have to adjust the URL and callback URL to where you put the program. </p>
+
+<p>Until now we provide example application for following programming languages/frameworks:</p>
 
 <ul>
 <li>ruby/sinatra</li>
 <li>php (plain)</li>
-<li>java/servlet</li>
 <li>Node.js</li>
 <li>Go</li>
 </ul>
 
-<p><a href="https://github.com/fidor/fidor_starter_kits">Our starter kits</a> are also available as a ruby gem on github.</p>
+<p>Our starter kits are also <a href="https://github.com/fidor/fidor_starter_kits">available on github</a> . Please feel free to add your own code and libraries.</p>
 
           <h1 id="develop-and-debug">Develop and Debug</h1>
 
-<p>The developer tools <a href="https://developer.fidortecs.com/api-browser/">API browser</a>, <a href="https://github.com/fidor/fidor_schema">Fidor schema</a>, <a href="https://github.com/fidor/fidor_starter_kits">Fidor starter kits</a>, <a href="https://apm.fidor.de/">Application Manager</a>, sandbox environment and <a href="https://developer.fidor.de/">developer community</a>  are provided free of charge. You only pay for API usage once your application goes live.</p>
+<p>The developer tools <a href="https://developer.fidortecs.com/api-browser/">API browser</a>, <a href="https://github.com/fidor/fidor_schema">Fidor schema</a>, <a href="https://github.com/fidor/fidor_starter_kits">Fidor starter kits</a>, <a href="https://apm.fidor.de/">Application Manager</a>, sandbox environment and <a href="https://developer.fidor.de/">developer community</a>  are provided free of charge. You only pay for API usage once you submit your application for approval and it goes live.</p>
 
 <h2 id="add-and-change-scopes">Add and Change Scopes</h2>
 
@@ -259,6 +268,14 @@ Here your can also select whether your application only needs access to your own
 
 <p>In order to actually access the account and retrieve the requested data, the account holder needs to authorize your application and allow it to access their account. This is achieved
 using <a href="https://tools.ietf.org/html/rfc6749">OAuth 2</a>.</p>
+
+<h3 id="client-facing-apps-vs.-server-side-connection">Client facing apps vs. server side connection</h3>
+
+<p>Fidor customers have diverse use cases for the Fidor API, ranging from payment automation without any user interaction to situations where consumers will sit in front of the computer every time they use the application. Applications run on PCs, mobile devices, on premise service and in the cloud. All that has implications on time and means of authentication and authorization.</p>
+
+<p>The primarily supported authentication method from Fidor is the 3 legged OAuth2 flow, that is particular useful for server based client facing apps and supports even 3rd party application providing. The following discussion and documentation is based on that mode.</p>
+
+<p>For applications to simply control your our own bank account via a pure server side connection we support User Credential flow (password grant type) as well. Also mobile applications need and get special treatment. Please get in contact with us via e-mail or leave a message in the approval submittion form.</p>
 
 <h3 id="user-perspective">User perspective</h3>
 
@@ -478,23 +495,48 @@ X-TOTAL → 300
 
           <h1 id="approval-and-operation">Approval and Operation</h1>
 
-<p>As soon you are happy with testing your application you can switch from &ldquo;test-mode&rdquo; to &ldquo;live-mode&rdquo;. Then your application with work with real accounts, real data and real money. </p>
+<p>As soon you are happy with testing your application you can switch from &ldquo;test-mode&rdquo; to &ldquo;live-mode&rdquo;. Then your application will work with real accounts, real data and real money. </p>
 
 <h2 id="prerequisites">Prerequisites</h2>
 
-<p>Only developers that went trough the complete bank account registration process and have a bank account (retail or business) with &ldquo;full KYC status&rdquo; can start the approval process for their applications. Please (re-)read the section 2 of <a href="https://apm.fidor.de/developer/terms_of_services/current">developer agreement</a> for additional prerequisites.</p>
+<p>At the moment only developers that went trough the complete bank account registration process and have a bank account (retail or business) with &ldquo;full KYC status&rdquo; can start the approval process for their applications. Please (re-)read the section 2 of <a href="https://apm.fidor.de/developer/terms_of_services/current">ToS</a> for additional prerequisites.</p>
 
 <p>Note that only the developer that created (registered) an application in the first place (application owner) can submit it for approval.</p>
 
-<h2 id="self-approval-(soon)">Self Approval (soon)</h2>
+<p><em>We will introduce an approval concept soon that differentiates between the developer&rsquo;s account and the full-KYC bank account the application needs access to. If you have such a situation we can to the appropriate setting for you.</em> </p>
 
-<p>If your application uses only a small set of functions (scope) and is set to access only your own account it may not need to be approved by Fidor. The exact scope of these &ldquo;Self-API applications&rdquo; is shown in the application manager.
-This kind of applications will automatically get approved once you submit it. You will get a notification about your application being available in live environment and can start using it immediately.</p>
+<h2 id="approval-process">Approval Process</h2>
 
-<h2 id="manual-approval-process">Manual Approval Process</h2>
+<p>Most applications must go through a manual approval process, in particular if you need non-AGB services (e.g. SEPA direct debit) or your application needs access to other peoples data. In some cases you will have to sign additional contracts before your application will be approved and go life. If you are in doubt, please contact our sales team well enough in advance.</p>
 
-<p>Applications that do not meet the conditions for self-approval, in particular if you need additional services (e.g. SEPA direct debit) or require access to other peoples data or accounts will go through a thorough manual review and approval process. 
-In most cases you will have to sign additional contracts before your application will be approved and go life. If you are in doubt, please contact our sales team well enough in advance.</p>
+<p>There are two basic access modes and approve types:</p>
+
+<table><thead>
+<tr>
+<th>Approval Type</th>
+<th>Use Case</th>
+<th>Application can access &hellip;</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>Team Accounts</strong></td>
+<td>Only one bank customer may use use the application</td>
+<td>&hellip; only one specific account</td>
+</tr>
+<tr>
+<td><strong>All Accounts</strong></td>
+<td>Everybody may use the application to access their bank account</td>
+<td>&hellip; all bank accounts</td>
+</tr>
+</tbody></table>
+
+<p>After a Fidor admin reviewed your approval request you will get an e-mail. If the admin requests some change or needs additional information you can re-submit the application as soon as the changes have been made.</p>
+
+<p>Once the application is approved you need to change the connection details in the application from testing to production, <em>see <a href="http://docs.fidor.de/#systems">Systems</a>.</em> Then you are ready to go.</p>
+
+<h3 id="self-approval-(soon)">Self Approval (soon)</h3>
+
+<p>If your application uses only a small set of functions (scope) and is set to access only your own account it may not need to be manualy approved by Fidor. The exact scope of these &ldquo;Self-API applications&rdquo; is shown in the application manager. This kind of applications will automatically get approved once you submit it. You will get a notification about your application being available in live environment and can start using it immediately.</p>
 
 <h2 id="statistics">Statistics</h2>
 
@@ -512,7 +554,7 @@ In most cases you will have to sign additional contracts before your application
 
 <p>The developer that submitted the application can revoke and or delete the application. Applications that have been revoked must go through the approval process again if you want to put it back live again.</p>
 
-<h2 id="user-view:-manage-installed-applications-(soon)">User view: Manage Installed Applications (soon)</h2>
+<h2 id="user-view:-manage-installed-applications">User view: Manage Installed Applications</h2>
 
 <p>All bank customers can see what applications they &ldquo;installed&rdquo; or &ldquo;subscribed to&rdquo; and get a detailed view on the rights they have granted to those applications. On the same page customers can &ldquo;uninstall&rdquo; applications and thus revoke rights.</p>
 
@@ -1747,6 +1789,11 @@ In most cases you will have to sign additional contracts before your application
 <p><code class="prettyprint">GET https://api.fidor.de/transfer_approvals/{id}</code> <sub>self</sub></p>
 
           <h1 id="errors">Errors</h1>
+<pre><code class="highlight plaintext">   /\___/\
+   \ -.- /
+   `-.^.-'
+     /"\  
+</code></pre>
 
 <p>The Fidor API uses the following error codes:</p>
 
