@@ -13,10 +13,11 @@ Note that only the developer that created (registered) an application in the fir
 Most applications must go through a manual approval process, in particular if you need non-AGB services (e.g. SEPA direct debit) or your application needs access to other peoples data. In some cases you will have to sign additional contracts before your application will be approved and go life. If you are in doubt, please contact our sales team well enough in advance.
 
 There are two basic access modes and approve types:
-| Approve Type | Use Case | Application can access ...
-| ------- | ---- | --- |
-| Team Account | Only one bank customer may use use the application | ... only one specific account |
-| All Accounts | Everybody may use the application to access their bank account | ... all bank accounts accounts |
+
+Approval Type | Use Case | Application can access ...
+------- | ---- | --- 
+**Team Accounts** | Only one bank customer may use use the application | ... only one specific account 
+**All Accounts** | Everybody may use the application to access their bank account | ... all bank accounts
 
 After a Fidor admin reviewed your approval request you will get an e-mail. If the admin requests some change or needs additional information you can re-submit the application as soon as the changes have been made.
 
