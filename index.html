@@ -221,11 +221,11 @@ To get started you just need a (free) Fidor Community Account.</p>
 
 <h3 id="using-starter-kits">Using Starter Kits</h3>
 
-<p>We provide you with a set of Fidor Starter Kits. They been created to help you understand how the API and the authentication works. You also can use the code smaples as starting points for your own application. </p>
+<p>We provide you with a set of Fidor Starter Kits. They have been created to help you understand how the API and the authentication works. You also can use the code samples as a starting point for your own application. </p>
 
 <p>They work out of the box - you just have to adjust the URL and callback URL to where you put the program. </p>
 
-<p>Until now we provide example application for following programming languages/frameworks:</p>
+<p>Until now we provide example applications for following programming languages/frameworks:</p>
 
 <ul>
 <li>ruby/sinatra</li>
@@ -249,7 +249,13 @@ Here your can also select whether your application only needs access to your own
 
 <p>For every new application a dedicated sandbox environment (account simulation) is created. The sandbox comes with some test data, so that you can start developing your application against the sandbox immediately.</p>
 
-<p>Along with this simulated bank accounts a sandbox user (with login and password) is created. A sandbox user is required during the authentication against the sandbox. You can see the login credential of this sandbox user when you select the sandbox tab in the Application Manager.</p>
+<p>To connect your application to the sandbox use the following URLs:
+| Function | URL |
+| &mdash;- | &mdash;- |
+| Sandbox API | http://aps.fidor.de |
+| Sandbox OAuth | http://aps.fidor.de/oauth |</p>
+
+<p>Along with this simulated bank accounts a <em>sandbox user</em> (with login and password) is created. A sandbox user is required during the authentication against the sandbox. You can see the login credential of this sandbox user when you select the sandbox tab in the Application Manager.</p>
 
 <p>Our sandbox environment offers you the same functionality as the live API. So once developed and tested against the sandbox environment, your application will be production ready.</p>
 
@@ -538,6 +544,18 @@ X-TOTAL → 300
 
 <p>If your application uses only a small set of functions (scope) and is set to access only your own account it may not need to be manualy approved by Fidor. The exact scope of these &ldquo;Self-API applications&rdquo; is shown in the application manager. This kind of applications will automatically get approved once you submit it. You will get a notification about your application being available in live environment and can start using it immediately.</p>
 
+<h3 id="switch-to-production">Switch to Production</h3>
+
+<p>Once your application have been approved you can switch from sandbox to the production system.</p>
+
+<p>To connect your application to production use the following URLs:
+| Function | URL |
+| &mdash;- | &mdash;- |
+| Production API | http://api.fidor.de |
+| Production OAuth | http://aps.fidor.de/oauth |</p>
+
+<p>The Application Client ID and Secret stay the same.</p>
+
 <h2 id="statistics">Statistics</h2>
 
 <p>We will provide you with statistics for your application in the near future.</p>
@@ -548,7 +566,7 @@ X-TOTAL → 300
 
 <h2 id="changing-scope-of-your-application">Changing Scope of Your Application</h2>
 
-<p>Once your application is live changing the scope will result to all tokens being revoked. That means that all people that use your application have to go through the rights-granting process (OAuth) again, the next they use the application.</p>
+<p>If your application is live changing the scope will result to all tokens being revoked. That means that all people that use your application have to go through the rights-granting process (OAuth) again, the next they use the application.</p>
 
 <h2 id="revoking-and-deleting-your-application">Revoking And Deleting Your Application</h2>
 
