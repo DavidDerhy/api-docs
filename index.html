@@ -249,11 +249,23 @@ Here your can also select whether your application only needs access to your own
 
 <p>For every new application a dedicated sandbox environment (account simulation) is created. The sandbox comes with some test data, so that you can start developing your application against the sandbox immediately.</p>
 
-<p>To connect your application to the sandbox use the following URLs:
-| Function | URL |
-| &mdash;- | &mdash;- |
-| Sandbox API | http://aps.fidor.de |
-| Sandbox OAuth | http://aps.fidor.de/oauth |</p>
+<p>To connect your application to the sandbox use the following URLs:</p>
+
+<table><thead>
+<tr>
+<th>Function</th>
+<th>URL</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Sandbox API</td>
+<td>http://aps.fidor.de</td>
+</tr>
+<tr>
+<td>Sandbox OAuth</td>
+<td>http://aps.fidor.de/oauth</td>
+</tr>
+</tbody></table>
 
 <p>Along with this simulated bank accounts a <em>sandbox user</em> (with login and password) is created. A sandbox user is required during the authentication against the sandbox. You can see the login credential of this sandbox user when you select the sandbox tab in the Application Manager.</p>
 
@@ -548,11 +560,23 @@ X-TOTAL → 300
 
 <p>Once your application have been approved you can switch from sandbox to the production system.</p>
 
-<p>To connect your application to production use the following URLs:
-| Function | URL |
-| &mdash;- | &mdash;- |
-| Production API | http://api.fidor.de |
-| Production OAuth | http://aps.fidor.de/oauth |</p>
+<p>To connect your application to production use the following URLs:</p>
+
+<table><thead>
+<tr>
+<th>Function</th>
+<th>URL</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Production API</td>
+<td>http://api.fidor.de</td>
+</tr>
+<tr>
+<td>Production OAuth</td>
+<td>http://aps.fidor.de/oauth</td>
+</tr>
+</tbody></table>
 
 <p>The Application Client ID and Secret stay the same.</p>
 
@@ -1813,7 +1837,7 @@ X-TOTAL → 300
      /"\  
 </code></pre>
 
-<p>The Fidor API uses the following error codes:</p>
+<p>The Fidor API uses following error codes:</p>
 
 <table><thead>
 <tr>
