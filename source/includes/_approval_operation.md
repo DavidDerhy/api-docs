@@ -29,10 +29,11 @@ If your application uses only a small set of functions (scope) and is set to acc
 Once your application have been approved you can switch from sandbox to the production system.
 
 To connect your application to production use the following URLs:
-| Function | URL |
-| ---- | ---- |
-| Production API | http://api.fidor.de |
-| Production OAuth | http://aps.fidor.de/oauth |
+
+Function | URL
+---- | ----
+Production API | http://api.fidor.de
+Production OAuth | http://aps.fidor.de/oauth
 
 The Application Client ID and Secret stay the same.
 

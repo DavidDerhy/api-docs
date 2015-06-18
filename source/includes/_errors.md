@@ -7,7 +7,7 @@
    `-.^.-'
 	 /"\  
 ```
-The Fidor API uses the following error codes:
+The Fidor API uses following error codes:
 
 
 Status Codes | Meaning
