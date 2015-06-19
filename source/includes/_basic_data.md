@@ -257,9 +257,30 @@ transaction_type_details | Details specific to this transaction type are collect
 ##Transaction Type Details
 Different transaction type can have different details that are specific for this particular type of the transaction. Some of the transaction types don't have any specific attributes. In that case the `transaction_type_details` object stays empty.
 
+Transaction Type | Description | Transaction Type Details
+---- | ---- | ----
+fidor_payin | internal payment (in) | internal_transfer_details
+fidor_payout | internal payment (out) | internal_transfer_details
+emoney_payin | Giropay payment (in) | internal_transfer_details
+sepa_payin | SEPA payment (in) | sepa_credit_transfer_details
+payout | SEPA payment (out) | sepa_credit_transfer_details
+creditcard_* | see below | credit_card_details 
+sepa_core_direct_debit | SEPA DD payment (out) standard | sepa_credit_transfer_details
+sepa_b2b_direct_debit | SEPA DD payment (out) business | sepa_credit_transfer_details
+bonus | Fidor bonus payment (in) | bonus_details
+gmt_payout | global money transfer (out) | gmt_details
+gmt_refund | GMT refund (in) | gmt_details
+gmt_fee | fee for GMT | gmt_details
+prepaid_mobile_topup | Topup for prepaid phones (out) | mobile_topup_details
+credit_interest | interest payment (bank gives) | -
+debit_interest | interest payment (bank takes) | -
+fee | general fee (out) | -
+fee_giropay | fee for Giropay usage (out) | -
+
 Let's take closer look at the transaction types Fidor supports right now.
 
 ###Internal Transfer
+Internal transfers are closed loop transaction (payments) from one Fidor bank account to another. 
 Details of the `internal_transfer` object contain extensive information about the transaction's initiator.
 
 ####fidor_payin
@@ -318,8 +339,8 @@ remote_name           | empty | String
 remote_nick           | Community nickname of the transaction's sender | String
 remote_subject        | Subject of the transaction | String
 
-###Sepa Credit Transfer
-Details of the `sepa_credit_transfer` object contain extensive information about the transaction's initiator or receiver. We differentiate between the incoming `sepa_payin` and outgoing `payout` sepa transactions.
+###SEPA Credit Transfer
+Details of the `sepa_credit_transfer` object contain extensive information about the transaction's initiator or receiver. We differentiate between the incoming `sepa_payin` and outgoing `payout` SEPA transactions.
 
 ####sepa_payin or payout
 
@@ -341,27 +362,32 @@ remote_name           | Full name of the transaction's sender/receiver | String
 remote_iban           | IBAN of the transaction's sender/receiver | String
 remote_bic            | BIC of the transaction's sender/receiver | String
 
+###SEPA Direct Debit (Lastschrift)
+SDDs are payments that are redrawn from the account. There are two different kinds: SEPA-Basislastschriften (SEPA Direct Debit CORE/COR1) and SEPA-Firmenlastschrift (SEPA Direct Debit B2B) with result in different transaction types: `sepa_core_direct_debit` and `sepa_b2b_direct_debit`. Both use the `sepa_credit_transfer` details object as described at *SEPA Credit Transfer* above.
+
+
 ###Credit Card
-Details of the `sepa_credit_transfer` object contain extensive information about the transaction's initiator or receiver. We differentiate between the incoming `sepa_payin` and outgoing `payout` sepa transactions.
+Credit card usage is a complex topic with many different transaction type from preauthentication to fees.
+All types share use the same  `credit_card` object.
 
-####Transaction Types
-
-* creditcard_annual_fee
-* creditcard_atm_fee
-* creditcard_foreign_exchange_fee
-* creditcard_notification_fee
-* creditcard_order_cancellation
-* creditcard_order_fee
-* creditcard_order_withdrawal_fee
-* creditcard_payin
-* creditcard_payout
-* creditcard_preauth
-* creditcard_release
+Transaction Type | Description
+--- | ---
+creditcard_preauth | Pre-authorize and block amount
+creditcard_release | Release pre-authorization and unblock amount
+creditcard_payout | Credit card payment (out)
+creditcard_payin | Credit card payment (in)
+creditcard_annual_fee | Annual fee
+creditcard_foreign_exchange_fee | Fee for using the CC in a foreign country
+creditcard_order_fee | 
+creditcard_order_cancellation | 
+creditcard_order_withdrawal_fee |
+creditcard_atm_fee | Fee for using the card at the ATM
+creditcard_notification_fee | 
 
 > credit_card details
 
 ```json
-"transaction_type_details" : { 
+{ 
   "cc_category": "R",
   "cc_merchant_category": "5411",
   "cc_merchant_name": "Metro Cash & Carry",
@@ -377,3 +403,26 @@ cc_merchant_category | Category given by the merchant | String
 cc_merchant_name     | CreditCard merchant initiating the transaction | String
 cc_sequence          | Sequence links all the credit_card related transactions together | String
 cc_type              | CreditCard type | String
+
+###Global Money Transfer (GMT)
+GMT payments are international payments to countries outside the SEPA area. Details of the `gmt_transfer` object contain information about the transaction's target.
+####gmt_payout, gmt_refund, gmt_fee
+> gmt_payout, gmt_refund, gmt_fee
+
+```json
+{
+  "destination_country": "AU",
+  "destination_currency": "AUD",
+  "amount_in_destination_currency": "12500",
+  "exchange_rate": "",
+  "fee_transaction_id": "",
+}
+```
+
+Parameter | Description | Format
+--------- | ----------- | -----------
+destination_country | Destination country, 2 letter (ISO3166 alpha2) | String
+destination_currency | Destination currency, 3 letter upcase (ISO 4217)| String
+amount_in_destination_currency | Amount transferred in the destination currency | Integer
+exchange_rate | Exchange rate valid at the time the transfer has been performed | Number
+fee_transaction_id | A unique identifier of the fee transaction that belongs to the gmt transaction | String
