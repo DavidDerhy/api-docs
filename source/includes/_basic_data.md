@@ -361,7 +361,7 @@ Details of the `sepa_credit_transfer` object contain extensive information about
 > credit_card details
 
 ```json
-"transaction_type_details" : { 
+{ 
   "cc_category": "R",
   "cc_merchant_category": "5411",
   "cc_merchant_name": "Metro Cash & Carry",
