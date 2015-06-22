@@ -168,23 +168,33 @@ When an application exceeds the rate limit, the Fidor API will return an HTTP 42
 For your convenience we provide you an endpoint for requesting the current state of your rate limit `GET https://api.fidor.de/rate_limit`
 
 ##Pagination
+Not all available data is dumped at once. With pagination you can control the output and navigate through the pages. 
 > https://api.fidor.de/transactions?page=2&per_page=100
 
-```
-X-LIMIT → 100
-X-OFFSET → 100
-X-TOTAL → 300
-```
-
-We use the header based pagination for navigating through long lists of found entries.
-
-HTTP Header | Description
+Parameter | Description
 --------- | -----------
-X-LIMIT   | The per page limit of the entries shown. Default value: 50
-X-OFFSET | The pagination offset
-X-TOTAL | The total number of the entries
+per_page   | Per page limit of the entries shown. Default is 10, max is 100
+page | The pagination offset
 
-To navigate through the pages please use `page=` and `per_page=` URL parameters as stated in an example on the right pane.
+###Collection
+Most data you get from the API will have a supplementary  `collection` object to give you information about the pagination and indicate where you currently are.
+
+```json
+"collection": {
+	"current_page": 1,
+	"per_page": 10,
+	"total_entries": 785,
+	"total_pages": 79
+}
+```
+
+Parameter | Description
+--------- | -----------
+current_page   | Current page of output
+per_page| Number of entries per page
+total_entries | Total number of entries found
+total_pages | Total number of pages based on the given pagination
+
 
 ##Manage Teams
 To help you develop your apps faster, we've built the team management functionality directly into the Application Manager. To invite your fellow developers just open the team management view and start typing the email address or the name of the developer you would like to invite to your team. When the developer with provided email address already has an account, he can start help you with your app immediately. In other case the invited developer will be notified by an email.

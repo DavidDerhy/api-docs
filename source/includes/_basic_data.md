@@ -267,10 +267,10 @@ payout | SEPA payment (out) | sepa_credit_transfer_details
 creditcard_* | see below | credit_card_details 
 sepa_core_direct_debit | SEPA DD payment (out) standard | sepa_credit_transfer_details
 sepa_b2b_direct_debit | SEPA DD payment (out) business | sepa_credit_transfer_details
-bonus | Fidor bonus payment (in) | bonus_details
 gmt_payout | global money transfer (out) | gmt_details
 gmt_refund | GMT refund (in) | gmt_details
 gmt_fee | fee for GMT | gmt_details
+bonus | Fidor bonus payment (in) | bonus_details
 prepaid_mobile_topup | Topup for prepaid phones (out) | mobile_topup_details
 credit_interest | interest payment (bank gives) | -
 debit_interest | interest payment (bank takes) | -
@@ -278,6 +278,7 @@ fee | general fee (out) | -
 fee_giropay | fee for Giropay usage (out) | -
 
 Let's take closer look at the transaction types Fidor supports right now.
+
 
 ###Internal Transfer
 Internal transfers are closed loop transaction (payments) from one Fidor bank account to another. 
@@ -376,13 +377,14 @@ creditcard_preauth | Pre-authorize and block amount
 creditcard_release | Release pre-authorization and unblock amount
 creditcard_payout | Credit card payment (out)
 creditcard_payin | Credit card payment (in)
-creditcard_annual_fee | Annual fee
+creditcard_annual_fee | Annual card fee
 creditcard_foreign_exchange_fee | Fee for using the CC in a foreign country
-creditcard_order_fee | 
-creditcard_order_cancellation | 
-creditcard_order_withdrawal_fee |
+creditcard_order_fee | Fee for card ordering
+creditcard_order_cancellation | If card order is canceled, fee gets refunded
+creditcard_order_withdrawal_fee | Fee for cancelling card order
 creditcard_atm_fee | Fee for using the card at the ATM
-creditcard_notification_fee | 
+creditcard_notification_fee | Fee for transaction notification (e-mail, SMS)
+
 
 > credit_card details
 
@@ -414,7 +416,7 @@ GMT payments are international payments to countries outside the SEPA area. Deta
   "destination_country": "AU",
   "destination_currency": "AUD",
   "amount_in_destination_currency": "12500",
-  "exchange_rate": "",
+  "exchange_rate": "1.4591",
   "fee_transaction_id": "",
 }
 ```
@@ -424,5 +426,52 @@ Parameter | Description | Format
 destination_country | Destination country, 2 letter (ISO3166 alpha2) | String
 destination_currency | Destination currency, 3 letter upcase (ISO 4217)| String
 amount_in_destination_currency | Amount transferred in the destination currency | Integer
-exchange_rate | Exchange rate valid at the time the transfer has been performed | Number
+exchange_rate | Exchange rate (EUR/dest_curr) valid at the time of transfer | Decimal
 fee_transaction_id | A unique identifier of the fee transaction that belongs to the gmt transaction | String
+
+###Bonus
+Some activities in the community lead to bonus payments. The details are stored in the `bonus_details` object.
+
+####bonus
+
+> bonus
+
+```json
+{
+	"affiliate_id" : "16",
+	"affiliate_name" : "ficoba_community",
+	"affiliate_transaction_type_id" : "46",
+	"affiliate_transaction_type_name" : "Geldfrage beantworten",
+	"affiliate_transaction_type_category" : "Community"
+}
+```
+
+Parameter | Description | Format
+--------- | ----------- | -----------
+affiliate_id | ID of the bonus affiliate | String
+affiliate_name | Name of the bonus affiliate | String
+affiliate_transaction_type_id | Identifier of the transaction type | String
+affiliate_transaction_type_name | name of the transaction type | String
+affiliate_transaction_type_category | category, e.g. Community, Banking, Bonusprogramm | String
+
+###Mobile Topup
+If you use the topup app in the account transactions will be marked as `prepaid_mobile_topup`. The details are stored in the `mobile_topup_details` object.
+
+####prepaid_mobile_topup
+
+> prepaid_mobile_topup
+
+```json
+{
+	"provider" : "vodafone",
+	"phone_number" : "1234567890123",
+	"topup_subject" : "Nada DE Vodafone"
+}
+```
+
+Parameter | Description | Format
+--------- | ----------- | -----------
+provider | name of the mobile network operator | String
+phone_number | Mobile phone number user for topup | String
+topup_subject | Subject of the mobile topup | String
+
