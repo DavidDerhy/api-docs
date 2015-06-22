@@ -475,37 +475,62 @@ response containing the <code class="prettyprint">access_token</code> and inform
 
 <h2 id="pagination">Pagination</h2>
 
+<p>Not all available data is dumped at once. With pagination you can control the output and navigate through the pages. </p>
+
 <blockquote>
 <p>https://api.fidor.de/transactions?page=2&amp;per_page=100</p>
 </blockquote>
-<pre><code class="highlight plaintext">X-LIMIT → 100
-X-OFFSET → 100
-X-TOTAL → 300
-</code></pre>
-
-<p>We use the header based pagination for navigating through long lists of found entries.</p>
 
 <table><thead>
 <tr>
-<th>HTTP Header</th>
+<th>Parameter</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>X-LIMIT</td>
-<td>The per page limit of the entries shown. Default value: 50</td>
+<td>per_page</td>
+<td>Per page limit of the entries shown. Default is 10, max is 100</td>
 </tr>
 <tr>
-<td>X-OFFSET</td>
+<td>page</td>
 <td>The pagination offset</td>
-</tr>
-<tr>
-<td>X-TOTAL</td>
-<td>The total number of the entries</td>
 </tr>
 </tbody></table>
 
-<p>To navigate through the pages please use <code class="prettyprint">page=</code> and <code class="prettyprint">per_page=</code> URL parameters as stated in an example on the right pane.</p>
+<h3 id="collection">Collection</h3>
+
+<p>Most data you get from the API will have a supplementary  <code class="prettyprint">collection</code> object to give you information about the pagination and indicate where you currently are.</p>
+<pre><code class="highlight json"><span class="s2">"collection"</span><span class="err">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"current_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"per_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"total_entries"</span><span class="p">:</span><span class="w"> </span><span class="mi">785</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"total_pages"</span><span class="p">:</span><span class="w"> </span><span class="mi">79</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>current_page</td>
+<td>Current page of output</td>
+</tr>
+<tr>
+<td>per_page</td>
+<td>Number of entries per page</td>
+</tr>
+<tr>
+<td>total_entries</td>
+<td>Total number of entries found</td>
+</tr>
+<tr>
+<td>total_pages</td>
+<td>Total number of pages based on the given pagination</td>
+</tr>
+</tbody></table>
 
 <h2 id="manage-teams">Manage Teams</h2>
 
@@ -1127,11 +1152,106 @@ X-TOTAL → 300
 
 <p>Different transaction type can have different details that are specific for this particular type of the transaction. Some of the transaction types don&rsquo;t have any specific attributes. In that case the <code class="prettyprint">transaction_type_details</code> object stays empty.</p>
 
+<table><thead>
+<tr>
+<th>Transaction Type</th>
+<th>Description</th>
+<th>Transaction Type Details</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>fidor_payin</td>
+<td>internal payment (in)</td>
+<td>internal_transfer_details</td>
+</tr>
+<tr>
+<td>fidor_payout</td>
+<td>internal payment (out)</td>
+<td>internal_transfer_details</td>
+</tr>
+<tr>
+<td>emoney_payin</td>
+<td>Giropay payment (in)</td>
+<td>internal_transfer_details</td>
+</tr>
+<tr>
+<td>sepa_payin</td>
+<td>SEPA payment (in)</td>
+<td>sepa_credit_transfer_details</td>
+</tr>
+<tr>
+<td>payout</td>
+<td>SEPA payment (out)</td>
+<td>sepa_credit_transfer_details</td>
+</tr>
+<tr>
+<td>creditcard_*</td>
+<td>see below</td>
+<td>credit_card_details</td>
+</tr>
+<tr>
+<td>sepa_core_direct_debit</td>
+<td>SEPA DD payment (out) standard</td>
+<td>sepa_credit_transfer_details</td>
+</tr>
+<tr>
+<td>sepa_b2b_direct_debit</td>
+<td>SEPA DD payment (out) business</td>
+<td>sepa_credit_transfer_details</td>
+</tr>
+<tr>
+<td>gmt_payout</td>
+<td>global money transfer (out)</td>
+<td>gmt_details</td>
+</tr>
+<tr>
+<td>gmt_refund</td>
+<td>GMT refund (in)</td>
+<td>gmt_details</td>
+</tr>
+<tr>
+<td>gmt_fee</td>
+<td>fee for GMT</td>
+<td>gmt_details</td>
+</tr>
+<tr>
+<td>bonus</td>
+<td>Fidor bonus payment (in)</td>
+<td>bonus_details</td>
+</tr>
+<tr>
+<td>prepaid_mobile_topup</td>
+<td>Topup for prepaid phones (out)</td>
+<td>mobile_topup_details</td>
+</tr>
+<tr>
+<td>credit_interest</td>
+<td>interest payment (bank gives)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>debit_interest</td>
+<td>interest payment (bank takes)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>fee</td>
+<td>general fee (out)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>fee_giropay</td>
+<td>fee for Giropay usage (out)</td>
+<td>-</td>
+</tr>
+</tbody></table>
+
 <p>Let&rsquo;s take closer look at the transaction types Fidor supports right now.</p>
 
 <h3 id="internal-transfer">Internal Transfer</h3>
 
-<p>Details of the <code class="prettyprint">internal_transfer</code> object contain extensive information about the transaction&rsquo;s initiator.</p>
+<p>Internal transfers are closed loop transaction (payments) from one Fidor bank account to another. 
+Details of the <code class="prettyprint">internal_transfer</code> object contain extensive information about the transaction&rsquo;s initiator.</p>
 
 <h4 id="fidor_payin">fidor_payin</h4>
 
@@ -1257,9 +1377,9 @@ X-TOTAL → 300
 </tr>
 </tbody></table>
 
-<h3 id="sepa-credit-transfer">Sepa Credit Transfer</h3>
+<h3 id="sepa-credit-transfer">SEPA Credit Transfer</h3>
 
-<p>Details of the <code class="prettyprint">sepa_credit_transfer</code> object contain extensive information about the transaction&rsquo;s initiator or receiver. We differentiate between the incoming <code class="prettyprint">sepa_payin</code> and outgoing <code class="prettyprint">payout</code> sepa transactions.</p>
+<p>Details of the <code class="prettyprint">sepa_credit_transfer</code> object contain extensive information about the transaction&rsquo;s initiator or receiver. We differentiate between the incoming <code class="prettyprint">sepa_payin</code> and outgoing <code class="prettyprint">payout</code> SEPA transactions.</p>
 
 <h4 id="sepa_payin-or-payout">sepa_payin or payout</h4>
 
@@ -1303,25 +1423,66 @@ X-TOTAL → 300
 </tr>
 </tbody></table>
 
+<h3 id="sepa-direct-debit-(lastschrift)">SEPA Direct Debit (Lastschrift)</h3>
+
+<p>SDDs are payments that are redrawn from the account. There are two different kinds: SEPA-Basislastschriften (SEPA Direct Debit CORE/COR1) and SEPA-Firmenlastschrift (SEPA Direct Debit B2B) with result in different transaction types: <code class="prettyprint">sepa_core_direct_debit</code> and <code class="prettyprint">sepa_b2b_direct_debit</code>. Both use the <code class="prettyprint">sepa_credit_transfer</code> details object as described at <em>SEPA Credit Transfer</em> above.</p>
+
 <h3 id="credit-card">Credit Card</h3>
 
-<p>Details of the <code class="prettyprint">sepa_credit_transfer</code> object contain extensive information about the transaction&rsquo;s initiator or receiver. We differentiate between the incoming <code class="prettyprint">sepa_payin</code> and outgoing <code class="prettyprint">payout</code> sepa transactions.</p>
+<p>Credit card usage is a complex topic with many different transaction type from preauthentication to fees.
+All types share use the same  <code class="prettyprint">credit_card</code> object.</p>
 
-<h4 id="transaction-types">Transaction Types</h4>
-
-<ul>
-<li>creditcard_annual_fee</li>
-<li>creditcard_atm_fee</li>
-<li>creditcard_foreign_exchange_fee</li>
-<li>creditcard_notification_fee</li>
-<li>creditcard_order_cancellation</li>
-<li>creditcard_order_fee</li>
-<li>creditcard_order_withdrawal_fee</li>
-<li>creditcard_payin</li>
-<li>creditcard_payout</li>
-<li>creditcard_preauth</li>
-<li>creditcard_release</li>
-</ul>
+<table><thead>
+<tr>
+<th>Transaction Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>creditcard_preauth</td>
+<td>Pre-authorize and block amount</td>
+</tr>
+<tr>
+<td>creditcard_release</td>
+<td>Release pre-authorization and unblock amount</td>
+</tr>
+<tr>
+<td>creditcard_payout</td>
+<td>Credit card payment (out)</td>
+</tr>
+<tr>
+<td>creditcard_payin</td>
+<td>Credit card payment (in)</td>
+</tr>
+<tr>
+<td>creditcard_annual_fee</td>
+<td>Annual card fee</td>
+</tr>
+<tr>
+<td>creditcard_foreign_exchange_fee</td>
+<td>Fee for using the CC in a foreign country</td>
+</tr>
+<tr>
+<td>creditcard_order_fee</td>
+<td>Fee for card ordering</td>
+</tr>
+<tr>
+<td>creditcard_order_cancellation</td>
+<td>If card order is canceled, fee gets refunded</td>
+</tr>
+<tr>
+<td>creditcard_order_withdrawal_fee</td>
+<td>Fee for cancelling card order</td>
+</tr>
+<tr>
+<td>creditcard_atm_fee</td>
+<td>Fee for using the card at the ATM</td>
+</tr>
+<tr>
+<td>creditcard_notification_fee</td>
+<td>Fee for transaction notification (e-mail, SMS)</td>
+</tr>
+</tbody></table>
 
 <blockquote>
 <p>credit_card details</p>
@@ -1365,6 +1526,150 @@ X-TOTAL → 300
 <tr>
 <td>cc_type</td>
 <td>CreditCard type</td>
+<td>String</td>
+</tr>
+</tbody></table>
+
+<h3 id="global-money-transfer-(gmt)">Global Money Transfer (GMT)</h3>
+
+<p>GMT payments are international payments to countries outside the SEPA area. Details of the <code class="prettyprint">gmt_transfer</code> object contain information about the transaction&rsquo;s target.</p>
+
+<h4 id="gmt_payout,-gmt_refund,-gmt_fee">gmt_payout, gmt_refund, gmt_fee</h4>
+
+<blockquote>
+<p>gmt_payout, gmt_refund, gmt_fee</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"destination_country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AU"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"destination_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AUD"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"amount_in_destination_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12500"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"exchange_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.4591"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"fee_transaction_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Format</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>destination_country</td>
+<td>Destination country, 2 letter (ISO3166 alpha2)</td>
+<td>String</td>
+</tr>
+<tr>
+<td>destination_currency</td>
+<td>Destination currency, 3 letter upcase (ISO 4217)</td>
+<td>String</td>
+</tr>
+<tr>
+<td>amount_in_destination_currency</td>
+<td>Amount transferred in the destination currency</td>
+<td>Integer</td>
+</tr>
+<tr>
+<td>exchange_rate</td>
+<td>Exchange rate (EUR/dest_curr) valid at the time of transfer</td>
+<td>Decimal</td>
+</tr>
+<tr>
+<td>fee_transaction_id</td>
+<td>A unique identifier of the fee transaction that belongs to the gmt transaction</td>
+<td>String</td>
+</tr>
+</tbody></table>
+
+<h3 id="bonus">Bonus</h3>
+
+<p>Some activities in the community lead to bonus payments. The details are stored in the <code class="prettyprint">bonus_details</code> object.</p>
+
+<h4 id="bonus">bonus</h4>
+
+<blockquote>
+<p>bonus</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"affiliate_id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"16"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"affiliate_name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"ficoba_community"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"affiliate_transaction_type_id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"46"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"affiliate_transaction_type_name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Geldfrage beantworten"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"affiliate_transaction_type_category"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Community"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Format</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>affiliate_id</td>
+<td>ID of the bonus affiliate</td>
+<td>String</td>
+</tr>
+<tr>
+<td>affiliate_name</td>
+<td>Name of the bonus affiliate</td>
+<td>String</td>
+</tr>
+<tr>
+<td>affiliate_transaction_type_id</td>
+<td>Identifier of the transaction type</td>
+<td>String</td>
+</tr>
+<tr>
+<td>affiliate_transaction_type_name</td>
+<td>name of the transaction type</td>
+<td>String</td>
+</tr>
+<tr>
+<td>affiliate_transaction_type_category</td>
+<td>category, e.g. Community, Banking, Bonusprogramm</td>
+<td>String</td>
+</tr>
+</tbody></table>
+
+<h3 id="mobile-topup">Mobile Topup</h3>
+
+<p>If you use the topup app in the account transactions will be marked as <code class="prettyprint">prepaid_mobile_topup</code>. The details are stored in the <code class="prettyprint">mobile_topup_details</code> object.</p>
+
+<h4 id="prepaid_mobile_topup">prepaid_mobile_topup</h4>
+
+<blockquote>
+<p>prepaid_mobile_topup</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"provider"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"vodafone"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phone_number"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"1234567890123"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"topup_subject"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Nada DE Vodafone"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Format</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>provider</td>
+<td>name of the mobile network operator</td>
+<td>String</td>
+</tr>
+<tr>
+<td>phone_number</td>
+<td>Mobile phone number user for topup</td>
+<td>String</td>
+</tr>
+<tr>
+<td>topup_subject</td>
+<td>Subject of the mobile topup</td>
 <td>String</td>
 </tr>
 </tbody></table>
