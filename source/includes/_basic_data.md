@@ -438,11 +438,11 @@ Some activities in the community lead to bonus payments. The details are stored 
 
 ```json
 {
-	"affiliate_id" : "16",
-	"affiliate_name" : "ficoba_community",
-	"affiliate_transaction_type_id" : "46",
-	"affiliate_transaction_type_name" : "Geldfrage beantworten",
-	"affiliate_transaction_type_category" : "Community"
+  "affiliate_id" : "16",
+  "affiliate_name" : "ficoba_community",
+  "affiliate_transaction_type_id" : "46",
+  "affiliate_transaction_type_name" : "Geldfrage beantworten",
+  "affiliate_transaction_type_category" : "Community"
 }
 ```
 
@@ -463,9 +463,9 @@ If you use the topup app in the account transactions will be marked as `prepaid_
 
 ```json
 {
-	"provider" : "vodafone",
-	"phone_number" : "1234567890123",
-	"topup_subject" : "Nada DE Vodafone"
+  "provider" : "vodafone",
+  "phone_number" : "1234567890123",
+  "topup_subject" : "Nada DE Vodafone"
 }
 ```
 
