@@ -417,7 +417,7 @@ GMT payments are international payments to countries outside the SEPA area. Deta
   "destination_currency": "AUD",
   "amount_in_destination_currency": "12500",
   "exchange_rate": "1.4591",
-  "fee_transaction_id": "",
+  "fee_transaction_id": ""
 }
 ```
 
