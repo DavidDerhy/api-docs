@@ -69,7 +69,7 @@ developer.fidor.de | Developer community landing page
 
 There are two environments with their respective security services:
 
-| Environment| Login (Authentication) | OAuth (Authorization) |
+| Environment| Login (Authentication) | OAuth (Authorization) | API
 | ------- | ---- | --- |
-| Testing/Simulation | aps.fidor.de (with sandbox accounts/logins)| aps.fidor.de |
-| Production | banking.fidor.de (with real accounts/logins) | apm.fidor.de |
+| Testing/Simulation | aps.fidor.de (with sandbox accounts/logins)| aps.fidor.de | aps.fidor.de
+| Production | banking.fidor.de (with real accounts/logins) | apm.fidor.de | api.fidor.de
