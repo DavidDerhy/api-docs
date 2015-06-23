@@ -20,11 +20,6 @@ Approval Type | Use Case | Application can access ...
 
 After a Fidor admin reviewed your approval request you will get an e-mail. If the admin requests some change or needs additional information you can re-submit the application as soon as the changes have been made.
 
-Once the application is approved you need to change the connection details in the application from testing to production, *see [Systems](http://docs.fidor.de/#systems).* Then you are ready to go.
-
-###Self Approval (soon)
-If your application uses only a small set of functions (scope) and is set to access only your own account it may not need to be manualy approved by Fidor. The exact scope of these "Self-API applications" is shown in the application manager. This kind of applications will automatically get approved once you submit it. You will get a notification about your application being available in live environment and can start using it immediately.
-
 ###Switch to Production
 Once your application have been approved you can switch from sandbox to the production system.
 
@@ -33,7 +28,7 @@ To connect your application to production use the following URLs:
 Function | URL
 ---- | ----
 Production API | http://api.fidor.de
-Production OAuth | http://aps.fidor.de/oauth
+Production OAuth | http://apm.fidor.de/oauth
 
 The Application Client ID and Secret stay the same.
 
