@@ -415,9 +415,9 @@ GMT payments are international payments to countries outside the SEPA area. Deta
 {
   "destination_country": "AU",
   "destination_currency": "AUD",
-  "amount_in_destination_currency": "12500",
-  "exchange_rate": "1.4591",
-  "fee_transaction_id": ""
+  "amount_in_destination_currency": 12500,
+  "exchange_rate": 1.4591,
+  "fee_transaction_id": 2452334
 }
 ```
 
@@ -427,7 +427,7 @@ destination_country | Destination country, 2 letter (ISO3166 alpha2) | String
 destination_currency | Destination currency, 3 letter upcase (ISO 4217)| String
 amount_in_destination_currency | Amount transferred in the destination currency | Integer
 exchange_rate | Exchange rate (EUR/dest_curr) valid at the time of transfer | Decimal
-fee_transaction_id | A unique identifier of the fee transaction that belongs to the gmt transaction | String
+fee_transaction_id | ID of  fee transaction of this GMT transaction | Integer
 
 ###Bonus
 Some activities in the community lead to bonus payments. The details are stored in the `bonus_details` object.
