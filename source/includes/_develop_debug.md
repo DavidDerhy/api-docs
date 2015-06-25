@@ -44,7 +44,7 @@ Fidor customers have diverse use cases for the Fidor API, ranging from payment a
 
 The primarily supported authentication method from Fidor is the 3 legged OAuth2 flow, that is particular useful for server based client facing apps and supports even 3rd party application providing. The following discussion and documentation is based on that mode.
 
-For applications to simply control your our own bank account via a pure server side connection we support User Credential flow (password grant type) as well. Also mobile applications need and get special treatment. Please get in contact with us via e-mail or leave a message in the approval submittion form.
+For applications to simply control your our own bank account via a pure server side connection we soon will provide an improved approval process, OAuth flow and OAuth features. Also mobile applications need and get special treatment. Please get in contact with us via e-mail or leave a message in the approval submittion form.
 
 ###User perspective
 From the user's perspective this works as follows:
