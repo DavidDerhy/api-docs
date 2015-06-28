@@ -167,24 +167,10 @@
 
 <p>There are two environments with their respective security services:</p>
 
-<table><thead>
-<tr>
-<th>Environment</th>
-<th>Login (Authentication)</th>
-<th>OAuth (Authorization)</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>Testing/Simulation</td>
-<td>aps.fidor.de (with sandbox accounts/logins)</td>
-<td>aps.fidor.de</td>
-</tr>
-<tr>
-<td>Production</td>
-<td>banking.fidor.de (with real accounts/logins)</td>
-<td>apm.fidor.de</td>
-</tr>
-</tbody></table>
+<p>| Environment| Login (Authentication) | OAuth (Authorization) | API
+| &mdash;&mdash;- | &mdash;- | &mdash; |
+| Testing/Simulation | aps.fidor.de (with sandbox accounts/logins)| aps.fidor.de | aps.fidor.de
+| Production | banking.fidor.de (with real accounts/logins) | apm.fidor.de | api.fidor.de</p>
 
           <h1 id="getting-started">Getting Started</h1>
 
@@ -259,11 +245,11 @@ Here your can also select whether your application only needs access to your own
 </thead><tbody>
 <tr>
 <td>Sandbox API</td>
-<td>http://aps.fidor.de</td>
+<td>https://aps.fidor.de</td>
 </tr>
 <tr>
 <td>Sandbox OAuth</td>
-<td>http://aps.fidor.de/oauth</td>
+<td>https://aps.fidor.de/oauth</td>
 </tr>
 </tbody></table>
 
@@ -293,7 +279,7 @@ using <a href="https://tools.ietf.org/html/rfc6749">OAuth 2</a>.</p>
 
 <p>The primarily supported authentication method from Fidor is the 3 legged OAuth2 flow, that is particular useful for server based client facing apps and supports even 3rd party application providing. The following discussion and documentation is based on that mode.</p>
 
-<p>For applications to simply control your our own bank account via a pure server side connection we support User Credential flow (password grant type) as well. Also mobile applications need and get special treatment. Please get in contact with us via e-mail or leave a message in the approval submittion form.</p>
+<p>For applications to simply control your our own bank account via a pure server side connection we soon will provide an improved approval process, OAuth flow and OAuth features. Also mobile applications need and get special treatment. Please get in contact with us via e-mail or leave a message in the approval submittion form.</p>
 
 <h3 id="user-perspective">User perspective</h3>
 
@@ -475,7 +461,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 
 <h2 id="pagination">Pagination</h2>
 
-<p>Not all available data is dumped at once. With pagination you can control the output and navigate through the pages. </p>
+<p>Not all available data is dumped at once. With pagination you can control the output and navigate through the pages.</p>
 
 <blockquote>
 <p>https://api.fidor.de/transactions?page=2&amp;per_page=100</p>
@@ -538,7 +524,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 
           <h1 id="approval-and-operation">Approval and Operation</h1>
 
-<p>As soon you are happy with testing your application you can switch from &ldquo;test-mode&rdquo; to &ldquo;live-mode&rdquo;. Then your application will work with real accounts, real data and real money. </p>
+<p>As soon you are happy with testing your application you can switch from &ldquo;test-mode&rdquo; to &ldquo;live-mode&rdquo;. Then your application will work with real accounts, real data and real money.</p>
 
 <h2 id="prerequisites">Prerequisites</h2>
 
@@ -546,7 +532,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 
 <p>Note that only the developer that created (registered) an application in the first place (application owner) can submit it for approval.</p>
 
-<p><em>We will introduce an approval concept soon that differentiates between the developer&rsquo;s account and the full-KYC bank account the application needs access to. If you have such a situation we can to the appropriate setting for you.</em> </p>
+<p><em>We will introduce an approval concept soon that differentiates between the developer&rsquo;s account and the full-KYC bank account the application needs access to. If you have such a situation we can to the appropriate setting for you.</em></p>
 
 <h2 id="approval-process">Approval Process</h2>
 
@@ -575,12 +561,6 @@ response containing the <code class="prettyprint">access_token</code> and inform
 
 <p>After a Fidor admin reviewed your approval request you will get an e-mail. If the admin requests some change or needs additional information you can re-submit the application as soon as the changes have been made.</p>
 
-<p>Once the application is approved you need to change the connection details in the application from testing to production, <em>see <a href="http://docs.fidor.de/#systems">Systems</a>.</em> Then you are ready to go.</p>
-
-<h3 id="self-approval-(soon)">Self Approval (soon)</h3>
-
-<p>If your application uses only a small set of functions (scope) and is set to access only your own account it may not need to be manualy approved by Fidor. The exact scope of these &ldquo;Self-API applications&rdquo; is shown in the application manager. This kind of applications will automatically get approved once you submit it. You will get a notification about your application being available in live environment and can start using it immediately.</p>
-
 <h3 id="switch-to-production">Switch to Production</h3>
 
 <p>Once your application have been approved you can switch from sandbox to the production system.</p>
@@ -595,11 +575,11 @@ response containing the <code class="prettyprint">access_token</code> and inform
 </thead><tbody>
 <tr>
 <td>Production API</td>
-<td>http://api.fidor.de</td>
+<td>https://api.fidor.de</td>
 </tr>
 <tr>
 <td>Production OAuth</td>
-<td>http://aps.fidor.de/oauth</td>
+<td>https://aps.fidor.de/oauth</td>
 </tr>
 </tbody></table>
 
@@ -1542,9 +1522,9 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 <pre><code class="highlight json"><span class="p">{</span><span class="w">
   </span><span class="s2">"destination_country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AU"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"destination_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AUD"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"amount_in_destination_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12500"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"exchange_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.4591"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fee_transaction_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+  </span><span class="s2">"amount_in_destination_currency"</span><span class="p">:</span><span class="w"> </span><span class="mi">12500</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"exchange_rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.4591</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"fee_transaction_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2452334</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -1577,8 +1557,8 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 </tr>
 <tr>
 <td>fee_transaction_id</td>
-<td>A unique identifier of the fee transaction that belongs to the gmt transaction</td>
-<td>String</td>
+<td>ID of  fee transaction of this GMT transaction</td>
+<td>Integer</td>
 </tr>
 </tbody></table>
 
@@ -1678,7 +1658,7 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 
 <p>We differ between different types of money transfers. In generell we distinguish between the Fidor internal transfers (Fidor to Fidor money transfer) and external transfers (SEPA, GMT, FPS, BACS etc.).</p>
 
-<h2 id="internal-transfer">Internal Transfer</h2>
+<h2 id="internal-transfer---fidor-to-fidor">Internal Transfer - Fidor to Fidor</h2>
 
 <blockquote>
 <p>Request body</p>
@@ -1711,7 +1691,7 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>Fidor offers you the possibility to transfer money to your fellow Fidor user without even knowing his account number. To transfer the money you can use one of the following:
+<p>Fidor offers you the possibility to transfer money to your fellow Fidor user without even knowing his account number (&ldquo;Freunden Geld senden&rdquo;). To transfer the money you can use one of the following:
 - nickname
 - email address
 - mobile phone number
@@ -1756,15 +1736,15 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://api.fidor.de/internal_transfers</code>  <sub>index</sub></p>
+<p><code class="prettyprint">GET https://api.fidor.de/internal_transfers</code>  <sub>index</sub></p>
 
-<p><code class="prettyprint">GET http://api.fidor.de/internal_transfers/{id}</code>  <sub>self</sub></p>
+<p><code class="prettyprint">GET https://api.fidor.de/internal_transfers/{id}</code>  <sub>self</sub></p>
 
-<p><code class="prettyprint">POST http://api.fidor.de/internal_transfers</code>  <sub>create</sub></p>
+<p><code class="prettyprint">POST https://api.fidor.de/internal_transfers</code>  <sub>create</sub></p>
 
 <h3 id="example:">Example:</h3>
 
-<p><code class="prettyprint">POST http://api.fidor.de/internal_transfers</code></p>
+<p><code class="prettyprint">POST https://api.fidor.de/internal_transfers</code></p>
 
 <p>Request on <code class="prettyprint">/internal_transfers</code> with the method POST.</p>
 
@@ -1777,7 +1757,7 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
   </span><span class="s2">"account_id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"123456789"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"external_uid"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"666"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"remote_iban"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AT131490022010010999"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"remote_bic"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPADATW1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_bic"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPADATW1XXX"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"remote_name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Walter White (Heisenberg)"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"amount"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">100000</span><span class="p">,</span><span class="w">
   </span><span class="s2">"subject"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Here is your dirty money, Walter!"</span><span class="w">
@@ -1795,7 +1775,7 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
   </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">100000</span><span class="p">,</span><span class="w">
   </span><span class="s2">"remote_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Walter White (Heisenberg)"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"remote_iban"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AT131490022010010999"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"remote_bic"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPADATW1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_bic"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SPADATW1XXX"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-04T13:47:48+01:00"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-04T13:47:48+01:00"</span><span class="p">,</span><span class="w">
@@ -1835,7 +1815,7 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 <tr>
 <td>remote_bic</td>
 <td>BIC of the recipient&rsquo;s bank account. Optional for transfers between two German bank accounts</td>
-<td>String</td>
+<td>String (11 characters!)</td>
 </tr>
 <tr>
 <td>remote_name</td>
@@ -1872,7 +1852,7 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 <h2 id="batch-transfer">Batch Transfer</h2>
 
 <blockquote>
-<p>GET http://api.fidor.de/batch_transfers</p>
+<p>GET https://api.fidor.de/batch_transfers</p>
 </blockquote>
 <pre><code class="highlight json"><span class="p">{</span><span class="w">
     </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -1903,7 +1883,7 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
                     </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
                     </span><span class="s2">"remote_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Walter Yoplack"</span><span class="p">,</span><span class="w">
                     </span><span class="s2">"remote_iban"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DE49140520002640025972"</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"remote_bic"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"remote_bic"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
                     </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"received"</span><span class="p">,</span><span class="w">
                     </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-03T12:18:42+01:00"</span><span class="p">,</span><span class="w">
                     </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-03T12:18:42+01:00"</span><span class="p">,</span><span class="w">
@@ -1956,7 +1936,7 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
                     </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
                     </span><span class="s2">"remote_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Walter Yoplack"</span><span class="p">,</span><span class="w">
                     </span><span class="s2">"remote_iban"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DE49140520002640025972"</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"remote_bic"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"remote_bic"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
                     </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
                     </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-12T14:22:37+01:00"</span><span class="p">,</span><span class="w">
                     </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-12T14:22:37+01:00"</span><span class="p">,</span><span class="w">
@@ -1996,11 +1976,11 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://api.fidor.de/batch_transfers</code>  <sub>index</sub></p>
+<p><code class="prettyprint">GET https://api.fidor.de/batch_transfers</code>  <sub>index</sub></p>
 
-<p><code class="prettyprint">GET http://api.fidor.de/batch_transfers/{id}</code>  <sub>self</sub></p>
+<p><code class="prettyprint">GET https://api.fidor.de/batch_transfers/{id}</code>  <sub>self</sub></p>
 
-<p><code class="prettyprint">POST http://api.fidor.de/batch_transfers</code>  <sub>create</sub></p>
+<p><code class="prettyprint">POST https://api.fidor.de/batch_transfers</code>  <sub>create</sub></p>
 
 <h2 id="coming-soon---extended-money-operations">Coming Soon - Extended Money Operations</h2>
 
@@ -2008,11 +1988,11 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://api.fidor.de/sepa_direct_debits</code> <sub>index</sub></p>
+<p><code class="prettyprint">GET https://api.fidor.de/sepa_direct_debits</code> <sub>index</sub></p>
 
-<p><code class="prettyprint">GET http://api.fidor.de/sepa_direct_debits/{id}</code> <sub>self</sub></p>
+<p><code class="prettyprint">GET https://api.fidor.de/sepa_direct_debits/{id}</code> <sub>self</sub></p>
 
-<p><code class="prettyprint">POST http://api.fidor.de/sepa_direct_debits</code> <sub>create</sub></p>
+<p><code class="prettyprint">POST https://api.fidor.de/sepa_direct_debits</code> <sub>create</sub></p>
 
 <h3 id="creating-sepa-mandate">Creating SEPA Mandate</h3>
 
@@ -2022,13 +2002,13 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 
 <p><em>PREVIEW:</em> A direct debit batch contains multiple direct debits which are processed asynchronously.</p>
 
-<p><code class="prettyprint">GET http://api.fidor.de/batch_direct_debits/{id}</code> 
+<p><code class="prettyprint">GET https://api.fidor.de/batch_direct_debits/{id}</code>
 <sub>self</sub></p>
 
-<p><code class="prettyprint">GET http://api.fidor.de/batch_direct_debits</code> 
+<p><code class="prettyprint">GET https://api.fidor.de/batch_direct_debits</code>
 <sub>instances</sub></p>
 
-<p><code class="prettyprint">POST http://api.fidor.de/batch_direct_debits</code> 
+<p><code class="prettyprint">POST https://api.fidor.de/batch_direct_debits</code>
 <sub>create</sub></p>
 
           <h1 id="transfer-approvals---trust-account">Transfer Approvals - Trust Account</h1>
