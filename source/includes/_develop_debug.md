@@ -13,8 +13,8 @@ To connect your application to the sandbox use the following URLs:
 
 Function | URL
 ---- | ----
-Sandbox API | http://aps.fidor.de
-Sandbox OAuth | http://aps.fidor.de/oauth
+Sandbox API | https://aps.fidor.de
+Sandbox OAuth | https://aps.fidor.de/oauth
 
 Along with this simulated bank accounts a *sandbox user* (with login and password) is created. A sandbox user is required during the authentication against the sandbox. You can see the login credential of this sandbox user when you select the sandbox tab in the Application Manager.
 
@@ -168,7 +168,7 @@ When an application exceeds the rate limit, the Fidor API will return an HTTP 42
 For your convenience we provide you an endpoint for requesting the current state of your rate limit `GET https://api.fidor.de/rate_limit`
 
 ##Pagination
-Not all available data is dumped at once. With pagination you can control the output and navigate through the pages. 
+Not all available data is dumped at once. With pagination you can control the output and navigate through the pages.
 > https://api.fidor.de/transactions?page=2&per_page=100
 
 Parameter | Description

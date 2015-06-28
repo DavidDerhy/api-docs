@@ -1,12 +1,12 @@
 #Approval and Operation
-As soon you are happy with testing your application you can switch from "test-mode" to "live-mode". Then your application will work with real accounts, real data and real money. 
+As soon you are happy with testing your application you can switch from "test-mode" to "live-mode". Then your application will work with real accounts, real data and real money.
 
 ##Prerequisites
 At the moment only developers that went trough the complete bank account registration process and have a bank account (retail or business) with "full KYC status" can start the approval process for their applications. Please (re-)read the section 2 of [ToS](https://apm.fidor.de/developer/terms_of_services/current) for additional prerequisites.
 
 Note that only the developer that created (registered) an application in the first place (application owner) can submit it for approval.
 
-*We will introduce an approval concept soon that differentiates between the developer's account and the full-KYC bank account the application needs access to. If you have such a situation we can to the appropriate setting for you.* 
+*We will introduce an approval concept soon that differentiates between the developer's account and the full-KYC bank account the application needs access to. If you have such a situation we can to the appropriate setting for you.*
 
 ##Approval Process
 Most applications must go through a manual approval process, in particular if you need non-AGB services (e.g. SEPA direct debit) or your application needs access to other peoples data. In some cases you will have to sign additional contracts before your application will be approved and go life. If you are in doubt, please contact our sales team well enough in advance.
@@ -14,8 +14,8 @@ Most applications must go through a manual approval process, in particular if yo
 There are two basic access modes and approve types:
 
 Approval Type | Use Case | Application can access ...
-------- | ---- | --- 
-**Team Accounts** | Only one bank customer may use use the application | ... only one specific account 
+------- | ---- | ---
+**Team Accounts** | Only one bank customer may use use the application | ... only one specific account
 **All Accounts** | Everybody may use the application to access their bank account | ... all bank accounts
 
 After a Fidor admin reviewed your approval request you will get an e-mail. If the admin requests some change or needs additional information you can re-submit the application as soon as the changes have been made.
@@ -27,8 +27,8 @@ To connect your application to production use the following URLs:
 
 Function | URL
 ---- | ----
-Production API | http://api.fidor.de
-Production OAuth | http://apm.fidor.de/oauth
+Production API | https://api.fidor.de
+Production OAuth | https://aps.fidor.de/oauth
 
 The Application Client ID and Secret stay the same.
 

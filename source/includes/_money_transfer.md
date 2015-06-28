@@ -51,15 +51,15 @@ amount | Amount of money you would like to send in account currency, in minor un
 subject | Subject of the transaction | String
 
 ### HTTP Request
-`GET http://api.fidor.de/internal_transfers`  <sub>index</sub>
+`GET https://api.fidor.de/internal_transfers`  <sub>index</sub>
 
-`GET http://api.fidor.de/internal_transfers/{id}`  <sub>self</sub>
+`GET https://api.fidor.de/internal_transfers/{id}`  <sub>self</sub>
 
-`POST http://api.fidor.de/internal_transfers`  <sub>create</sub>
+`POST https://api.fidor.de/internal_transfers`  <sub>create</sub>
 
-### Example: 
+### Example:
 
-`POST http://api.fidor.de/internal_transfers`
+`POST https://api.fidor.de/internal_transfers`
 
 Request on `/internal_transfers` with the method POST.
 
@@ -120,7 +120,7 @@ updated_at | Last update date-time | String (date-time) ISO 8601 Date-Time
 
 ##Batch Transfer
 
-> GET http://api.fidor.de/batch_transfers
+> GET https://api.fidor.de/batch_transfers
 
 ```
 {
@@ -245,11 +245,11 @@ PREVIEW: A batch transfer can contain multiple transfers which are processed asy
 
 ### HTTP Request
 
-`GET http://api.fidor.de/batch_transfers`  <sub>index</sub>
+`GET https://api.fidor.de/batch_transfers`  <sub>index</sub>
 
-`GET http://api.fidor.de/batch_transfers/{id}`  <sub>self</sub>
+`GET https://api.fidor.de/batch_transfers/{id}`  <sub>self</sub>
 
-`POST http://api.fidor.de/batch_transfers`  <sub>create</sub>
+`POST https://api.fidor.de/batch_transfers`  <sub>create</sub>
 
 ##Coming Soon - Extended Money Operations
 
@@ -257,25 +257,25 @@ In order to create a SEPA Direct Debit you have to crete a SEPA Mandate first. N
 
 ### HTTP Request
 
-`GET http://api.fidor.de/sepa_direct_debits` <sub>index</sub>
+`GET https://api.fidor.de/sepa_direct_debits` <sub>index</sub>
 
-`GET http://api.fidor.de/sepa_direct_debits/{id}` <sub>self</sub>
+`GET https://api.fidor.de/sepa_direct_debits/{id}` <sub>self</sub>
 
-`POST http://api.fidor.de/sepa_direct_debits` <sub>create</sub>
+`POST https://api.fidor.de/sepa_direct_debits` <sub>create</sub>
 
 ###Creating SEPA Mandate
 
 ###Creating SEPA Direct Debit
 
-###Batch Direct Debit 
+###Batch Direct Debit
 
 *PREVIEW:* A direct debit batch contains multiple direct debits which are processed asynchronously.
 
-`GET http://api.fidor.de/batch_direct_debits/{id}` 
+`GET https://api.fidor.de/batch_direct_debits/{id}`
 <sub>self</sub>
 
-`GET http://api.fidor.de/batch_direct_debits` 
+`GET https://api.fidor.de/batch_direct_debits`
 <sub>instances</sub>
 
-`POST http://api.fidor.de/batch_direct_debits` 
+`POST https://api.fidor.de/batch_direct_debits`
 <sub>create</sub>
