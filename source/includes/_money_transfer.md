@@ -1,7 +1,7 @@
 #Money Transfer
 We differ between different types of money transfers. In generell we distinguish between the Fidor internal transfers (Fidor to Fidor money transfer) and external transfers (SEPA, GMT, FPS, BACS etc.).
 
-##Internal Transfer
+##Internal Transfer - Fidor to Fidor
 > Request body
 
 ```json
@@ -33,7 +33,7 @@ We differ between different types of money transfers. In generell we distinguish
 }
 ```
 
-Fidor offers you the possibility to transfer money to your fellow Fidor user without even knowing his account number. To transfer the money you can use one of the following:
+Fidor offers you the possibility to transfer money to your fellow Fidor user without even knowing his account number ("Freunden Geld senden"). To transfer the money you can use one of the following:
 - nickname
 - email address
 - mobile phone number
@@ -71,7 +71,7 @@ Request on `/internal_transfers` with the method POST.
   "account_id" : "123456789",
   "external_uid" : "666",
   "remote_iban": "AT131490022010010999",
-  "remote_bic": "SPADATW1",
+  "remote_bic": "SPADATW1XXX",
   "remote_name" : "Walter White (Heisenberg)",
   "amount" : 100000,
   "subject" : "Here is your dirty money, Walter!"
@@ -89,7 +89,7 @@ Request on `/internal_transfers` with the method POST.
   "amount": 100000,
   "remote_name": "Walter White (Heisenberg)",
   "remote_iban": "AT131490022010010999",
-  "remote_bic": "SPADATW1",
+  "remote_bic": "SPADATW1XXX",
   "state": "success",
   "created_at": "2015-03-04T13:47:48+01:00",
   "updated_at": "2015-03-04T13:47:48+01:00",
@@ -109,7 +109,7 @@ Parameter | Description | Format
 account_id | Account identifier of the sender | String
 external_uid | Unique ID of the creator of the transaction. In case a uid is reused for a transaction, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transaction status is unknown | String
 remote_iban | IBAN of the recipient's bank account | String
-remote_bic | BIC of the recipient's bank account. Optional for transfers between two German bank accounts | String
+remote_bic | BIC of the recipient's bank account. Optional for transfers between two German bank accounts | String (11 characters!)
 remote_name | Recipient's full name | String
 amount | Amount of money you would like to send in in account currency, in minor units, e.g. 1EUR is represented as 100. | Integer
 currency |Currency of Account or Amount. ISO 4217 alpha-3 - 3 letter upcase e.g EUR | String (enum)
@@ -152,7 +152,7 @@ updated_at | Last update date-time | String (date-time) ISO 8601 Date-Time
                     "amount": 1,
                     "remote_name": "Walter Yoplack",
                     "remote_iban": "DE49140520002640025972",
-                    "remote_bic": null,
+                    "remote_bic": "",
                     "state": "received",
                     "created_at": "2015-02-03T12:18:42+01:00",
                     "updated_at": "2015-02-03T12:18:42+01:00",
@@ -205,7 +205,7 @@ updated_at | Last update date-time | String (date-time) ISO 8601 Date-Time
                     "amount": 1,
                     "remote_name": "Walter Yoplack",
                     "remote_iban": "DE49140520002640025972",
-                    "remote_bic": null,
+                    "remote_bic": "",
                     "state": "success",
                     "created_at": "2015-02-12T14:22:37+01:00",
                     "updated_at": "2015-02-12T14:22:37+01:00",
