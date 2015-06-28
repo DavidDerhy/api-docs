@@ -39,21 +39,21 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id="introduction">Introduction</h1>
-<pre><code class="highlight plaintext">  /ffffff   /ffffff  /ff      
- /ff__  ff /ff__  ff| ff      
-| ff  \ ff| ff  \ ff| ff 
+<pre><code class="highlight plaintext">  /ffffff   /ffffff  /ff
+ /ff__  ff /ff__  ff| ff
+| ff  \ ff| ff  \ ff| ff
 | ffffffff| ffffff  | ff
 | ff__  ff| ff      | ff
 | ff  | ff| ff      | ff
 | ff  | ff| ff      | ff
-|__/  |__/|__/      |__/   
+|__/  |__/|__/      |__/
 </code></pre>
 
 <p>Welcome to the Fidor Banking API! Our API allows you to easily access your Fidor bank account, get information about your transaction history and submit various types of payments. In addition you may provide services for Fidor customers and access their accounts if certain conditions are met.</p>
 
 <p>For general introduction to our developer program please visit our <a href="https://developer.fidor.de/">developer community</a>.</p>
 
-<p>Our API is RESTful, we use JSON format and OAuth2.0 authorization. </p>
+<p>Our API is RESTful, we use JSON format and OAuth2.0 authorization.</p>
 
 <h2 id="endpoints">Endpoints</h2>
 
@@ -167,10 +167,27 @@
 
 <p>There are two environments with their respective security services:</p>
 
-<p>| Environment| Login (Authentication) | OAuth (Authorization) | API
-| &mdash;&mdash;- | &mdash;- | &mdash; |
-| Testing/Simulation | aps.fidor.de (with sandbox accounts/logins)| aps.fidor.de | aps.fidor.de
-| Production | banking.fidor.de (with real accounts/logins) | apm.fidor.de | api.fidor.de</p>
+<table><thead>
+<tr>
+<th>Environment</th>
+<th>Login (Authentication)</th>
+<th>OAuth (Authorization)</th>
+<th>API</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Testing/Simulation</td>
+<td>aps.fidor.de (with sandbox accounts/logins)</td>
+<td>aps.fidor.de</td>
+<td>aps.fidor.de</td>
+</tr>
+<tr>
+<td>Production</td>
+<td>banking.fidor.de (with real accounts/logins)</td>
+<td>apm.fidor.de</td>
+<td>api.fidor.de</td>
+</tr>
+</tbody></table>
 
           <h1 id="getting-started">Getting Started</h1>
 
