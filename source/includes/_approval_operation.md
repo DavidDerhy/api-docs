@@ -32,6 +32,9 @@ Production OAuth | https://aps.fidor.de/oauth
 
 The Application Client ID and Secret stay the same.
 
+####Transport Layer Security (TLS) and Java
+The TLS server in the production environment is configured not to allow weak ciphers specifications. Depending on what version of the Java you are using, it may be necessary to install the 'Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files' in order to be able to access the system. Please see: http://docs.oracle.com/javase/7/docs/technotes/guides/security/SunProviders.html#importlimits and http://www.oracle.com/technetwork/java/javase/downloads/index.html for more information and download possibilities
+
 ##Statistics
 We will provide you with statistics for your application in the near future.
 
