@@ -87,7 +87,7 @@ maiden_name | Customer's maide name | String
 adr_street | Street address of the customer | String
 adr_street_number | House number | String
 adr_post_code | Postcode of the customer | String
-adr_city | City customer lives in | String 
+adr_city | City customer lives in | String
 adr_country | Country customer lives in | String
 adr_phone | Customer's phone number | String
 adr_mobile | Customer's mobile phone number | String
@@ -99,9 +99,9 @@ nationality | Customer's nationality - Country code as defined in ISO3166 alpha2
 marital_status | Customer's marital status | Integer (enum) - 1: single, 2: married, 3: widowed, 4: divorced, 5: seperated, 6: de facto
 religion | Customer's religion - denomination for tax reasons. 0: no information, 1: no denomination, 2: Protestant, 3: Roman-Catholic, 4-18: Other denominations| Integer (enum) - Valid Values "0", "1", "2", "3", "4", "5", "6", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", 18"
 id_card_registration_city | The | String
-id_card_number | The number of customer's identity document | 
+id_card_number | The number of customer's identity document |
 id_card_valid_until | The expiration date of customer's identity document| String (date)
-created_at | Creation date-time, never changes. ISO 8601 Date-Time e.g. "2014-10-10T17:41:58+02:00" | Datetime 
+created_at | Creation date-time, never changes. ISO 8601 Date-Time e.g. "2014-10-10T17:41:58+02:00" | Datetime
 updated_at | Last update date-time. ISO 8601 Date-Time e.g. "2015-02-04T04:08:54+01:00" | Datetime
 creditor_identifier | Creditor Identifier ID set if the customer wants to create direct debits | String
 
@@ -184,7 +184,7 @@ is_trusted | Indicates if this is an escrow account | Boolean
 is_locked | Indicates whether the account is locked | Boolean
 currency | Currency of Account or Amount. ISO 4217 alpha-3 - 3 letter upcase e.g EUR | String (enum)
 overdraft | Available account overdraft in minor units | Integer
-created_at | Creation date-time, never changes. ISO 8601 Date-Time e.g. "2014-10-10T17:41:58+02:00" | Datetime 
+created_at | Creation date-time, never changes. ISO 8601 Date-Time e.g. "2014-10-10T17:41:58+02:00" | Datetime
 updated_at | Last update date-time. ISO 8601 Date-Time e.g. "2015-02-04T04:08:54+01:00" | Datetime
 
 For your convenience we also include the information about the customers of the account in a response.
@@ -192,13 +192,13 @@ For your convenience we also include the information about the customers of the 
 
 ### HTTP Requests
 
-`GET https://api.fidor.de/accounts` 
+`GET https://api.fidor.de/accounts`
 <sub>index</sub>
 
-`GET https://api.fidor.de/accounts/{id}` 
+`GET https://api.fidor.de/accounts/{id}`
 <sub>self</sub>
 
-`GET https://api.fidor.de/accounts/{id}/transactions` 
+`GET https://api.fidor.de/accounts/{id}/transactions`
 <sub>account transaction</sub>
 
 `GET https://api.fidor.de/accounts/{id}/internal_transfers`
@@ -249,10 +249,10 @@ booking_code | Accounting transaction code in the central banking system | Strin
 booking_date | Date the transaction was booked. ISO 8601 Date | String (date)
 value_date | Date the amount was credited to the account. ISO 8601 Date | String (date)
 return_transaction_id | If the transaction was marked for return, this references the new return transaction | String
-created_at | Creation date-time, never changes. ISO 8601 Date-Time e.g. "2014-10-10T17:41:58+02:00" | Datetime 
+created_at | Creation date-time, never changes. ISO 8601 Date-Time e.g. "2014-10-10T17:41:58+02:00" | Datetime
 updated_at | Last update date-time. ISO 8601 Date-Time e.g. "2015-02-04T04:08:54+01:00" | Datetime
 currency | Currency of Account or Amount. ISO 4217 alpha-3 - 3 letter upcase e.g EUR | String (enum)
-transaction_type_details | Details specific to this transaction type are collected here | 
+transaction_type_details | Details specific to this transaction type are collected here |
 
 ##Transaction Type Details
 Different transaction type can have different details that are specific for this particular type of the transaction. Some of the transaction types don't have any specific attributes. In that case the `transaction_type_details` object stays empty.
@@ -264,7 +264,7 @@ fidor_payout | internal payment (out) | internal_transfer_details
 emoney_payin | Giropay payment (in) | internal_transfer_details
 sepa_payin | SEPA payment (in) | sepa_credit_transfer_details
 payout | SEPA payment (out) | sepa_credit_transfer_details
-creditcard_* | see below | credit_card_details 
+creditcard_* | see below | credit_card_details
 sepa_core_direct_debit | SEPA DD payment (out) standard | sepa_credit_transfer_details
 sepa_b2b_direct_debit | SEPA DD payment (out) business | sepa_credit_transfer_details
 gmt_payout | global money transfer (out) | gmt_details
@@ -281,7 +281,7 @@ Let's take closer look at the transaction types Fidor supports right now.
 
 
 ###Internal Transfer
-Internal transfers are closed loop transaction (payments) from one Fidor bank account to another. 
+Internal transfers are closed loop transaction (payments) from one Fidor bank account to another.
 Details of the `internal_transfer` object contain extensive information about the transaction's initiator.
 
 ####fidor_payin
@@ -389,7 +389,7 @@ creditcard_notification_fee | Fee for transaction notification (e-mail, SMS)
 > credit_card details
 
 ```json
-{ 
+{
   "cc_category": "R",
   "cc_merchant_category": "5411",
   "cc_merchant_name": "Metro Cash & Carry",
@@ -474,4 +474,3 @@ Parameter | Description | Format
 provider | name of the mobile network operator | String
 phone_number | Mobile phone number user for topup | String
 topup_subject | Subject of the mobile topup | String
-
