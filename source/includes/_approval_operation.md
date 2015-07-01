@@ -28,7 +28,7 @@ To connect your application to production use the following URLs:
 Function | URL
 ---- | ----
 Production API | https://api.fidor.de
-Production OAuth | https://aps.fidor.de/oauth
+Production OAuth | https://apm.fidor.de/oauth
 
 The Application Client ID and Secret stay the same.
 
