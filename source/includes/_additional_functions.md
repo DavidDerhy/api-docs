@@ -336,3 +336,171 @@ PUT | `https://api.fidor.de/short_term_loans/:id` | To pay back current short te
 ```
 // To be defined.
 ```
+
+
+#Blocked Amounts
+
+Parameter | Description | Format
+--------- | ----------- | -----------
+id | Unique block identifier | String
+account_id | Account identifier of the sender | String
+amount | Amount blocked, in account currency, in minor units, e.g. 1EUR is represented as 100. Must be greater than 0 e.g. at least one cent in EUR | Integer
+expires_after | Block expiration date | String (date) ISO 8601 Date
+description | Description of the block | String
+version | Internal version number, read-only | String
+created_at | Creation date-time, never changes | String (date-time) ISO 8601 Date-Time
+updated_at | Last update date-time | String (date-time) ISO 8601 Date-Time
+
+Method    | Endpoint    | Description
+--------- | ----------- | -----------
+GET | `https://api.fidor.de/blocked_amounts` | To get list of blocked amounts
+GET | `https://api.fidor.de/blocked_amounts/:id` | To get information about specific blocked amount by id
+POST | `https://api.fidor.de/blocked_amounts` | To create a new blocked amount
+PUT | `https://api.fidor.de/blocked_amounts/:id` | To update an existing blocked amount
+DELETE | `https://api.fidor.de/blocked_amounts/:id` | To delete blocked amount
+
+## List of all blocked amounts
+> Including currently active ones
+
+```
+{
+  "data" : [
+    {
+      "id": "6",
+      "account_id": "95828151",
+      "amount": 10000,
+      "expires_after": "2015-04-03T00:00:00Z",
+      "description": "created",
+      "version": "1",
+      "created_at": "2015-04-02T15:16:21Z",
+      "updated_at": "2015-04-02T15:16:21Z"
+    },
+    {
+      "id": "7",
+      "account_id": "95828151",
+      "amount": 20000,
+      "expires_after": "2015-04-03T00:00:00Z",
+      "description": "created",
+      "version": "1",
+      "created_at": "2015-04-02T15:16:21Z",
+      "updated_at": "2015-04-02T15:16:21Z"
+    }
+  ]
+}
+```
+
+## Get specific blocked amount
+> GET https://api.fidor.de/blocked_amounts/:id
+
+```
+{
+    "id": "6",
+    "account_id": "95828151",
+    "amount": 10000,
+    "expires_after": "2015-05-03T00:00:00Z",
+    "description": "created",
+    "version": "1",
+    "created_at": "2015-04-02T15:16:21Z",
+    "updated_at": "2015-04-02T15:16:21Z"
+}
+```
+
+> In case if specified blocked amount is not found.
+
+```
+{
+    "code": 404,
+    "errors": [],
+    "message": "Blocked amount not found"
+}
+```
+
+
+## Create a new blocked amount
+> POST https://api.fidor.de/blocked_amounts
+
+> request body
+
+```
+{
+  "account_id" : "95828151",
+  "description" : "the description",
+  "amount" : 2000,
+  "expires_after" : "2020-10-10"
+}
+```
+
+> response body
+
+```
+{
+  "id": "6",
+  "account_id": "95828151",
+  "amount": 2000,
+  "expires_after": "2020-10-10T00:00:00Z",
+  "description": "the description",
+  "version": "1",
+  "created_at": "2015-04-02T15:16:21Z",
+  "updated_at": "2015-04-02T15:16:21Z"
+}
+```
+
+> If there are any errors during request
+
+```
+{
+  "code": 422,
+  "errors": [
+      {
+          "field": "account_id",
+          "message": "should be the authenticated account id"
+      }
+  ]
+}
+```
+
+## Update the blocked amount
+> PUT https://api.fidor.de/blocked_amounts/:id
+
+> request body
+
+```
+{
+  "account_id" : 95828151,
+  "description" : "new description"
+}
+```
+
+> response body
+
+```
+{
+  "id": "6",
+  "account_id": "95828151",
+  "amount": 2000,
+  "expires_after": "2020-10-10T00:00:00Z",
+  "description": "new description",
+  "version": "1",
+  "created_at": "2015-04-02T15:16:21Z",
+  "updated_at": "2015-04-02T15:16:21Z"
+}
+```
+
+> You can only edit blocked amounts that are created via this API. You'll get an error when trying to edit the record you're not allowed to.
+
+```
+{
+  "code": 403,
+  "errors": [],
+  "message": "You are not allowed to edit this record"
+}
+```
+
+## Unblocks the blocked amount
+> DELETE https://api.fidor.de/blocked_amounts/:id
+
+> response status
+
+```
+204 No Content
+```
