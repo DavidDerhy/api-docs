@@ -1,6 +1,6 @@
 #Basic Data
 
-##User
+##Users
 > GET https://api.fidor.de/users/current
 
 ```json
@@ -27,7 +27,7 @@ updated_at | Last update date-time | String (date-time) ISO 8601 Date-Time
 `GET https://api.fidor.de/users/current` <sub>current user</sub>
 
 
-##Customer
+##Customers
 > GET https://api.fidor.de/customers
 
 ```json
@@ -105,7 +105,7 @@ created_at | Creation date-time, never changes. ISO 8601 Date-Time e.g. "2014-10
 updated_at | Last update date-time. ISO 8601 Date-Time e.g. "2015-02-04T04:08:54+01:00" | Datetime
 creditor_identifier | Creditor Identifier ID set if the customer wants to create direct debits | String
 
-## Account
+## Accounts
 
 > GET https://api.fidor.de/accounts
 

@@ -2,12 +2,10 @@
 title: Fidor API Reference
 
 toc_footers:
-  - <a href='https://apm.fidor.de'>Get API Credentials</a>
+  - <a href='https://apm.fidor.de'>Application Manager</a>
   - <a href='https://developer.fidor.de/community/'>Developer Community</a>
+  - <a href='https://developer.fidor.de/api-browser/'>API Browser</a>
   - <a href="https://www.fidor.de/impressum">Imprint</a>
-  - <a href='http://github.com/tripit/slate'>Powered by Slate</a>
-
-
 
 includes:
   - getting_started
@@ -43,9 +41,9 @@ Here's a quick overview of our API endpoints:
 
 Method | Endpoint | Usage | Returns
 --------- | ----------- | --------- | -----------
-GET | [`/users/current`](#user) | Get user's data | user
-GET | [`/customers`](#customer) | Get customer data | customer
-GET | [`/accounts`](#account) | Get customer's bank accounts | account
+GET | [`/users/current`](#users) | Get user's data | users
+GET | [`/customers`](#customers) | Get customer data | customers
+GET | [`/accounts`](#accounts) | Get customer's bank accounts | accounts
 POST | [`/internal_transfers`](#internal-transfer) | Send money to another fidor user |
 GET | [`/internal_transfers`](#internal-transfer) | Get all fidor-to-fidor transfers for the current user | internal transfer
 POST | [`/sepa_credit_transfers`](#sepa-credit-transfer) | Send money to another bank account through SEPA |
