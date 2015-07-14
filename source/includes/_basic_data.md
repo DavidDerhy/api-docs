@@ -72,7 +72,7 @@ updated_at | Last update date-time | String (date-time) ISO 8601 Date-Time
     }
 }
 ```
-Customer gives you much more information about the user
+Customers gives you all the personal data of the customer
 
 Parameter | Description | Format
 --------- | ----------- | -----------

@@ -44,8 +44,8 @@ Method | Endpoint | Usage | Returns
 GET | [`/users/current`](#users) | Get user's data | users
 GET | [`/customers`](#customers) | Get customer data | customers
 GET | [`/accounts`](#accounts) | Get customer's bank accounts | accounts
-POST | [`/internal_transfers`](#internal-transfer) | Send money to another fidor user |
-GET | [`/internal_transfers`](#internal-transfer) | Get all fidor-to-fidor transfers for the current user | internal transfer
+POST | [`/internal_transfers`](#internal-transfer---fidor-to-fidor) | Send money to another fidor user |
+GET | [`/internal_transfers`](#internal-transfer---fidor-to-fidor) | Get all fidor-to-fidor transfers for the current user | internal transfer
 POST | [`/sepa_credit_transfers`](#sepa-credit-transfer) | Send money to another bank account through SEPA |
 GET | [`/sepa_credit_transfers`](#sepa-credit-transfer) | Get all sepa transfers for the current user | sepa credit  transfer
 POST | [`/batch_transfers`](#batch-transfer) | Send money in batch either with internal or sepa credit transfer or both |
