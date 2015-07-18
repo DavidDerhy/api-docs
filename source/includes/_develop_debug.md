@@ -76,7 +76,7 @@ From the perspective of the application, the OAuth2 Authorization Code Grant flo
   - In case authorization of your app was not performed, you will receive an [error response](#errors) from the server as described in
     [OAuth2 sec 4.1.2.1](https://tools.ietf.org/html/rfc6749#section-4.1.2.1)
 
-  - You MUST check the state parameter to ensure it contains the same value you sent to the authorize endpoint. If not, you must discontinue processing at this point and should contact Fidor as this is likely an attempt to breach security!
+  - You MUST check the `state` parameter to ensure it contains the same value you sent to the authorize endpoint. If not, you must discontinue processing at this point and should contact Fidor as this is likely an attempt to breach security!
 
   - Extract the `code` parameter from the response and send it to the Fidor server's [Access Token Request endpoint](#systems) `oauth/token` as described in [OAuth2 sec 4.1.3](https://tools.ietf.org/html/rfc6749#section-4.1.3). You will need to supply the following parameters in the body of a `POST` request, using `application/x-www-form-urlencoded` encoding:
 
