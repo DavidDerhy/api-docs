@@ -1,5 +1,5 @@
 #Money Transfer
-We differ between different types of money transfers. In generell we distinguish between the Fidor internal transfers (Fidor to Fidor money transfer) and external transfers (SEPA, GMT, FPS, BACS etc.).
+We differentiate between different types of money transfers. In general we distinguish between the Fidor internal transfers (Fidor to Fidor money transfer) and external transfers (SEPA, GMT, FPS, BACS etc.).
 
 ##Internal Transfer - Fidor to Fidor
 > Request body
@@ -33,7 +33,7 @@ We differ between different types of money transfers. In generell we distinguish
 }
 ```
 
-Fidor offers you the possibility to transfer money to your fellow Fidor user without even knowing his account number ("Freunden Geld senden"). To transfer the money you can use one of the following:
+Fidor offers you the possibility to transfer money to other Fidor users without even knowing their account number ("Freunden Geld senden"). To transfer the money you can use one of the following:
 - nickname
 - email address
 - mobile phone number
@@ -99,10 +99,10 @@ Request on `/internal_transfers` with the method POST.
 }
 ```
 
-To transfer money to any country participating in SEPA (Single Euro Payments Area) initiative you will have to use the `sepa_credit_transfers` endpoint
+To transfer money to any country participating in the SEPA (Single Euro Payments Area) initiative  use the `sepa_credit_transfers` endpoint
 `POST https://api.fidor.de/sepa_credit_transfers`
 
-If you want to send money to another bank account in Germany, you don't have to provide the BIC - IBAN is enough.
+If you want to send money to another bank account in Germany, you don't even have to provide the BIC - IBAN is enough.
 
 Parameter | Description | Format
 --------- | ----------- | -----------
@@ -253,7 +253,7 @@ PREVIEW: A batch transfer can contain multiple transfers which are processed asy
 
 ##Coming Soon - Extended Money Operations
 
-In order to create a SEPA Direct Debit you have to crete a SEPA Mandate first. Not every Fidor customer is eligible for creating the SEPA Mandates. If you are interested in SEPA Direct Debits and do not have a required account for creating SEPA Mandates you will have to contact Fidor first.
+In order to create a SEPA Direct Debit you have to create a SEPA Mandate first. Not every Fidor customer is eligible to create SEPA Mandates. If you are interested in SEPA Direct Debits and do not have a required account for creating SEPA Mandates you will need to contact Fidor first.
 
 ### HTTP Request
 

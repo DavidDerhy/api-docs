@@ -1,5 +1,5 @@
 #Overdraft
-Fidor offers its customers to request an overdraft for their accounts. Overdraft is calculated based on your montly income for the last three months and your current account balance. Since your current balance may vary significantly from day to day, we will show you the overdraft line once you requested and received it.
+Fidor allows its customers to request an overdraft for their accounts. The available overdraft limit is calculated from the monthly income of the last three months and your current account balance. Since your current balance may vary significantly from day to day, we will show you the overdraft line once you requested and received it.
 
 Parameter | Description | Format
 --------- | ----------- | -----------
@@ -37,7 +37,7 @@ PUT | `https://api.fidor.de/overdrafts/:id` | To deactivate your overdraft
 }
 ```
 
-> Requesting an overdraft for a wrong account
+> Requesting an overdraft for an incorrect account
 
 ```
 {
@@ -51,7 +51,7 @@ PUT | `https://api.fidor.de/overdrafts/:id` | To deactivate your overdraft
 }
 ```
 
-> When the request was successfull you will get the information about your overdraft in the response
+> When the request was successful, we will provide information concerning the overdraft in the response
 
 ```
 {
@@ -62,16 +62,14 @@ PUT | `https://api.fidor.de/overdrafts/:id` | To deactivate your overdraft
 }
 ```
 
-Every new fullKYC fidor customer doesn't have an overdraft but can request one. To request an overdraft you have to make a POST request to the /overdrafts endpoint - `POST https://api.fidor.de/overdrafts`
+Not every new fullKYC fidor customer has an overdraft but can request one. To request an overdraft, make a POST request to the /overdrafts endpoint - `POST https://api.fidor.de/overdrafts`
 
-Following scenarios are possible:
+The following scenarios are possible:
 
 - Your account is not overdraftable or was blacklisted
-- You're trying to request an overdraft for a wrong account
+- You're trying to request an overdraft for an incorrect account
 - An overdraft was granted to you and you get the detailed information about it
 
-
-Every new fullKYC fidor customer doesn't have an overdraft but can request one. To request an overdraft you have to make a POST request to the /overdrafts endpoint - `POST https://api.fidor.de/overdrafts`
 
 ## History of Overdrafts and Current Overdraft
 > GET https://api.fidor.de/overdrafts - history of your overdrafts
@@ -124,7 +122,7 @@ Every new fullKYC fidor customer doesn't have an overdraft but can request one. 
 }
 ```
 
-Once you were granted an overdraft you have the possibility to get the history of you previous overdrafts or your current overdraft - `GET https://api.fidor.de/overdrafts`
+Once you were granted an overdraft you have the possibility to retrieve the history of your previous overdrafts or your current overdraft - `GET https://api.fidor.de/overdrafts`
 
 
 ## Deactivate an Overdraft
@@ -136,7 +134,7 @@ Once you were granted an overdraft you have the possibility to get the history o
 }
 ```
 
-In case you don't need an overdraft anymore you have the possibility to deactivate it. To deactivate an overdraft you have to send a `PUT` request to the overdraft's endpoint `https://api.fidor.de/overdrafts/{:id}` with the request body containing the `"deactivate"` property set to `true`.
+In case you don't need an overdraft anymore you can deactivate it. To deactivate an overdraft send a `PUT` request to the overdraft's endpoint `https://api.fidor.de/overdrafts/{:id}` with the request body containing the `"deactivate"` property set to `true`.
 
 #Short-Term Loan
 
@@ -240,7 +238,7 @@ PUT | `https://api.fidor.de/short_term_loans/:id` | To pay back current short te
 ```
 
 <aside class="notice">
-  If you haven't requested any short_term_loans yet, or requested one but not activated it yet.
+  If you haven't requested any short_term_loans yet, or requested one but have not activated it yet.
 </aside>
 
 ## New Short Term Loan preview
@@ -405,7 +403,7 @@ DELETE | `https://api.fidor.de/blocked_amounts/:id` | To delete blocked amount
 }
 ```
 
-> In case if specified blocked amount is not found.
+> In case the specified blocked amount is not found.
 
 ```
 {
@@ -445,7 +443,7 @@ DELETE | `https://api.fidor.de/blocked_amounts/:id` | To delete blocked amount
 }
 ```
 
-> If there are any errors during request
+> If there are any errors during the request
 
 ```
 {
@@ -486,7 +484,7 @@ DELETE | `https://api.fidor.de/blocked_amounts/:id` | To delete blocked amount
 }
 ```
 
-> You can only edit blocked amounts that are created via this API. You'll get an error when trying to edit the record you're not allowed to.
+> You can only edit blocked amounts that were created via this API. You'll get an error when trying to edit the record you're not allowed to.
 
 ```
 {
