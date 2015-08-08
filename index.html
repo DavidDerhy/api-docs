@@ -29,10 +29,10 @@
       <div id="toc">
       </div>
         <ul class="toc-footer">
-            <li><a href='https://apm.fidor.de'>Get API Credentials</a></li>
+            <li><a href='https://apm.fidor.de'>Application Manager</a></li>
             <li><a href='https://developer.fidor.de/community/'>Developer Community</a></li>
+            <li><a href='https://developer.fidor.de/api-browser/'>API Browser</a></li>
             <li><a href="https://www.fidor.de/impressum">Imprint</a></li>
-            <li><a href='http://github.com/tripit/slate'>Powered by Slate</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
@@ -69,31 +69,31 @@
 </thead><tbody>
 <tr>
 <td>GET</td>
-<td><a href="#user"><code class="prettyprint">/users/current</code></a></td>
+<td><a href="#users"><code class="prettyprint">/users/current</code></a></td>
 <td>Get user&rsquo;s data</td>
-<td>user</td>
+<td>users</td>
 </tr>
 <tr>
 <td>GET</td>
-<td><a href="#customer"><code class="prettyprint">/customers</code></a></td>
+<td><a href="#customers"><code class="prettyprint">/customers</code></a></td>
 <td>Get customer data</td>
-<td>customer</td>
+<td>customers</td>
 </tr>
 <tr>
 <td>GET</td>
-<td><a href="#account"><code class="prettyprint">/accounts</code></a></td>
+<td><a href="#accounts"><code class="prettyprint">/accounts</code></a></td>
 <td>Get customer&rsquo;s bank accounts</td>
-<td>account</td>
+<td>accounts</td>
 </tr>
 <tr>
 <td>POST</td>
-<td><a href="#internal-transfer"><code class="prettyprint">/internal_transfers</code></a></td>
+<td><a href="#internal-transfer---fidor-to-fidor"><code class="prettyprint">/internal_transfers</code></a></td>
 <td>Send money to another fidor user</td>
 <td></td>
 </tr>
 <tr>
 <td>GET</td>
-<td><a href="#internal-transfer"><code class="prettyprint">/internal_transfers</code></a></td>
+<td><a href="#internal-transfer---fidor-to-fidor"><code class="prettyprint">/internal_transfers</code></a></td>
 <td>Get all fidor-to-fidor transfers for the current user</td>
 <td>internal transfer</td>
 </tr>
@@ -192,41 +192,41 @@
           <h1 id="getting-started">Getting Started</h1>
 
 <p>Welcome to the Fidor APIs, your direct access to the functions and services of the world&rsquo;s most innovative Bank: Fidor Bank.
-To get started you just need a (free) Fidor Community Account.</p>
+To get started all you need is a (free) Fidor Community Account.</p>
 
 <h2 id="create-a-fidor-account">Create a Fidor Account</h2>
 
 <p>If you already have a Fidor bank account just follow the instructions on <a href="#create-an-application">how to create an application</a>.</p>
 
-<p>If you do not have a Fidor account yet or choose to create a separate account for development visit Fidor Bank&rsquo;s webpage <a href="https://www.fidor.de/register">Fidor DE</a> and register for an account. Registering for just a &ldquo;Fidor Community Account&rdquo; is sufficient for testing the API.</p>
+<p>If you do not have a Fidor account yet or would like to create a separate account for development visit Fidor Bank&rsquo;s webpage <a href="https://www.fidor.de/register">Fidor DE</a> and register. Registering for just a &ldquo;Fidor Community Account&rdquo; is sufficient for testing the API.</p>
 
 <p>You will have to provide some personal information, a valid e-mail address and a mobile number (to send you a confirmation SMS). Please follow the <a href="https://developer.fidor.de/kb/create-an-account/">illustrated step-by-step guide here</a>.</p>
 
 <p>You may extend your Fidor Account to a full blown bank account now, but you do not need to. You can do that at any time later.</p>
 
-<p>Once you created your account you can go to the <a href="https://apm.fidor.de/">Application Manager</a> and </p>
+<p>Once you created your account you can go to the <a href="https://apm.fidor.de/">Application Manager</a>. </p>
 
 <p><em>Please do not confuse the</em> Fidor Community Account <em>with the</em> Developer Community Account <em>you need if you want to take part in the discussion in <a href="https://developer.fidor.de/community/">Developer Community Forums</a>.</em></p>
 
 <h2 id="add-an-application-(to-use-the-api)">Add an Application (to use the API)</h2>
 
-<p>In order to use the API, you have to tell Fidor the name, purpose and some technical information of the programm (application) on your side that will connect to the API on our side. </p>
+<p>In order to use the API, you have to tell Fidor the name, purpose and some technical information of the your application that will connect to the Fidor API. </p>
 
-<p>Please login with your Fidor account credentials to the <a href="https://apm.fidor.de/">Application Manager</a> and select &ldquo;New App&rdquo;. If you log in for the first time you have to accept the Terms of Service first.</p>
+<p>Please log in to the <a href="https://apm.fidor.de/">Application Manager</a> with your Fidor account credentials and select &ldquo;New App&rdquo;. If you log in for the first time you have to accept the Terms of Service first.</p>
 
-<p>You can add as many applications as you want. </p>
+<p>You can add as many applications as you like. </p>
 
 <h3 id="sandbox">Sandbox</h3>
 
-<p>Every application get&rsquo;s a dedicated test environment (sandbox). The sandbox comes with some test data, and a dedicated sandbox user login. </p>
+<p>Every application is provided with a dedicated test environment (sandbox). The sandbox comes with some test data and a dedicated sandbox user login to simulate an account holder. </p>
 
-<p>Our sandbox offers you the same functionality as the live API. So  you can start developing your application without any risk of loosing money or unintentionally altering data.</p>
+<p>Our sandbox offers you the same functionality as the live API, so you can start developing your application without risk of losing money or unintentionally altering data.</p>
 
 <h3 id="using-starter-kits">Using Starter Kits</h3>
 
 <p>We provide you with a set of Fidor Starter Kits. They have been created to help you understand how the API and the authentication works. You also can use the code samples as a starting point for your own application. </p>
 
-<p>They work out of the box - you just have to adjust the URL and callback URL to where you put the program. </p>
+<p>They work out of the box - you only have to adjust the URL and callback URL to where you put the program. </p>
 
 <p>Until now we provide example applications for following programming languages/frameworks:</p>
 
@@ -237,7 +237,7 @@ To get started you just need a (free) Fidor Community Account.</p>
 <li>Go</li>
 </ul>
 
-<p>Our starter kits are also <a href="https://github.com/fidor/fidor_starter_kits">available on github</a> . Please feel free to add your own code and libraries.</p>
+<p>Our starter kits are also available on <a href="https://github.com/fidor/fidor_starter_kits">github</a> . Please feel free to add your own code and libraries.</p>
 
           <h1 id="develop-and-debug">Develop and Debug</h1>
 
@@ -285,27 +285,27 @@ Here your can also select whether your application only needs access to your own
  \______/ |__/  |__/ \______/    \___/  |__/  |__/
 </code></pre>
 
-<p>The Fidor API offers many functions to retrieve information from your and other people&rsquo;s bank accounts, community accounts and much more. The extent of access your application needs, is configured when you define the <em>scope</em> of your application in the Application Manager.</p>
+<p>The Fidor API offers many functions to retrieve information from your and other people&rsquo;s bank accounts, community accounts and much more. The extent of access your application needs is configured when you define the <em>scope</em> of your application in the Application Manager.</p>
 
 <p>In order to actually access the account and retrieve the requested data, the account holder needs to authorize your application and allow it to access their account. This is achieved
 using <a href="https://tools.ietf.org/html/rfc6749">OAuth 2</a>.</p>
 
 <h3 id="client-facing-apps-vs.-server-side-connection">Client facing apps vs. server side connection</h3>
 
-<p>Fidor customers have diverse use cases for the Fidor API, ranging from payment automation without any user interaction to situations where consumers will sit in front of the computer every time they use the application. Applications run on PCs, mobile devices, on premise service and in the cloud. All that has implications on time and means of authentication and authorization.</p>
+<p>Fidor customers have diverse use cases for the Fidor API, ranging from payment automation without any user interaction to situations where consumers will sit in front of the computer every time they use the application. Applications run on PCs, mobile devices, on premise service and in the cloud. All this has implications on time and means of authentication and authorization.</p>
 
-<p>The primarily supported authentication method from Fidor is the 3 legged OAuth2 flow, that is particular useful for server based client facing apps and supports even 3rd party application providing. The following discussion and documentation is based on that mode.</p>
+<p>The primarily supported authentication method from Fidor is the 3 legged OAuth2 flow, that is particularly useful for server based client-facing apps and supports 3rd party application providing. The following discussion and documentation is based on that mode.</p>
 
-<p>For applications to simply control your our own bank account via a pure server side connection we soon will provide an improved approval process, OAuth flow and OAuth features. Also mobile applications need and get special treatment. Please get in contact with us via e-mail or leave a message in the approval submittion form.</p>
+<p>For applications to simply control your our own bank account via a pure server side connection we soon will provide an improved approval process, OAuth flow and OAuth features. Also mobile applications require special treatment. Please get in contact with us via e-mail or leave a message in the approval submission form.</p>
 
 <h3 id="user-perspective">User perspective</h3>
 
-<p>From the user&rsquo;s perspective this works as follows:</p>
+<p>From the user&rsquo;s perspective the process works as follows:</p>
 
 <ul>
-<li><p>the user is redirected to Fidor and, in case they are not already logged in, is asked to <strong>enter username and password</strong></p></li>
-<li><p>in case the user has not previously authorized your app, the user is displayed the list of permissions your application is requesting and <strong>asked to confirm that the app is allowed to access their account with the given scope</strong>.</p></li>
-<li><p>finally, the user is redirected to your app which will be allowed to make API calls</p></li>
+<li><p>the user is redirected to Fidor and in case they are not already logged in, is asked to <strong>enter their username and password</strong></p></li>
+<li><p>in case the user has not previously authorized your app, the user is displayed the list of permissions your application is requesting and is <strong>asked to confirm that the app is allowed to access their account with the given scope</strong>.</p></li>
+<li><p>finally, the user is redirected to your app which will make calls to the API.</p></li>
 </ul>
 
 <h3 id="application-perspective">Application perspective</h3>
@@ -313,7 +313,7 @@ using <a href="https://tools.ietf.org/html/rfc6749">OAuth 2</a>.</p>
 <p>From the perspective of the application, the OAuth2 Authorization Code Grant flow needs to be implemented:</p>
 
 <ul>
-<li><p>the user is redirected via http redirect to the request <a href="#systems">authorization endpoint</a> by your application:</p>
+<li><p>the the app redirects th user to the <a href="#systems">request authorization endpoint</a> via http redirect:</p>
 
 <p><code class="prettyprint">/oauth/authorize?redirect_uri=&lt;redirect_url&gt;&amp;client_id=&lt;client_id&gt;&amp;state=&lt;state&gt;&amp;response_type=code</code></p></li>
 <li><p>you will need to provide the following values:</p>
@@ -325,21 +325,28 @@ using <a href="https://tools.ietf.org/html/rfc6749">OAuth 2</a>.</p>
 </ul></li>
 <li><p>Once the Fidor server has authenticated the user and received authorization, it will redirect the user back to the <code class="prettyprint">redirect_url</code>
 you provided. Attached to this redirect url will be the provided <code class="prettyprint">state</code> parameter and a <code class="prettyprint">code</code> parameter.</p></li>
-<li><p>In case authorization of your app was not performed, you will receive an <a href="#errors">error response</a> from the server as described in
+<li><p>In case authorization of your app failed, you will receive an <a href="#errors">error response</a> from the server as described in
 <a href="https://tools.ietf.org/html/rfc6749#section-4.1.2.1">OAuth2 sec 4.1.2.1</a></p></li>
-<li><p>You MUST check the state parameter to ensure it contains the same value you sent to the authorize endpoint. If not, you must discontinue processing at this point and should contact Fidor as this is likely an attempt to breach security!</p></li>
+<li><p>You MUST check the <code class="prettyprint">state</code> parameter to ensure it contains the same value you sent to the authorize endpoint. If not, you must discontinue processing at this point and should contact Fidor as this is likely an attempt to breach security!</p></li>
 <li><p>Extract the <code class="prettyprint">code</code> parameter from the response and send it to the Fidor server&rsquo;s <a href="#systems">Access Token Request endpoint</a> <code class="prettyprint">oauth/token</code> as described in <a href="https://tools.ietf.org/html/rfc6749#section-4.1.3">OAuth2 sec 4.1.3</a>. You will need to supply the following parameters in the body of a <code class="prettyprint">POST</code> request, using <code class="prettyprint">application/x-www-form-urlencoded</code> encoding:</p>
 
 <ul>
 <li><code class="prettyprint">grant_type</code> : &ldquo;authorization_code&rdquo;</li>
 <li><code class="prettyprint">code</code> : the code you received via http redirect (see above)</li>
 <li><code class="prettyprint">client_id</code> : the client_id that has been assigned to your app (see below)</li>
-<li><code class="prettyprint">client_secret</code> : the client_secret that has been assigned to your app (see below)</li>
 <li><code class="prettyprint">redirect_url</code> : the same redirect URL provided in the authorization request (see above)</li>
 </ul></li>
+<li><p>The http request contains an <code class="prettyprint">Authorization</code> http header, containing the <code class="prettyprint">client_id</code> and <code class="prettyprint">client_secret</code> (see below) of your app.</p></li>
+<li><p>!Deprecated! Alternatively, the <code class="prettyprint">client_secret</code> may be provided <code class="prettyprint">application/x-www-form-urlencoded</code> in the body of the request along with the other parameters.</p></li>
 <li><p>The server will return either an error (described in <a href="https://tools.ietf.org/html/rfc6749#section-5.2">OAuth2 sec 5.2</a> or a JSON
-response containing the <code class="prettyprint">access_token</code> and information about it.</p></li>
+response containing the <code class="prettyprint">access_token</code>, token information and a <code class="prettyprint">refresh_token</code>.</p></li>
 <li><p>The access token will be of type <a href="https://tools.ietf.org/html/rfc6750">&ldquo;Bearer&rdquo;</a> and needs to be included in the http <code class="prettyprint">Authorization</code> header of subsequent requests to the API (see <a href="https://tools.ietf.org/html/rfc6750#section-2.1">Bearer Token Usage</a>)</p></li>
+<li><p>Once the <code class="prettyprint">access_token</code> has expired, the <code class="prettyprint">refresh_token</code> may be used in order to retrieve a new valid <code class="prettyprint">access_token</code>. Refresh token requests are addressed to the same endpoint as authorization grant request, but contain the following parameter, as described in <a href="https://tools.ietf.org/html/rfc6749#section-6">OAuth2 §6</a>:</p>
+
+<ul>
+<li><code class="prettyprint">grant_type</code> : &ldquo;refresh_token&rdquo;</li>
+<li><code class="prettyprint">refresh_token</code> : the refresh token you received in the authorization code flow, above</li>
+</ul></li>
 </ul>
 
 <p>The required parameters (<code class="prettyprint">client_id</code>, <code class="prettyprint">client_secret</code> and the <code class="prettyprint">redirect_url</code>) are available in the App Manager:</p>
@@ -385,7 +392,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 </tbody></table>
 
 <aside class="warning">
-  <strong>You must never share Client ID and Client Secret with other people.</strong><br/>
+  <strong>You must never share the Client Secret parameter with other people. This is your applications password.</strong><br/>
   If it happened unintentionally please copy the application (to get a new Client ID and Client Secret), delete the old one and use the copy.
 </aside>
 
@@ -393,7 +400,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 <pre><code class="highlight shell">curl --header <span class="s2">"Accept : application/vnd.fidor.de; version=1,text/json"</span> --header <span class="s2">"Content-Type : application/json"</span> --header <span class="s2">"Authorization : Bearer &lt;your token&gt;"</span> https://api.fidor.de/users/current
 </code></pre>
 
-<p>To successfully communicate with Fidor API, you have to provide 3 headers:</p>
+<p>To successfully communicate with the Fidor API, you must provide 3 headers:</p>
 
 <table><thead>
 <tr>
@@ -416,7 +423,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 </tbody></table>
 
 <aside class="notice">
-  You must replace <strong>ca48897797c9275d75e2d7a5bc778721</strong> with your personal access_token. You get this API token during the OAuth process when you call our API for the first time (see above).
+  You must replace <strong>ca48897797c9275d75e2d7a5bc778721</strong> with your personal access_token, the token is generated via the OAuth process described above.
 </aside>
 
 <h2 id="throttling-(rate-limits)">Throttling (Rate Limits)</h2>
@@ -442,13 +449,13 @@ response containing the <code class="prettyprint">access_token</code> and inform
 
 <p>We throttle our APIs by default to ensure maximum performance for all developers.</p>
 
-<p>Rate limiting in version 1 of the API is primarily considered on a per-user basis — or more accurately described, per access token in your control. Rate limits are determined globally for the entire application.</p>
+<p>Rate limiting in version 1 of the API is primarily considered on a per-user basis — or more accurately, per access token in your control. Rate limits are determined globally for the entire application.</p>
 
-<p>Rate limits in version 1 of the API are divided into 15 minute intervals. In the version 1 of the API rate limit is 60 calls every 15 minutes, but we may adjust that over time.</p>
+<p>Rate limits in version 1 of the API are divided into 15 minute intervals. In the version 1 of the API rate limit is 60 calls every 15 minutes, but this value may be adjusted at our discretion.</p>
 
 <h3 id="rate-limit-headers">Rate Limit Headers</h3>
 
-<p>For you to make a better prediction about the API rate limit for your application or user, please consider to use the <code class="prettyprint">X-RateLimit-*</code> headers.</p>
+<p>For you to make a better prediction about the API rate limit for your application or user, please use the <code class="prettyprint">X-RateLimit-*</code> headers.</p>
 
 <p>We provide three context based headers for this purpose:</p>
 
@@ -474,7 +481,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 
 <p>When an application exceeds the rate limit, the Fidor API will return an HTTP 429 “Too Many Requests” response code (HTTP Status Code Documentation).</p>
 
-<p>For your convenience we provide you an endpoint for requesting the current state of your rate limit <code class="prettyprint">GET https://api.fidor.de/rate_limit</code></p>
+<p>For your convenience we provide an endpoint for requesting the current state of your rate limit <code class="prettyprint">GET https://api.fidor.de/rate_limit</code></p>
 
 <h2 id="pagination">Pagination</h2>
 
@@ -502,7 +509,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 
 <h3 id="collection">Collection</h3>
 
-<p>Most data you get from the API will have a supplementary  <code class="prettyprint">collection</code> object to give you information about the pagination and indicate where you currently are.</p>
+<p>Most data you get from the API will have a supplementary  <code class="prettyprint">collection</code> object to provide information about the pagination and indicate your current place in a collection.</p>
 <pre><code class="highlight json"><span class="s2">"collection"</span><span class="err">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"current_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
     </span><span class="s2">"per_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
@@ -537,25 +544,25 @@ response containing the <code class="prettyprint">access_token</code> and inform
 
 <h2 id="manage-teams">Manage Teams</h2>
 
-<p>To help you develop your apps faster, we&rsquo;ve built the team management functionality directly into the Application Manager. To invite your fellow developers just open the team management view and start typing the email address or the name of the developer you would like to invite to your team. When the developer with provided email address already has an account, he can start help you with your app immediately. In other case the invited developer will be notified by an email.</p>
+<p>To help you develop your apps faster, we&rsquo;ve built the team management functionality directly into the Application Manager. To invite your fellow developers just open the team management view and start typing the email address or the name of the developer you would like to invite to your team. If the developer with provided email address already has a Fidor account, she can start to help you with your app immediately. In other cases, the invited developer will be notified by email.</p>
 
           <h1 id="approval-and-operation">Approval and Operation</h1>
 
-<p>As soon you are happy with testing your application you can switch from &ldquo;test-mode&rdquo; to &ldquo;live-mode&rdquo;. Then your application will work with real accounts, real data and real money.</p>
+<p>Once you have successfully tested your application you can switch from &ldquo;test-mode&rdquo; to &ldquo;live-mode&rdquo;. Once approved, your application will work with real accounts, real data and real money.</p>
 
 <h2 id="prerequisites">Prerequisites</h2>
 
-<p>At the moment only developers that went trough the complete bank account registration process and have a bank account (retail or business) with &ldquo;full KYC status&rdquo; can start the approval process for their applications. Please (re-)read the section 2 of <a href="https://apm.fidor.de/developer/terms_of_services/current">ToS</a> for additional prerequisites.</p>
+<p>At the moment only developers that went through the complete bank account registration process and have a bank account (retail or business) with &ldquo;full KYC status&rdquo; can start the approval process for their applications. Please (re-)read the section 2 of <a href="https://apm.fidor.de/developer/terms_of_services/current">ToS</a> for additional prerequisites.</p>
 
-<p>Note that only the developer that created (registered) an application in the first place (application owner) can submit it for approval.</p>
+<p>Note that only the developer that created (registered) an application initially (application owner) may submit it for approval.</p>
 
-<p><em>We will introduce an approval concept soon that differentiates between the developer&rsquo;s account and the full-KYC bank account the application needs access to. If you have such a situation we can to the appropriate setting for you.</em></p>
+<p><em>We will introduce an approval concept soon that differentiates between the developer&rsquo;s account and the full-KYC bank account the application needs access to. If you have such a situation please get in touch with our API support.</em></p>
 
 <h2 id="approval-process">Approval Process</h2>
 
-<p>Most applications must go through a manual approval process, in particular if you need non-AGB services (e.g. SEPA direct debit) or your application needs access to other peoples data. In some cases you will have to sign additional contracts before your application will be approved and go life. If you are in doubt, please contact our sales team well enough in advance.</p>
+<p>Most applications must go through a manual approval process, in particular if you require non-AGB services (e.g. SEPA direct debit) or your application needs access to third party accounts. In some cases you will have to sign additional contracts before your application can be approved and go live. If you are in doubt, please contact our sales team.</p>
 
-<p>There are two basic access modes and approve types:</p>
+<p>There are two basic access modes and approval types:</p>
 
 <table><thead>
 <tr>
@@ -576,13 +583,13 @@ response containing the <code class="prettyprint">access_token</code> and inform
 </tr>
 </tbody></table>
 
-<p>After a Fidor admin reviewed your approval request you will get an e-mail. If the admin requests some change or needs additional information you can re-submit the application as soon as the changes have been made.</p>
+<p>After a Fidor admin reviewed your approval request you will receive an e-mail. If the admin requests changes or requires additional information you can re-submit the application as soon as the changes have been made.</p>
 
 <h3 id="switch-to-production">Switch to Production</h3>
 
-<p>Once your application have been approved you can switch from sandbox to the production system.</p>
+<p>Once your application has been approved you can switch from the sandbox to the production environment.</p>
 
-<p>To connect your application to production use the following URLs:</p>
+<p>To connect your application to the production environment use the following URLs:</p>
 
 <table><thead>
 <tr>
@@ -612,23 +619,23 @@ response containing the <code class="prettyprint">access_token</code> and inform
 
 <h2 id="check-api-logs-(soon)">Check API Logs (soon)</h2>
 
-<p>For you to being able to see what your application is doing, we offer you the ability to see and analyze the log files directly in the Application Manager. Every application you create gets an &ldquo;API Logs&rdquo; view, where you see the requests your application is doing, the traffic your application is creating etc.</p>
+<p>In order to monitor your application, we will offer  the ability to see and analyze log files directly in the Application Manager. Every application you create gets an &ldquo;API Logs&rdquo; view, where you see your application&rsquo;s requests, the traffic your application is creating etc.</p>
 
-<h2 id="changing-scope-of-your-application">Changing Scope of Your Application</h2>
+<h2 id="changing-the-scope-of-your-application">Changing the Scope of Your Application</h2>
 
-<p>If your application is live changing the scope will result to all tokens being revoked. That means that all people that use your application have to go through the rights-granting process (OAuth) again, the next they use the application.</p>
+<p>If your application is live, changing the scope will result in all issued tokens being revoked. This means that anyone using your application has to go through the rights-granting process (OAuth) again the next they use the application.</p>
 
 <h2 id="revoking-and-deleting-your-application">Revoking And Deleting Your Application</h2>
 
-<p>The developer that submitted the application can revoke and or delete the application. Applications that have been revoked must go through the approval process again if you want to put it back live again.</p>
+<p>The developer that submitted the application can revoke and or delete the application. Applications that have been revoked must go through the approval process again.</p>
 
 <h2 id="user-view:-manage-installed-applications">User view: Manage Installed Applications</h2>
 
-<p>All bank customers can see what applications they &ldquo;installed&rdquo; or &ldquo;subscribed to&rdquo; and get a detailed view on the rights they have granted to those applications. On the same page customers can &ldquo;uninstall&rdquo; applications and thus revoke rights.</p>
+<p>All bank customers can see what applications they &ldquo;installed&rdquo; or &ldquo;subscribed to&rdquo; and get a detailed view of the rights they have granted to those applications. On the same page customers can &ldquo;uninstall&rdquo; applications and thus revoke rights. You will not be notified of revoked authorizations and must handle resulting errors during API calls.</p>
 
           <h1 id="basic-data">Basic Data</h1>
 
-<h2 id="user">User</h2>
+<h2 id="users">Users</h2>
 
 <blockquote>
 <p>GET https://api.fidor.de/users/current</p>
@@ -642,7 +649,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>After the authorization you can query the data for the user using your app. You will get only high-level user information. Following fields will be delivered upon requesting the user information:</p>
+<p>After authorization you can query the user data of the authorized account holder. You will only receive high-level user information. The following fields will be delivered upon requesting the user information:</p>
 
 <table><thead>
 <tr>
@@ -682,7 +689,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 
 <p><code class="prettyprint">GET https://api.fidor.de/users/current</code> <sub>current user</sub></p>
 
-<h2 id="customer">Customer</h2>
+<h2 id="customers">Customers</h2>
 
 <blockquote>
 <p>GET https://api.fidor.de/customers</p>
@@ -729,7 +736,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>Customer gives you much more information about the user</p>
+<p>Customers gives you all the personal data of the customer</p>
 
 <table><thead>
 <tr>
@@ -880,7 +887,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 </tr>
 </tbody></table>
 
-<h2 id="account">Account</h2>
+<h2 id="accounts">Accounts</h2>
 
 <blockquote>
 <p>GET https://api.fidor.de/accounts</p>
@@ -1151,7 +1158,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 
 <h2 id="transaction-type-details">Transaction Type Details</h2>
 
-<p>Different transaction type can have different details that are specific for this particular type of the transaction. Some of the transaction types don&rsquo;t have any specific attributes. In that case the <code class="prettyprint">transaction_type_details</code> object stays empty.</p>
+<p>Different transaction types contain different details specific for this particular type of the transaction. Some of the transaction types don&rsquo;t have any specific attributes. In this case the <code class="prettyprint">transaction_type_details</code> object remains empty.</p>
 
 <table><thead>
 <tr>
@@ -1247,7 +1254,7 @@ response containing the <code class="prettyprint">access_token</code> and inform
 </tr>
 </tbody></table>
 
-<p>Let&rsquo;s take closer look at the transaction types Fidor supports right now.</p>
+<p>Let&rsquo;s take closer look at the transaction types Fidor supports currently.</p>
 
 <h3 id="internal-transfer">Internal Transfer</h3>
 
@@ -1270,7 +1277,7 @@ Details of the <code class="prettyprint">internal_transfer</code> object contain
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>In case of fidor_payin you will get more information about the sender of the payment.</p>
+<p>In case of fidor_payin you will receive more information about the initiator of the payment.</p>
 
 <table><thead>
 <tr>
@@ -1332,7 +1339,7 @@ Details of the <code class="prettyprint">internal_transfer</code> object contain
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p><code class="prettyprint">fidor_payout</code> has same structure but less details because of legal reasons.</p>
+<p><code class="prettyprint">fidor_payout</code> has the same structure but fewer details because of legal reasons.</p>
 
 <table><thead>
 <tr>
@@ -1426,11 +1433,11 @@ Details of the <code class="prettyprint">internal_transfer</code> object contain
 
 <h3 id="sepa-direct-debit-(lastschrift)">SEPA Direct Debit (Lastschrift)</h3>
 
-<p>SDDs are payments that are redrawn from the account. There are two different kinds: SEPA-Basislastschriften (SEPA Direct Debit CORE/COR1) and SEPA-Firmenlastschrift (SEPA Direct Debit B2B) with result in different transaction types: <code class="prettyprint">sepa_core_direct_debit</code> and <code class="prettyprint">sepa_b2b_direct_debit</code>. Both use the <code class="prettyprint">sepa_credit_transfer</code> details object as described at <em>SEPA Credit Transfer</em> above.</p>
+<p>SDDs are payments that are automatically drawn from an account. There are two kinds: SEPA-Basislastschriften (SEPA Direct Debit CORE/COR1) and SEPA-Firmenlastschrift (SEPA Direct Debit B2B) which result in different transaction types: <code class="prettyprint">sepa_core_direct_debit</code> and <code class="prettyprint">sepa_b2b_direct_debit</code>. Both use the <code class="prettyprint">sepa_credit_transfer</code> details object as described under <em>SEPA Credit Transfer</em> above.</p>
 
 <h3 id="credit-card">Credit Card</h3>
 
-<p>Credit card usage is a complex topic with many different transaction type from preauthentication to fees.
+<p>Credit card usage is a complex topic with many different transaction types ranging from preauthentication to fees.
 All types share use the same  <code class="prettyprint">credit_card</code> object.</p>
 
 <table><thead>
@@ -1533,7 +1540,7 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 
 <h3 id="global-money-transfer-(gmt)">Global Money Transfer (GMT)</h3>
 
-<p>GMT payments are international payments to countries outside the SEPA area. Details of the <code class="prettyprint">gmt_transfer</code> object contain information about the transaction&rsquo;s target.</p>
+<p>GMT payments are payments to countries outside the SEPA area. Details of the <code class="prettyprint">gmt_transfer</code> object contain information about the transaction&rsquo;s target.</p>
 
 <h4 id="gmt_payout,-gmt_refund,-gmt_fee">gmt_payout, gmt_refund, gmt_fee</h4>
 
@@ -1637,7 +1644,7 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 
 <h3 id="mobile-topup">Mobile Topup</h3>
 
-<p>If you use the topup app in the account transactions will be marked as <code class="prettyprint">prepaid_mobile_topup</code>. The details are stored in the <code class="prettyprint">mobile_topup_details</code> object.</p>
+<p>If you use the topup app in the account, transactions will be marked as <code class="prettyprint">prepaid_mobile_topup</code>. The details are stored in the <code class="prettyprint">mobile_topup_details</code> object.</p>
 
 <h4 id="prepaid_mobile_topup">prepaid_mobile_topup</h4>
 
@@ -1677,7 +1684,7 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 
           <h1 id="money-transfer">Money Transfer</h1>
 
-<p>We differ between different types of money transfers. In generell we distinguish between the Fidor internal transfers (Fidor to Fidor money transfer) and external transfers (SEPA, GMT, FPS, BACS etc.).</p>
+<p>We differentiate between different types of money transfers. In general we distinguish between the Fidor internal transfers (Fidor to Fidor money transfer) and external transfers (SEPA, GMT, FPS, BACS etc.).</p>
 
 <h2 id="internal-transfer---fidor-to-fidor">Internal Transfer - Fidor to Fidor</h2>
 
@@ -1712,7 +1719,7 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>Fidor offers you the possibility to transfer money to your fellow Fidor user without even knowing his account number (&ldquo;Freunden Geld senden&rdquo;). To transfer the money you can use one of the following:
+<p>Fidor offers you the possibility to transfer money to other Fidor users without even knowing their account number (&ldquo;Freunden Geld senden&rdquo;). To transfer the money you can use one of the following:
 - nickname
 - email address
 - mobile phone number
@@ -1806,10 +1813,10 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>To transfer money to any country participating in SEPA (Single Euro Payments Area) initiative you will have to use the <code class="prettyprint">sepa_credit_transfers</code> endpoint
+<p>To transfer money to any country participating in the SEPA (Single Euro Payments Area) initiative  use the <code class="prettyprint">sepa_credit_transfers</code> endpoint
 <code class="prettyprint">POST https://api.fidor.de/sepa_credit_transfers</code></p>
 
-<p>If you want to send money to another bank account in Germany, you don&rsquo;t have to provide the BIC - IBAN is enough.</p>
+<p>If you want to send money to another bank account in Germany, you don&rsquo;t even have to provide the BIC - IBAN is enough.</p>
 
 <table><thead>
 <tr>
@@ -2005,7 +2012,7 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 
 <h2 id="coming-soon---extended-money-operations">Coming Soon - Extended Money Operations</h2>
 
-<p>In order to create a SEPA Direct Debit you have to crete a SEPA Mandate first. Not every Fidor customer is eligible for creating the SEPA Mandates. If you are interested in SEPA Direct Debits and do not have a required account for creating SEPA Mandates you will have to contact Fidor first.</p>
+<p>In order to create a SEPA Direct Debit you have to create a SEPA Mandate first. Not every Fidor customer is eligible to create SEPA Mandates. If you are interested in SEPA Direct Debits and do not have a required account for creating SEPA Mandates you will need to contact Fidor first.</p>
 
 <h3 id="http-request">HTTP Request</h3>
 
@@ -2122,13 +2129,13 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 </tr>
 </tbody></table>
 
-<p>In case you&rsquo;re using Fidor&rsquo;s trust account e.g. for your crowdfunding platfom. Legally every trust account belongs to the Fidor Bank - it means that you cannot get the money from the account without Fidor&rsquo;s approval.</p>
+<p>In case you&rsquo;re using Fidor&rsquo;s trust account e.g. for your crowdfunding platfom, legally every trust account belongs to the Fidor Bank - it means that you cannot get the money from the account without Fidor&rsquo;s approval.</p>
 
 <p>When you try to initiate an <code class="prettyprint">internal_transfer</code> or a <code class="prettyprint">sepa_credit_transfer</code> we will create a so called <code class="prettyprint">transfer_approval</code> for you and block the transferred amount. After a <code class="prettyprint">POST</code> to <code class="prettyprint">internal_transfers</code> or a <code class="prettyprint">sepa_credit_transfers</code> you will get the body of the <code class="prettyprint">transfer_approval</code> created for you and the http status code <code class="prettyprint">204</code>.</p>
 
-<p>Once this <code class="prettyprint">transfer_approval</code> has been approved, we will create and execute the transfer for you. If the <code class="prettyprint">transfer_approval</code> was rejected the money will be credited back to the account.</p>
+<p>Once this <code class="prettyprint">transfer_approval</code> has been approved, we will create and execute the transfer for you. If the <code class="prettyprint">transfer_approval</code> was rejected the money will be credited back to the trust account.</p>
 
-<p>You can get the information about the approvals by calling the <code class="prettyprint">transfer_approvals</code> endpoint. You will see the <code class="prettyprint">state</code> of the approval and the <code class="prettyprint">transfer_id</code> in case your transfer has been approved.</p>
+<p>You can retrieve information about the approvals by calling the <code class="prettyprint">transfer_approvals</code> endpoint. You will see the <code class="prettyprint">state</code> of the approval and the <code class="prettyprint">transfer_id</code> if your transfer has been approved.</p>
 
 <p>HTTP REQUESTS</p>
 
