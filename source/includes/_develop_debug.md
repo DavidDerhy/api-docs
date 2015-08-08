@@ -33,32 +33,32 @@ Our sandbox environment offers you the same functionality as the live API. So on
  \______/ |__/  |__/ \______/    \___/  |__/  |__/
 ```
 
-The Fidor API offers many functions to retrieve information from your and other people's bank accounts, community accounts and much more. The extent of access your application needs, is configured when you define the *scope* of your application in the Application Manager.
+The Fidor API offers many functions to retrieve information from your and other people's bank accounts, community accounts and much more. The extent of access your application needs is configured when you define the *scope* of your application in the Application Manager.
 
 In order to actually access the account and retrieve the requested data, the account holder needs to authorize your application and allow it to access their account. This is achieved
 using [OAuth 2](https://tools.ietf.org/html/rfc6749).
 
 
 ### Client facing apps vs. server side connection
-Fidor customers have diverse use cases for the Fidor API, ranging from payment automation without any user interaction to situations where consumers will sit in front of the computer every time they use the application. Applications run on PCs, mobile devices, on premise service and in the cloud. All that has implications on time and means of authentication and authorization.
+Fidor customers have diverse use cases for the Fidor API, ranging from payment automation without any user interaction to situations where consumers will sit in front of the computer every time they use the application. Applications run on PCs, mobile devices, on premise service and in the cloud. All this has implications on time and means of authentication and authorization.
 
-The primarily supported authentication method from Fidor is the 3 legged OAuth2 flow, that is particular useful for server based client facing apps and supports even 3rd party application providing. The following discussion and documentation is based on that mode.
+The primarily supported authentication method from Fidor is the 3 legged OAuth2 flow, that is particularly useful for server based client-facing apps and supports 3rd party application providing. The following discussion and documentation is based on that mode.
 
-For applications to simply control your our own bank account via a pure server side connection we soon will provide an improved approval process, OAuth flow and OAuth features. Also mobile applications need and get special treatment. Please get in contact with us via e-mail or leave a message in the approval submittion form.
+For applications to simply control your our own bank account via a pure server side connection we soon will provide an improved approval process, OAuth flow and OAuth features. Also mobile applications require special treatment. Please get in contact with us via e-mail or leave a message in the approval submission form.
 
 ###User perspective
-From the user's perspective this works as follows:
+From the user's perspective the process works as follows:
 
-  - the user is redirected to Fidor and, in case they are not already logged in, is asked to **enter username and password**
+  - the user is redirected to Fidor and in case they are not already logged in, is asked to **enter their username and password**
 
-  - in case the user has not previously authorized your app, the user is displayed the list of permissions your application is requesting and **asked to confirm that the app is allowed to access their account with the given scope**.
+  - in case the user has not previously authorized your app, the user is displayed the list of permissions your application is requesting and is **asked to confirm that the app is allowed to access their account with the given scope**.
 
-  - finally, the user is redirected to your app which will be allowed to make API calls
+  - finally, the user is redirected to your app which will make calls to the API.
 
 ###Application perspective
 From the perspective of the application, the OAuth2 Authorization Code Grant flow needs to be implemented:
 
-  - the user is redirected via http redirect to the request [authorization endpoint](#systems) by your application:
+  - the the app redirects th user to the [request authorization endpoint](#systems) via http redirect:
 
       `/oauth/authorize?redirect_uri=<redirect_url>&client_id=<client_id>&state=<state>&response_type=code`
 
@@ -73,7 +73,7 @@ From the perspective of the application, the OAuth2 Authorization Code Grant flo
   - Once the Fidor server has authenticated the user and received authorization, it will redirect the user back to the `redirect_url`
     you provided. Attached to this redirect url will be the provided `state` parameter and a `code` parameter.
 
-  - In case authorization of your app was not performed, you will receive an [error response](#errors) from the server as described in
+  - In case authorization of your app failed, you will receive an [error response](#errors) from the server as described in
     [OAuth2 sec 4.1.2.1](https://tools.ietf.org/html/rfc6749#section-4.1.2.1)
 
   - You MUST check the `state` parameter to ensure it contains the same value you sent to the authorize endpoint. If not, you must discontinue processing at this point and should contact Fidor as this is likely an attempt to breach security!
@@ -83,13 +83,22 @@ From the perspective of the application, the OAuth2 Authorization Code Grant flo
       - `grant_type` : "authorization_code"
       - `code` : the code you received via http redirect (see above)
       - `client_id` : the client_id that has been assigned to your app (see below)
-      - `client_secret` : the client_secret that has been assigned to your app (see below)
       - `redirect_url` : the same redirect URL provided in the authorization request (see above)
 
+  - The http request contains an `Authorization` http header, containing the `client_id` and `client_secret` (see below) of your app.
+
+  - !Deprecated! Alternatively, the `client_secret` may be provided `application/x-www-form-urlencoded` in the body of the request along with the other parameters.
+
   - The server will return either an error (described in [OAuth2 sec 5.2](https://tools.ietf.org/html/rfc6749#section-5.2) or a JSON
-    response containing the `access_token` and information about it.
+    response containing the `access_token`, token information and a `refresh_token`.
 
   - The access token will be of type ["Bearer"](https://tools.ietf.org/html/rfc6750) and needs to be included in the http `Authorization` header of subsequent requests to the API (see [Bearer Token Usage](https://tools.ietf.org/html/rfc6750#section-2.1))
+
+  - Once the `access_token` has expired, the `refresh_token` may be used in order to retrieve a new valid `access_token`. Refresh token requests are addressed to the same endpoint as authorization grant request, but contain the following parameter, as described in [OAuth2 §6](https://tools.ietf.org/html/rfc6749#section-6):
+
+      - `grant_type` : "refresh_token"
+      - `refresh_token` : the refresh token you received in the authorization code flow, above
+
 
 The required parameters (`client_id`, `client_secret` and the `redirect_url`) are available in the App Manager:
 
@@ -105,7 +114,7 @@ Customer Service URL | http://myapp.com/customer
 Customer Service Email | likeaboss@myapp.com
 
 <aside class="warning">
-  <strong>You must never share Client ID and Client Secret with other people.</strong><br/>
+  <strong>You must never share the Client Secret parameter with other people. This is your applications password.</strong><br/>
   If it happened unintentionally please copy the application (to get a new Client ID and Client Secret), delete the old one and use the copy.
 </aside>
 
@@ -114,7 +123,7 @@ Customer Service Email | likeaboss@myapp.com
 curl --header "Accept : application/vnd.fidor.de; version=1,text/json" --header "Content-Type : application/json" --header "Authorization : Bearer <your token>" https://api.fidor.de/users/current
 ```
 
-To successfully communicate with Fidor API, you have to provide 3 headers:
+To successfully communicate with the Fidor API, you must provide 3 headers:
 
 Header | Value
 --------- | -----------
@@ -123,7 +132,7 @@ Accept | application/vnd.fidor.de; version=1,text/json
 Content-Type | application/json
 
 <aside class="notice">
-  You must replace <strong>ca48897797c9275d75e2d7a5bc778721</strong> with your personal access_token. You get this API token during the OAuth process when you call our API for the first time (see above).
+  You must replace <strong>ca48897797c9275d75e2d7a5bc778721</strong> with your personal access_token, the token is generated via the OAuth process described above.
 </aside>
 
 ##Throttling (Rate Limits)
@@ -148,12 +157,12 @@ Content-Type | application/json
 
 We throttle our APIs by default to ensure maximum performance for all developers.
 
-Rate limiting in version 1 of the API is primarily considered on a per-user basis — or more accurately described, per access token in your control. Rate limits are determined globally for the entire application.
+Rate limiting in version 1 of the API is primarily considered on a per-user basis — or more accurately, per access token in your control. Rate limits are determined globally for the entire application.
 
-Rate limits in version 1 of the API are divided into 15 minute intervals. In the version 1 of the API rate limit is 60 calls every 15 minutes, but we may adjust that over time.
+Rate limits in version 1 of the API are divided into 15 minute intervals. In the version 1 of the API rate limit is 60 calls every 15 minutes, but this value may be adjusted at our discretion.
 
 ###Rate Limit Headers
-For you to make a better prediction about the API rate limit for your application or user, please consider to use the `X-RateLimit-*` headers.
+For you to make a better prediction about the API rate limit for your application or user, please use the `X-RateLimit-*` headers.
 
 We provide three context based headers for this purpose:
 
@@ -165,7 +174,7 @@ X-RateLimit-Reset | The remaining window before the rate limit resets in e.g. UT
 
 When an application exceeds the rate limit, the Fidor API will return an HTTP 429 “Too Many Requests” response code (HTTP Status Code Documentation).
 
-For your convenience we provide you an endpoint for requesting the current state of your rate limit `GET https://api.fidor.de/rate_limit`
+For your convenience we provide an endpoint for requesting the current state of your rate limit `GET https://api.fidor.de/rate_limit`
 
 ##Pagination
 Not all available data is dumped at once. With pagination you can control the output and navigate through the pages.
@@ -177,7 +186,7 @@ per_page   | Per page limit of the entries shown. Default is 10, max is 100
 page | The pagination offset
 
 ###Collection
-Most data you get from the API will have a supplementary  `collection` object to give you information about the pagination and indicate where you currently are.
+Most data you get from the API will have a supplementary  `collection` object to provide information about the pagination and indicate your current place in a collection.
 
 ```json
 "collection": {
@@ -197,4 +206,4 @@ total_pages | Total number of pages based on the given pagination
 
 
 ##Manage Teams
-To help you develop your apps faster, we've built the team management functionality directly into the Application Manager. To invite your fellow developers just open the team management view and start typing the email address or the name of the developer you would like to invite to your team. When the developer with provided email address already has an account, he can start help you with your app immediately. In other case the invited developer will be notified by an email.
+To help you develop your apps faster, we've built the team management functionality directly into the Application Manager. To invite your fellow developers just open the team management view and start typing the email address or the name of the developer you would like to invite to your team. If the developer with provided email address already has a Fidor account, she can start to help you with your app immediately. In other cases, the invited developer will be notified by email.

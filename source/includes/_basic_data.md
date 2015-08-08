@@ -13,7 +13,7 @@
 }
 ```
 
-After the authorization you can query the data for the user using your app. You will get only high-level user information. Following fields will be delivered upon requesting the user information:
+After authorization you can query the user data of the authorized account holder. You will only receive high-level user information. The following fields will be delivered upon requesting the user information:
 
 Parameter | Description | Format
 --------- | ----------- | -----------
@@ -255,7 +255,7 @@ currency | Currency of Account or Amount. ISO 4217 alpha-3 - 3 letter upcase e.g
 transaction_type_details | Details specific to this transaction type are collected here |
 
 ##Transaction Type Details
-Different transaction type can have different details that are specific for this particular type of the transaction. Some of the transaction types don't have any specific attributes. In that case the `transaction_type_details` object stays empty.
+Different transaction types contain different details specific for this particular type of the transaction. Some of the transaction types don't have any specific attributes. In this case the `transaction_type_details` object remains empty.
 
 Transaction Type | Description | Transaction Type Details
 ---- | ---- | ----
@@ -277,7 +277,7 @@ debit_interest | interest payment (bank takes) | -
 fee | general fee (out) | -
 fee_giropay | fee for Giropay usage (out) | -
 
-Let's take closer look at the transaction types Fidor supports right now.
+Let's take closer look at the transaction types Fidor supports currently.
 
 
 ###Internal Transfer
@@ -300,7 +300,7 @@ Details of the `internal_transfer` object contain extensive information about th
 }
 ```
 
-In case of fidor_payin you will get more information about the sender of the payment.
+In case of fidor_payin you will receive more information about the initiator of the payment.
 
 Parameter | Description | Format
 --------- | ----------- | -----------
@@ -328,7 +328,7 @@ remote_subject        | Subject of the transaction | String
 }
 ```
 
-`fidor_payout` has same structure but less details because of legal reasons.
+`fidor_payout` has the same structure but fewer details because of legal reasons.
 
 Parameter | Description | Format
 --------- | ----------- | -----------
@@ -364,11 +364,11 @@ remote_iban           | IBAN of the transaction's sender/receiver | String
 remote_bic            | BIC of the transaction's sender/receiver | String
 
 ###SEPA Direct Debit (Lastschrift)
-SDDs are payments that are redrawn from the account. There are two different kinds: SEPA-Basislastschriften (SEPA Direct Debit CORE/COR1) and SEPA-Firmenlastschrift (SEPA Direct Debit B2B) with result in different transaction types: `sepa_core_direct_debit` and `sepa_b2b_direct_debit`. Both use the `sepa_credit_transfer` details object as described at *SEPA Credit Transfer* above.
+SDDs are payments that are automatically drawn from an account. There are two kinds: SEPA-Basislastschriften (SEPA Direct Debit CORE/COR1) and SEPA-Firmenlastschrift (SEPA Direct Debit B2B) which result in different transaction types: `sepa_core_direct_debit` and `sepa_b2b_direct_debit`. Both use the `sepa_credit_transfer` details object as described under *SEPA Credit Transfer* above.
 
 
 ###Credit Card
-Credit card usage is a complex topic with many different transaction type from preauthentication to fees.
+Credit card usage is a complex topic with many different transaction types ranging from preauthentication to fees.
 All types share use the same  `credit_card` object.
 
 Transaction Type | Description
@@ -407,7 +407,7 @@ cc_sequence          | Sequence links all the credit_card related transactions t
 cc_type              | CreditCard type | String
 
 ###Global Money Transfer (GMT)
-GMT payments are international payments to countries outside the SEPA area. Details of the `gmt_transfer` object contain information about the transaction's target.
+GMT payments are payments to countries outside the SEPA area. Details of the `gmt_transfer` object contain information about the transaction's target.
 ####gmt_payout, gmt_refund, gmt_fee
 > gmt_payout, gmt_refund, gmt_fee
 
@@ -455,7 +455,7 @@ affiliate_transaction_type_name | name of the transaction type | String
 affiliate_transaction_type_category | category, e.g. Community, Banking, Bonusprogramm | String
 
 ###Mobile Topup
-If you use the topup app in the account transactions will be marked as `prepaid_mobile_topup`. The details are stored in the `mobile_topup_details` object.
+If you use the topup app in the account, transactions will be marked as `prepaid_mobile_topup`. The details are stored in the `mobile_topup_details` object.
 
 ####prepaid_mobile_topup
 

@@ -59,13 +59,13 @@ state | State of the transfer approval | String, e.g. "pending", "approved", "re
 created_at | Creation date-time, never changes. ISO 8601 Date-Time e.g. "2014-10-10T17:41:58+02:00" | Datetime 
 updated_at | Last update date-time. ISO 8601 Date-Time e.g. "2015-02-04T04:08:54+01:00" | Datetime
 
-In case you're using Fidor's trust account e.g. for your crowdfunding platfom. Legally every trust account belongs to the Fidor Bank - it means that you cannot get the money from the account without Fidor's approval.
+In case you're using Fidor's trust account e.g. for your crowdfunding platfom, legally every trust account belongs to the Fidor Bank - it means that you cannot get the money from the account without Fidor's approval.
 
 When you try to initiate an `internal_transfer` or a `sepa_credit_transfer` we will create a so called `transfer_approval` for you and block the transferred amount. After a `POST` to `internal_transfers` or a `sepa_credit_transfers` you will get the body of the `transfer_approval` created for you and the http status code `204`.
 
-Once this `transfer_approval` has been approved, we will create and execute the transfer for you. If the `transfer_approval` was rejected the money will be credited back to the account.
+Once this `transfer_approval` has been approved, we will create and execute the transfer for you. If the `transfer_approval` was rejected the money will be credited back to the trust account.
 
-You can get the information about the approvals by calling the `transfer_approvals` endpoint. You will see the `state` of the approval and the `transfer_id` in case your transfer has been approved.
+You can retrieve information about the approvals by calling the `transfer_approvals` endpoint. You will see the `state` of the approval and the `transfer_id` if your transfer has been approved.
 
 HTTP REQUESTS
 
