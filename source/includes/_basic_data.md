@@ -474,3 +474,135 @@ Parameter | Description | Format
 provider | name of the mobile network operator | String
 phone_number | Mobile phone number user for topup | String
 topup_subject | Subject of the mobile topup | String
+
+## Preauths
+> GET https://api.fidor.de/preauths/:id
+
+```json
+{
+  "id": "9123",
+  "account_id": "1238343434",
+  "amount": 2435,
+  "currency": "EUR",
+  "expires_at": "2015-02-03T13:02:45+01:00",
+  "preauth_type": "creditcard_preauth",
+  "preauth_type_details": {
+    "cc_merchant_name": "Starbucks",
+    "cc_merchant_category": "O",
+    "cc_type": "IO",
+    "cc_category": "C",
+    "cc_sequence": "25",
+    "pos_code": "POS",
+    "financial_network_code": "CAN"
+  },
+  "created_at": "2015-02-03T06:23:43Z",
+  "updated_at": "2015-02-03T06:23:43Z"
+}
+```
+
+Parameter            | Description                                                                                                                                               | Format
+---------            | -----------                                                                                                                                               | -----------
+id                   | Unique preauth identifier                                                                                                                                 | String
+account_id           | Fidor account the preauth belongs to                                                                                                                      | String
+preauth_type         | Type of the preauth                                                                                                                                       | String (enum)
+amount               | The blocked amount in account currency, in minor units, e.g. 1EUR is represented as 100. Can be negative e.g. if something was withdrawn from an account. | Integer
+expires_at           | When the preauth has expired. ISO 8601 Date-Time                                                                                                          | Datetime
+created_at           | Creation date-time, never changes. ISO 8601 Date-Time e.g. "2014-10-10T17:41:58+02:00"                                                                    | Datetime
+updated_at           | Last update date-time. ISO 8601 Date-Time e.g. "2015-02-04T04:08:54+01:00"                                                                                | Datetime
+currency             | Currency of Account or Amount. ISO 4217 alpha-3 - 3 letter upcase e.g EUR                                                                                 | String (enum)
+preauth_type_details | Details specific to this preauth type are collected here                                                                                                  |
+
+## Preauth Type Details
+Different preauth types contain different details specific for this particular type of the preauth. Some of the preauth types don't have any specific attributes. In this case the `preauth_type_details` object remains empty.
+
+Preauth Type              | Description           | Preauth Type Details
+----                      | ----                  | ----
+creditcard_preauth        |                       | credit_card_details
+internal_transfer_preauth |                       | internal_transfer_details
+capital_bond_preauth      |                       | capital_bond_details
+currency_order_preauth    |                       | currency_order_details
+gmt_preauth               |                       | gmt_details
+ripple_preauth            |                       | ripple_details
+unknown                   | unmapped preauth type | _empty_
+
+Let’s take closer look at the preauth types Fidor supports currently.
+
+### Credit Card Details
+
+```json
+{
+  "cc_category": "R",
+  "cc_merchant_category": "5411",
+  "cc_merchant_name": "Metro Cash & Carry",
+  "cc_sequence": 6666666,
+  "cc_type": "00",
+  "pos_code": "COD",
+  "financial_network_code": "IXC23"
+}
+```
+
+Parameter | Description | Format
+--------- | ----------- | -----------
+cc_category          | CreditCard category | String
+cc_merchant_category | Category given by the merchant | String
+cc_merchant_name     | CreditCard merchant initiating the transaction | String
+cc_sequence          | Sequence links all the credit_card related transactions together | String
+cc_type              | CreditCard type | String
+pos_code  | Code for point of service where card was used | String
+financial_network_code | empty | String
+
+### Internal Transfer details
+
+```json
+{
+  "internal_transfer_id": "666",
+  "remote_account_id": "66666666",
+  "remote_bic": "",
+  "remote_iban": "",
+  "remote_name": "",
+  "remote_nick": "Heisenberg",
+  "remote_subject": "Thanks for nothing"
+}
+```
+
+Parameter            | Description                                                                                        | Format
+---------            | -----------                                                                                        | -----------
+internal_transfer_id | Unique account identifier of the transfer transaction belongs to. Refunded transactions have no id | String
+remote_account_id    | Unique account identifier of the payment's sender                                                  | String
+remote_bic           | empty                                                                                              | String
+remote_iban          | empty                                                                                              | String
+remote_name          | empty                                                                                              | String
+remote_nick          | Community nickname of the transaction's sender                                                     | String
+remote_subject       | Subject of the transaction                                                                         | String
+
+### Capital Bond details
+
+_empty_
+
+### Currency Order details
+
+_empty_
+
+### GMT details
+
+```json
+{
+  "destination_country": "AU",
+  "destination_currency": "AUD",
+  "amount_in_destination_currency": 12500,
+  "exchange_rate": 1.4591,
+  "fee_transaction_id": 2452334
+}
+```
+
+Parameter                      | Description                                                 | Format
+---------                      | -----------                                                 | -----------
+destination_country            | Destination country, 2 letter (ISO3166 alpha2)              | String
+destination_currency           | Destination currency, 3 letter upcase (ISO 4217)            | String
+amount_in_destination_currency | Amount transferred in the destination currency              | Integer
+exchange_rate                  | Exchange rate (EUR/dest_curr) valid at the time of transfer | Decimal
+fee_transaction_id             | ID of  fee transaction of this GMT transaction              | Integer
+
+### Ripple details
+
+_empty_
