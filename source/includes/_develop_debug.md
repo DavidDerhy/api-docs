@@ -179,6 +179,7 @@ For your convenience we provide an endpoint for requesting the current state of 
 ##Pagination
 Not all available data is dumped at once. With pagination you can control the output and navigate through the pages.
 > https://api.fidor.de/transactions?page=2&per_page=100
+> https://api.fidor.de/preauths?page=1&per_page=20
 
 Parameter | Description
 --------- | -----------

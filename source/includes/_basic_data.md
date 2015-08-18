@@ -211,6 +211,8 @@ For your convenience we also include the information about the customers of the 
 <sub>See also: [SEPA direct debit](#sepa-direct-debit)</sub>
 
 ## Transactions
+Transactions gives you a list of financial transactions that happened on the given account. In most cases not only the obvious transaction related data but also  `transaction_type_details` are provided (see below).
+
 > GET https://api.fidor.de/transactions/:id
 
 ```json
@@ -276,6 +278,7 @@ credit_interest | interest payment (bank gives) | -
 debit_interest | interest payment (bank takes) | -
 fee | general fee (out) | -
 fee_giropay | fee for Giropay usage (out) | -
+unknown | unmapped transaction type | -
 
 Let's take closer look at the transaction types Fidor supports currently.
 
@@ -373,7 +376,7 @@ All types share use the same  `credit_card` object.
 
 Transaction Type | Description
 --- | ---
-creditcard_preauth | Pre-authorize and block amount
+creditcard_preauth | Pre-authorize and block amount (*depricated, see* `preauth`)
 creditcard_release | Release pre-authorization and unblock amount
 creditcard_payout | Credit card payment (out)
 creditcard_payin | Credit card payment (in)
@@ -475,7 +478,23 @@ provider | name of the mobile network operator | String
 phone_number | Mobile phone number user for topup | String
 topup_subject | Subject of the mobile topup | String
 
+##Transactions Filter 
+There are many ways to filter the output of `transactions`.
+> GET https://api.fidor.de/transactions?filter[transaction_types]=Value&filter[booking_date_from]=Value
+
+Using the filter returns only entries with ... (see description)
+Name | Type | Description
+--------- | ----------- | -----------
+filter[id_from] | string (integer) | ... ids >= the given id
+filter[id_to] | string (integer) | ... ids <= the given id
+filter[booking_date_from] | string (date-time) | ... booking_date >= the given date
+filter[booking_date_to] | string (date-time)  | ... booking_date <= the given date
+filter[transaction_types]  | string (enum), see transaction_types | ... the given type
+
 ## Preauths
+Prauths are blocked amounts that have been reserved for future payments. The money has not yet have been deducted from the account but is not available for other spending. This is usually used with credit cards but there are a lot of other use cases as well. 
+The sum of all current preauths can be seen with `accounts.preauth_amount`.
+
 > GET https://api.fidor.de/preauths/:id
 
 ```json
@@ -505,15 +524,16 @@ Parameter            | Description                                              
 id                   | Unique preauth identifier                                                                                                                                 | String
 account_id           | Fidor account the preauth belongs to                                                                                                                      | String
 preauth_type         | Type of the preauth                                                                                                                                       | String (enum)
-amount               | The blocked amount in account currency, in minor units, e.g. 1EUR is represented as 100. Can be negative e.g. if something was withdrawn from an account. | Integer
-expires_at           | When the preauth has expired. ISO 8601 Date-Time                                                                                                          | Datetime
+amount               | The blocked amount in account currency, in minor units, e.g. 1 EUR is represented as 100. Will be set to 0 once preauth has been cleared. Can be negative e.g. if something was withdrawn from an account. | Integer
+expires_at           | Expiration date (if not cleared before). Default expiring time is 30 days. ISO 8601 Date-Time                                                                                                          | Datetime
 created_at           | Creation date-time, never changes. ISO 8601 Date-Time e.g. "2014-10-10T17:41:58+02:00"                                                                    | Datetime
 updated_at           | Last update date-time. ISO 8601 Date-Time e.g. "2015-02-04T04:08:54+01:00"                                                                                | Datetime
-currency             | Currency of Account or Amount. ISO 4217 alpha-3 - 3 letter upcase e.g EUR                                                                                 | String (enum)
+currency             | Currency of account or amount. ISO 4217 alpha-3 - 3 letter upcase e.g EUR                                                                                 | String (enum)
 preauth_type_details | Details specific to this preauth type are collected here                                                                                                  |
 
+
 ## Preauth Type Details
-Different preauth types contain different details specific for this particular type of the preauth. Some of the preauth types don't have any specific attributes. In this case the `preauth_type_details` object remains empty.
+Different preauth types provide different preauth type details. 
 
 Preauth Type              | Description           | Preauth Type Details
 ----                      | ----                  | ----
@@ -523,12 +543,12 @@ capital_bond_preauth      |                       | capital_bond_details
 currency_order_preauth    |                       | currency_order_details
 gmt_preauth               |                       | gmt_details
 ripple_preauth            |                       | ripple_details
-unknown                   | unmapped preauth type | _empty_
+unknown                   | unmapped preauth type | -
 
 Let’s take closer look at the preauth types Fidor supports currently.
 
-### Credit Card Details
-
+### Credit Card
+Details of the `creditcard_preauth` object contain information about the merchant and more.
 ```json
 {
   "cc_category": "R",
@@ -551,8 +571,8 @@ cc_type              | CreditCard type | String
 pos_code  | Code for point of service where card was used | String
 financial_network_code | empty | String
 
-### Internal Transfer details
-
+### Internal Transfer
+If internal money transfers cannot be completed (e.g. because the receiver does not have a Fidor account yet), the amount is blocked until the money is collected or the preauth expires. Details of the `internal_transfer_preauth` object contain information about the receiver of the payment.
 ```json
 {
   "internal_transfer_id": "666",
@@ -575,16 +595,15 @@ remote_name          | empty                                                    
 remote_nick          | Community nickname of the transaction's sender                                                     | String
 remote_subject       | Subject of the transaction                                                                         | String
 
-### Capital Bond details
+### Capital Bond
+If you order a Fidor capital bond the amount gets blocked until the bond gets approved by Fidor. Details of the `capital_bond_preauth` object contain information about the bought capital bond.
 
-_empty_
 
-### Currency Order details
+### Currency Order
+If you buy foreign currencies with the in-account app in the web interface of your Fidor Smart Account, the amount of the purchase will be blocked until the payment process is completed. There is no API for currency order yet. Details of the `currency_order_preauth` object contain information about the currency order. 
 
-_empty_
-
-### GMT details
-
+### Global Money Transfer (GMT)
+If you use Global Money Transfer (Auslandsüberweisung) the amount will be blocked until the transfer process is completed. Details of the `gmt_preauth` object contain information about the transaction's target.
 ```json
 {
   "destination_country": "AU",
@@ -604,5 +623,17 @@ exchange_rate                  | Exchange rate (EUR/dest_curr) valid at the time
 fee_transaction_id             | ID of  fee transaction of this GMT transaction              | Integer
 
 ### Ripple details
+If you send money via Ripple the amount will be blocked until the transfer has been completed. Details of the `ripple_preauth` object contain information about the transaction's target.
 
-_empty_
+##Preauth Filter 
+There are many ways to filter the output of `preauth`.
+> GET https://api.fidor.de/preauth?filter[transaction_types]=Value&filter[booking_date_from]=Value
+
+Using the filter returns only entries with ... (see description)
+Name | Type | Description
+--------- | ----------- | -----------
+filter[id_from] | string (integer) | ... ids >= the given id
+filter[id_to] | string (integer) | ... ids <= the given id
+filter[booking_date_from] | string (date-time) | ... booking_date >= the given date
+filter[booking_date_to] | string (date-time)  | ... booking_date <= the given date
+filter[transaction_types]  | string (enum), see transaction_types | ... the given type
