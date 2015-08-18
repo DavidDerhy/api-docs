@@ -341,7 +341,7 @@ remote_nick           | Community nickname of the transaction's sender | String
 remote_subject        | Subject of the transaction | String
 
 ###SEPA Credit Transfer
-Details of the `sepa_credit_transfer` object contain extensive information about the transaction's initiator or receiver. We differentiate between the incoming `sepa_payin` and outgoing `payout` SEPA transactions.
+Details of the `sepa_credit_transfers` object contain extensive information about the transaction's initiator or receiver. We differentiate between the incoming `sepa_payin` and outgoing `payout` SEPA transactions.
 
 ####sepa_payin or payout
 
