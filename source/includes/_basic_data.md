@@ -478,11 +478,12 @@ provider | name of the mobile network operator | String
 phone_number | Mobile phone number user for topup | String
 topup_subject | Subject of the mobile topup | String
 
-##Transactions Filter 
+##Transactions Filter
 There are many ways to filter the output of `transactions`.
 > GET https://api.fidor.de/transactions?filter[transaction_types]=Value&filter[booking_date_from]=Value
 
 Using the filter returns only entries with ... (see description)
+
 Name | Type | Description
 --------- | ----------- | -----------
 filter[id_from] | string (integer) | ... ids >= the given id
@@ -492,7 +493,7 @@ filter[booking_date_to] | string (date-time)  | ... booking_date <= the given da
 filter[transaction_types]  | string (enum), see transaction_types | ... the given type
 
 ## Preauths
-Prauths are blocked amounts that have been reserved for future payments. The money has not yet have been deducted from the account but is not available for other spending. This is usually used with credit cards but there are a lot of other use cases as well. 
+Prauths are blocked amounts that have been reserved for future payments. The money has not yet have been deducted from the account but is not available for other spending. This is usually used with credit cards but there are a lot of other use cases as well.
 The sum of all current preauths can be seen with `accounts.preauth_amount`.
 
 > GET https://api.fidor.de/preauths/:id
@@ -533,7 +534,7 @@ preauth_type_details | Details specific to this preauth type are collected here 
 
 
 ## Preauth Type Details
-Different preauth types provide different preauth type details. 
+Different preauth types provide different preauth type details.
 
 Preauth Type              | Description           | Preauth Type Details
 ----                      | ----                  | ----
@@ -549,6 +550,7 @@ Let’s take closer look at the preauth types Fidor supports currently.
 
 ### Credit Card
 Details of the `creditcard_preauth` object contain information about the merchant and more.
+
 ```json
 {
   "cc_category": "R",
@@ -573,6 +575,7 @@ financial_network_code | empty | String
 
 ### Internal Transfer
 If internal money transfers cannot be completed (e.g. because the receiver does not have a Fidor account yet), the amount is blocked until the money is collected or the preauth expires. Details of the `internal_transfer_preauth` object contain information about the receiver of the payment.
+
 ```json
 {
   "internal_transfer_id": "666",
@@ -600,10 +603,11 @@ If you order a Fidor capital bond the amount gets blocked until the bond gets ap
 
 
 ### Currency Order
-If you buy foreign currencies with the in-account app in the web interface of your Fidor Smart Account, the amount of the purchase will be blocked until the payment process is completed. There is no API for currency order yet. Details of the `currency_order_preauth` object contain information about the currency order. 
+If you buy foreign currencies with the in-account app in the web interface of your Fidor Smart Account, the amount of the purchase will be blocked until the payment process is completed. There is no API for currency order yet. Details of the `currency_order_preauth` object contain information about the currency order.
 
 ### Global Money Transfer (GMT)
 If you use Global Money Transfer (Auslandsüberweisung) the amount will be blocked until the transfer process is completed. Details of the `gmt_preauth` object contain information about the transaction's target.
+
 ```json
 {
   "destination_country": "AU",
@@ -625,11 +629,12 @@ fee_transaction_id             | ID of  fee transaction of this GMT transaction 
 ### Ripple details
 If you send money via Ripple the amount will be blocked until the transfer has been completed. Details of the `ripple_preauth` object contain information about the transaction's target.
 
-##Preauth Filter 
+##Preauth Filter
 There are many ways to filter the output of `preauth`.
 > GET https://api.fidor.de/preauth?filter[transaction_types]=Value&filter[booking_date_from]=Value
 
 Using the filter returns only entries with ... (see description)
+
 Name | Type | Description
 --------- | ----------- | -----------
 filter[id_from] | string (integer) | ... ids >= the given id
