@@ -488,7 +488,8 @@ response containing the <code class="prettyprint">access_token</code>, token inf
 <p>Not all available data is dumped at once. With pagination you can control the output and navigate through the pages.</p>
 
 <blockquote>
-<p>https://api.fidor.de/transactions?page=2&amp;per_page=100</p>
+<p>https://api.fidor.de/transactions?page=2&amp;per_page=100
+https://api.fidor.de/preauths?page=1&amp;per_page=20</p>
 </blockquote>
 
 <table><thead>
@@ -1055,6 +1056,8 @@ response containing the <code class="prettyprint">access_token</code>, token inf
 
 <h2 id="transactions">Transactions</h2>
 
+<p>Transactions gives you a list of financial transactions that happened on the given account. In most cases not only the obvious transaction related data but also  <code class="prettyprint">transaction_type_details</code> are provided (see below).</p>
+
 <blockquote>
 <p>GET https://api.fidor.de/transactions/:id</p>
 </blockquote>
@@ -1252,6 +1255,11 @@ response containing the <code class="prettyprint">access_token</code>, token inf
 <td>fee for Giropay usage (out)</td>
 <td>-</td>
 </tr>
+<tr>
+<td>unknown</td>
+<td>unmapped transaction type</td>
+<td>-</td>
+</tr>
 </tbody></table>
 
 <p>Let&rsquo;s take closer look at the transaction types Fidor supports currently.</p>
@@ -1387,7 +1395,7 @@ Details of the <code class="prettyprint">internal_transfer</code> object contain
 
 <h3 id="sepa-credit-transfer">SEPA Credit Transfer</h3>
 
-<p>Details of the <code class="prettyprint">sepa_credit_transfer</code> object contain extensive information about the transaction&rsquo;s initiator or receiver. We differentiate between the incoming <code class="prettyprint">sepa_payin</code> and outgoing <code class="prettyprint">payout</code> SEPA transactions.</p>
+<p>Details of the <code class="prettyprint">sepa_credit_transfers</code> object contain extensive information about the transaction&rsquo;s initiator or receiver. We differentiate between the incoming <code class="prettyprint">sepa_payin</code> and outgoing <code class="prettyprint">payout</code> SEPA transactions.</p>
 
 <h4 id="sepa_payin-or-payout">sepa_payin or payout</h4>
 
@@ -1448,7 +1456,7 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 </thead><tbody>
 <tr>
 <td>creditcard_preauth</td>
-<td>Pre-authorize and block amount</td>
+<td>Pre-authorize and block amount (<em>depricated, see</em> <code class="prettyprint">preauth</code>)</td>
 </tr>
 <tr>
 <td>creditcard_release</td>
@@ -1679,6 +1687,401 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 <td>topup_subject</td>
 <td>Subject of the mobile topup</td>
 <td>String</td>
+</tr>
+</tbody></table>
+
+<h2 id="transactions-filter">Transactions Filter</h2>
+
+<p>There are many ways to filter the output of <code class="prettyprint">transactions</code>.</p>
+
+<blockquote>
+<p>GET https://api.fidor.de/transactions?filter[transaction_types]=Value&amp;filter[booking_date_from]=Value</p>
+</blockquote>
+
+<p>Using the filter returns only entries with &hellip; (see description)</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>filter[id_from]</td>
+<td>string (integer)</td>
+<td>&hellip; ids &gt;= the given id</td>
+</tr>
+<tr>
+<td>filter[id_to]</td>
+<td>string (integer)</td>
+<td>&hellip; ids &lt;= the given id</td>
+</tr>
+<tr>
+<td>filter[booking_date_from]</td>
+<td>string (date-time)</td>
+<td>&hellip; booking_date &gt;= the given date</td>
+</tr>
+<tr>
+<td>filter[booking_date_to]</td>
+<td>string (date-time)</td>
+<td>&hellip; booking_date &lt;= the given date</td>
+</tr>
+<tr>
+<td>filter[transaction_types]</td>
+<td>string (enum), see transaction_types</td>
+<td>&hellip; the given type</td>
+</tr>
+</tbody></table>
+
+<h2 id="preauths">Preauths</h2>
+
+<p>Prauths are blocked amounts that have been reserved for future payments. The money has not yet have been deducted from the account but is not available for other spending. This is usually used with credit cards but there are a lot of other use cases as well.
+The sum of all current preauths can be seen with <code class="prettyprint">accounts.preauth_amount</code>.</p>
+
+<blockquote>
+<p>GET https://api.fidor.de/preauths/:id</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9123"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1238343434"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">2435</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EUR"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"expires_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-03T13:02:45+01:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"preauth_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"creditcard_preauth"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"preauth_type_details"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"cc_merchant_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Starbucks"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cc_merchant_category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"O"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cc_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"IO"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cc_category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cc_sequence"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pos_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"POS"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"financial_network_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CAN"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-03T06:23:43Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-03T06:23:43Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Format</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>Unique preauth identifier</td>
+<td>String</td>
+</tr>
+<tr>
+<td>account_id</td>
+<td>Fidor account the preauth belongs to</td>
+<td>String</td>
+</tr>
+<tr>
+<td>preauth_type</td>
+<td>Type of the preauth</td>
+<td>String (enum)</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>The blocked amount in account currency, in minor units, e.g. 1 EUR is represented as 100. Will be set to 0 once preauth has been cleared. Can be negative e.g. if something was withdrawn from an account.</td>
+<td>Integer</td>
+</tr>
+<tr>
+<td>expires_at</td>
+<td>Expiration date (if not cleared before). Default expiring time is 30 days. ISO 8601 Date-Time</td>
+<td>Datetime</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>Creation date-time, never changes. ISO 8601 Date-Time e.g. &ldquo;2014-10-10T17:41:58+02:00&rdquo;</td>
+<td>Datetime</td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>Last update date-time. ISO 8601 Date-Time e.g. &ldquo;2015-02-04T04:08:54+01:00&rdquo;</td>
+<td>Datetime</td>
+</tr>
+<tr>
+<td>currency</td>
+<td>Currency of account or amount. ISO 4217 alpha-3 - 3 letter upcase e.g EUR</td>
+<td>String (enum)</td>
+</tr>
+<tr>
+<td>preauth_type_details</td>
+<td>Details specific to this preauth type are collected here</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h2 id="preauth-type-details">Preauth Type Details</h2>
+
+<p>Different preauth types provide different preauth type details.</p>
+
+<table><thead>
+<tr>
+<th>Preauth Type</th>
+<th>Description</th>
+<th>Preauth Type Details</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>creditcard_preauth</td>
+<td></td>
+<td>credit_card_details</td>
+</tr>
+<tr>
+<td>internal_transfer_preauth</td>
+<td></td>
+<td>internal_transfer_details</td>
+</tr>
+<tr>
+<td>capital_bond_preauth</td>
+<td></td>
+<td>capital_bond_details</td>
+</tr>
+<tr>
+<td>currency_order_preauth</td>
+<td></td>
+<td>currency_order_details</td>
+</tr>
+<tr>
+<td>gmt_preauth</td>
+<td></td>
+<td>gmt_details</td>
+</tr>
+<tr>
+<td>ripple_preauth</td>
+<td></td>
+<td>ripple_details</td>
+</tr>
+<tr>
+<td>unknown</td>
+<td>unmapped preauth type</td>
+<td>-</td>
+</tr>
+</tbody></table>
+
+<p>Let’s take closer look at the preauth types Fidor supports currently.</p>
+
+<h3 id="credit-card">Credit Card</h3>
+
+<p>Details of the <code class="prettyprint">creditcard_preauth</code> object contain information about the merchant and more.</p>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"cc_category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"R"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cc_merchant_category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5411"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cc_merchant_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Metro Cash &amp; Carry"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cc_sequence"</span><span class="p">:</span><span class="w"> </span><span class="mi">6666666</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cc_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"pos_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"COD"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"financial_network_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"IXC23"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Format</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>cc_category</td>
+<td>CreditCard category</td>
+<td>String</td>
+</tr>
+<tr>
+<td>cc_merchant_category</td>
+<td>Category given by the merchant</td>
+<td>String</td>
+</tr>
+<tr>
+<td>cc_merchant_name</td>
+<td>CreditCard merchant initiating the transaction</td>
+<td>String</td>
+</tr>
+<tr>
+<td>cc_sequence</td>
+<td>Sequence links all the credit_card related transactions together</td>
+<td>String</td>
+</tr>
+<tr>
+<td>cc_type</td>
+<td>CreditCard type</td>
+<td>String</td>
+</tr>
+<tr>
+<td>pos_code</td>
+<td>Code for point of service where card was used</td>
+<td>String</td>
+</tr>
+<tr>
+<td>financial_network_code</td>
+<td>empty</td>
+<td>String</td>
+</tr>
+</tbody></table>
+
+<h3 id="internal-transfer">Internal Transfer</h3>
+
+<p>If internal money transfers cannot be completed (e.g. because the receiver does not have a Fidor account yet), the amount is blocked until the money is collected or the preauth expires. Details of the <code class="prettyprint">internal_transfer_preauth</code> object contain information about the receiver of the payment.</p>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"internal_transfer_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"666"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_account_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"66666666"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_bic"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_iban"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_nick"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Heisenberg"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_subject"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Thanks for nothing"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Format</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>internal_transfer_id</td>
+<td>Unique account identifier of the transfer transaction belongs to. Refunded transactions have no id</td>
+<td>String</td>
+</tr>
+<tr>
+<td>remote_account_id</td>
+<td>Unique account identifier of the payment&rsquo;s sender</td>
+<td>String</td>
+</tr>
+<tr>
+<td>remote_bic</td>
+<td>empty</td>
+<td>String</td>
+</tr>
+<tr>
+<td>remote_iban</td>
+<td>empty</td>
+<td>String</td>
+</tr>
+<tr>
+<td>remote_name</td>
+<td>empty</td>
+<td>String</td>
+</tr>
+<tr>
+<td>remote_nick</td>
+<td>Community nickname of the transaction&rsquo;s sender</td>
+<td>String</td>
+</tr>
+<tr>
+<td>remote_subject</td>
+<td>Subject of the transaction</td>
+<td>String</td>
+</tr>
+</tbody></table>
+
+<h3 id="capital-bond">Capital Bond</h3>
+
+<p>If you order a Fidor capital bond the amount gets blocked until the bond gets approved by Fidor. Details of the <code class="prettyprint">capital_bond_preauth</code> object contain information about the bought capital bond.</p>
+
+<h3 id="currency-order">Currency Order</h3>
+
+<p>If you buy foreign currencies with the in-account app in the web interface of your Fidor Smart Account, the amount of the purchase will be blocked until the payment process is completed. There is no API for currency order yet. Details of the <code class="prettyprint">currency_order_preauth</code> object contain information about the currency order.</p>
+
+<h3 id="global-money-transfer-(gmt)">Global Money Transfer (GMT)</h3>
+
+<p>If you use Global Money Transfer (Auslandsüberweisung) the amount will be blocked until the transfer process is completed. Details of the <code class="prettyprint">gmt_preauth</code> object contain information about the transaction&rsquo;s target.</p>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"destination_country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AU"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"destination_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AUD"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"amount_in_destination_currency"</span><span class="p">:</span><span class="w"> </span><span class="mi">12500</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"exchange_rate"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.4591</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"fee_transaction_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2452334</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Format</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>destination_country</td>
+<td>Destination country, 2 letter (ISO3166 alpha2)</td>
+<td>String</td>
+</tr>
+<tr>
+<td>destination_currency</td>
+<td>Destination currency, 3 letter upcase (ISO 4217)</td>
+<td>String</td>
+</tr>
+<tr>
+<td>amount_in_destination_currency</td>
+<td>Amount transferred in the destination currency</td>
+<td>Integer</td>
+</tr>
+<tr>
+<td>exchange_rate</td>
+<td>Exchange rate (EUR/dest_curr) valid at the time of transfer</td>
+<td>Decimal</td>
+</tr>
+<tr>
+<td>fee_transaction_id</td>
+<td>ID of  fee transaction of this GMT transaction</td>
+<td>Integer</td>
+</tr>
+</tbody></table>
+
+<h3 id="ripple-details">Ripple details</h3>
+
+<p>If you send money via Ripple the amount will be blocked until the transfer has been completed. Details of the <code class="prettyprint">ripple_preauth</code> object contain information about the transaction&rsquo;s target.</p>
+
+<h2 id="preauth-filter">Preauth Filter</h2>
+
+<p>There are many ways to filter the output of <code class="prettyprint">preauth</code>.</p>
+
+<blockquote>
+<p>GET https://api.fidor.de/preauth?filter[transaction_types]=Value&amp;filter[booking_date_from]=Value</p>
+</blockquote>
+
+<p>Using the filter returns only entries with &hellip; (see description)</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>filter[id_from]</td>
+<td>string (integer)</td>
+<td>&hellip; ids &gt;= the given id</td>
+</tr>
+<tr>
+<td>filter[id_to]</td>
+<td>string (integer)</td>
+<td>&hellip; ids &lt;= the given id</td>
+</tr>
+<tr>
+<td>filter[booking_date_from]</td>
+<td>string (date-time)</td>
+<td>&hellip; booking_date &gt;= the given date</td>
+</tr>
+<tr>
+<td>filter[booking_date_to]</td>
+<td>string (date-time)</td>
+<td>&hellip; booking_date &lt;= the given date</td>
+</tr>
+<tr>
+<td>filter[transaction_types]</td>
+<td>string (enum), see transaction_types</td>
+<td>&hellip; the given type</td>
 </tr>
 </tbody></table>
 
