@@ -377,7 +377,7 @@ All types share use the same  `credit_card` object.
 Transaction Type | Description
 --- | ---
 creditcard_preauth | Pre-authorize and block amount (*depricated, see* `preauth`)
-creditcard_release | Release pre-authorization and unblock amount
+creditcard_release | Release pre-authorization and unblock amount  (*depricated, see* `preauth`)
 creditcard_payout | Credit card payment (out)
 creditcard_payin | Credit card payment (in)
 creditcard_annual_fee | Annual card fee

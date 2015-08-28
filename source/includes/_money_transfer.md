@@ -44,7 +44,7 @@ You can also initiate an internal transfer to the person, who doesn't yet have a
 
 Parameter | Description | Format
 --------- | ----------- | -----------
-account_id | Account identifier of the sender | String
+account_id | Account identifier of the sender (`/accounts/id`)| String
 receiver | Recipient of the transfer. Possible values are: Fidor nickname, Fidor account identifier, twitter nickname, email address, mobile phone number | String
 external_uid | Unique ID of the creator of the transaction. In case a uid is reused for a transaction, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transaction status is unknown | String
 amount | Amount of money you would like to send in account currency, in minor units, e.g. 1EUR is represented as 100. Must be greater than 0 e.g. at least one cent in EUR | Integer
@@ -99,14 +99,14 @@ Request on `/internal_transfers` with the method POST.
 }
 ```
 
-To transfer money to any country participating in the SEPA (Single Euro Payments Area) initiative  use the `sepa_credit_transfers` endpoint
+To transfer money to any country participating in the SEPA (Single Euro Payments Area) initiative use the `sepa_credit_transfers` endpoint
 `POST https://api.fidor.de/sepa_credit_transfers`
 
 If you want to send money to another bank account in Germany, you don't even have to provide the BIC - IBAN is enough.
 
 Parameter | Description | Format
 --------- | ----------- | -----------
-account_id | Account identifier of the sender | String
+account_id | Account identifier of the sender (`/accounts/id`)| String
 external_uid | Unique ID of the creator of the transaction. In case a uid is reused for a transaction, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transaction status is unknown | String
 remote_iban | IBAN of the recipient's bank account | String
 remote_bic | BIC of the recipient's bank account. Optional for transfers between two German bank accounts | String (11 characters!)
