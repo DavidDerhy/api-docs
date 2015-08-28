@@ -6,11 +6,11 @@ We differentiate between different types of money transfers. In general we disti
 
 ```json
 {
-  "account_id" : "71616244",
-  "receiver": "kycfull@fidor.de",
-  "external_uid" : "1234567",
-  "amount" : 1,
-  "subject" : "object"
+  "account_id" : "37635844",
+  "receiver": "tracy@gmail.com",
+  "external_uid" : "0f25a5f8f",
+  "amount" : 1500,
+  "subject" : "Lunch, Monday. Thank you"
 }
 ```
 
@@ -18,37 +18,78 @@ We differentiate between different types of money transfers. In general we disti
 
 ```
 {
-  "id": "281",
-  "subject": "object",
-  "account_id": "71616244",
-  "user_id": "4",
-  "receiver": "71616244",
-  "amount": 1,
-  "state": "success",
-  "created_at": "2015-02-18T15:38:23+01:00",
-  "updated_at": "2015-02-18T15:38:25+01:00",
+  "id": "940879",
+  "subject": "Lunch, Monday. Thank you",
+  "account_id": "37635844",
+  "user_id": "7027",
+  "receiver": "tracy@gmail.com",
+  "amount": 1500,
+  "state": "pending_receiver",
+  "created_at": "2015-08-27T21:33:20Z",
+  "updated_at": "2015-08-27T21:33:20Z",
   "currency": "EUR",
-  "transaction_id": "281",
-  "external_uid": "1"
+  "transaction_id": "940879",
+  "external_uid": "0f25a5f8"
+}
+```
+
+> If you try to send a transfer twice
+
+```
+{
+  "code": 409,
+  "errors": [
+  {
+    "field": "external_uid",
+    "message": "must be unique"
+  }
+  ],
+  "message": "An order with this external_uid has already been placed"
 }
 ```
 
 Fidor offers you the possibility to transfer money to other Fidor users without even knowing their account number ("Freunden Geld senden"). To transfer the money you can use one of the following:
+
 - nickname
 - email address
 - mobile phone number
 - twitter nickname
 - account identification
 
-You can also initiate an internal transfer to the person, who doesn't yet have an account at Fidor bank. In this case the amount will be blocked and the recipient will be notified about the transferred amount and can open an account at Fidor bank to receive the money. The amount will be blocked for 14 days. During this period of time the recipient can create an account at Fidor and the money will be credited to his account. After the expiration of 14 days, the money will be credited back to the sender's account.
+You can also initiate an internal transfer to the person, who doesn't yet have an account at Fidor bank. In this case the amount will be blocked (see `/preauths`) and the recipient will be notified about the transferred amount and that they can open an account at Fidor bank to collect the money. The amount will be blocked for 14 days. After that time,  the money will be credited back to the sender's account.
 
+####POST Parameter
 Parameter | Description | Format
 --------- | ----------- | -----------
 account_id | Account identifier of the sender (`/accounts/id`)| String
 receiver | Recipient of the transfer. Possible values are: Fidor nickname, Fidor account identifier, twitter nickname, email address, mobile phone number | String
-external_uid | Unique ID of the creator of the transaction. In case a uid is reused for a transaction, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transaction status is unknown | String
-amount | Amount of money you would like to send in account currency, in minor units, e.g. 1EUR is represented as 100. Must be greater than 0 e.g. at least one cent in EUR | Integer
-subject | Subject of the transaction | String
+external_uid | Unique ID given by the creator of the transfer. In case a uid is reused for a transfer, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transfer status is unknown | String
+amount | Amount of money you would like to send in account currency, in minor units, e.g. 1 EUR is represented as 100. Must be greater than 0 e.g. at least one cent in EUR | Integer
+subject | Subject of the transfer| String
+
+#### Response Parameter
+Parameter | Description | Format
+--------- | ----------- | -----------
+id | ID of transfer | Integer
+subject | Subject of the transfer as stated | String
+account_id | Account identifier of the sender as stated | String
+user_id | Customer ID of the sender | Integer
+receiver | Recipient of the transfer as stated | String
+amount | Amount as stated | Integer
+state | State of transfer | String
+created_at | Timestamp of creation | String 
+updated_at | Timestamp of last update | String 
+currency | Currency of transfer | String
+transaction_id | ID of the corresponding transaction | Integer
+external_uid | Unique external ID as stated  | String
+
+##### Transfer states
+State | Description 
+--------- | ----------- 
+success | Transfer was successful
+pending_receiver | Transfer needs to be collected by receiver
+expired | Transfer expired and the money was returned
+
 
 ### HTTP Request
 `GET https://api.fidor.de/internal_transfers`  <sub>index</sub>
@@ -58,7 +99,6 @@ subject | Subject of the transaction | String
 `POST https://api.fidor.de/internal_transfers`  <sub>create</sub>
 
 ### Example:
-
 `POST https://api.fidor.de/internal_transfers`
 
 Request on `/internal_transfers` with the method POST.
@@ -99,15 +139,29 @@ Request on `/internal_transfers` with the method POST.
 }
 ```
 
-To transfer money to any country participating in the SEPA (Single Euro Payments Area) initiative use the `sepa_credit_transfers` endpoint
-`POST https://api.fidor.de/sepa_credit_transfers`
+> If you try to send a transfer twice
 
-If you want to send money to another bank account in Germany, you don't even have to provide the BIC - IBAN is enough.
+```
+{
+  "code": 409,
+  "errors": [
+  {
+    "field": "external_uid",
+    "message": "must be unique"
+  }
+  ],
+  "message": "An order with this external_uid has already been placed"
+}
+```
+
+To transfer money to any country participating in the SEPA (Single Euro Payments Area) initiative use the `sepa_credit_transfers` endpoint. If you want to send money to another bank account in Germany, you don't even have to provide the BIC. IBAN is enough in that case.
 
 Parameter | Description | Format
 --------- | ----------- | -----------
 account_id | Account identifier of the sender (`/accounts/id`)| String
-external_uid | Unique ID of the creator of the transaction. In case a uid is reused for a transaction, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transaction status is unknown | String
+external_uid | Unique ID of the creator of the transfer. In case a uid is reused for a transfer, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transfer status is unknown | String
+account_id | Account identifier of the sender | String
+external_uid | Unique ID given by the creator of the transfer. In case a uid is reused for a transfer, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transfer status is unknown | String
 remote_iban | IBAN of the recipient's bank account | String
 remote_bic | BIC of the recipient's bank account. Optional for transfers between two German bank accounts | String (11 characters!)
 remote_name | Recipient's full name | String
@@ -116,6 +170,15 @@ currency |Currency of Account or Amount. ISO 4217 alpha-3 - 3 letter upcase e.g 
 subject | Subject of the transfer | String
 created_at | Creation date-time, never changes | String (date-time) ISO 8601 Date-Time
 updated_at | Last update date-time | String (date-time) ISO 8601 Date-Time
+
+
+### HTTP Request
+`GET https://api.fidor.de/sepa_credit_transfer`  <sub>index</sub>
+
+`GET https://api.fidor.de/sepa_credit_transfer/{id}`  <sub>self</sub>
+
+`POST https://api.fidor.de/sepa_credit_transfer`  <sub>create</sub>
+
 
 
 ##Batch Transfer
