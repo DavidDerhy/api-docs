@@ -46,61 +46,80 @@ The primarily supported authentication method from Fidor is the 3 legged OAuth2 
 
 For applications to simply control your our own bank account via a pure server side connection we soon will provide an improved approval process, OAuth flow and OAuth features. Also mobile applications require special treatment. Please get in contact with us via e-mail or leave a message in the approval submission form.
 
-###User perspective
-From the user's perspective the process works as follows:
+###Accountholder perspective
+From the accountholder's perspective the process works as follows:
 
-  - the user is redirected to Fidor and in case they are not already logged in, is asked to **enter their username and password**
+  - the accountholder using your application is redirected to Fidor. In case they are not already logged in, they are asked to **enter  username and password**
 
-  - in case the user has not previously authorized your app, the user is displayed the list of permissions your application is requesting and is **asked to confirm that the app is allowed to access their account with the given scope**.
+  - in case the accountholder has not previously authorized your app, the user is displayed the list of permissions your application is requesting and is **asked to confirm that the app is allowed to access their account with the given scope**.
 
-  - finally, the user is redirected to your app which will make calls to the API.
+Afterwards the accountholder is returned to your app which will make calls to the API and display the results.
 
 ###Application perspective
-From the perspective of the application, the OAuth2 Authorization Code Grant flow needs to be implemented:
 
-  - the the app redirects th user to the [request authorization endpoint](#systems) via http redirect:
+From the perspective of your application, the OAuth2 process consists of three steps:
 
-      `/oauth/authorize?redirect_uri=<redirect_url>&client_id=<client_id>&state=<state>&response_type=code`
+  1. you **redirect** the accountholder's browser to the [request authorization endpoint](#systems) endpoint
+  2. the `request authorization endpoint` returns an **Authorization Code** to your server after the accountholder was successfully authenticated
+  3. you **retrieve the OAuth bearer token** from Fidor by sending your `client_id` and `client_secret` to the `token` endpoint along with the Authorization Code received in the previous step.
 
-  - you will need to provide the following values:
+This bearer token is used to authenticate calls to the API. These three steps are elaborated in detail in the following sections:
 
-    - `redirect_url` : the url on your server the client will be redirected to once the authorization has been completed successfully or falied. This needs to be one of the redirect urls configured for your application in the Application Manager (see below)
+#### Accountholder Redirect
+
+In order to retrieve an OAuth  token to access an accountholder's account, first instruct your application to redirect the accountholder's browser to the [request authorization endpoint](#systems). Typically, this is done by returning an HTTP status of 3xx and the redirect location in an HTTP `Location` header:
+
+      `/oauth/authorize?redirect_uri=<redirect_uri>&client_id=<client_id>&state=<state>&response_type=code`
+
+you will need to provide the following values:
+
+    - `redirect_uri` : the url on your server the client will be redirected to once the authorization has been completed successfully or falied. This needs to be one of the redirect urls configured for your application in the Application Manager (see below)
 
     - `client_id` : the client_id that has been assigned to your app (see below)
 
-    - `state` : a random state value that will be returned to you, see [OAUTH2 sec 4.1.1](https://tools.ietf.org/html/rfc6749#section-4.1.1)
+    - `state` : a random state value that will be returned to you
+    
+For more details about this step, see [OAUTH2 sec 4.1.1](https://tools.ietf.org/html/rfc6749#section-4.1.1)
 
-  - Once the Fidor server has authenticated the user and received authorization, it will redirect the user back to the `redirect_url`
-    you provided. Attached to this redirect url will be the provided `state` parameter and a `code` parameter.
+#### Extract the Authorization Code
 
-  - In case authorization of your app failed, you will receive an [error response](#errors) from the server as described in
-    [OAuth2 sec 4.1.2.1](https://tools.ietf.org/html/rfc6749#section-4.1.2.1)
+Once the Fidor server has authenticated the user and established authorization, it will redirect the user back to the `redirect_uri`
+you provided. Attached to this redirect uri will be the provided `state` parameter and a `code` parameter. For example, you would receive a call from the accountholder's browser to:
 
-  - You MUST check the `state` parameter to ensure it contains the same value you sent to the authorize endpoint. If not, you must discontinue processing at this point and should contact Fidor as this is likely an attempt to breach security!
+  `<redirect_uri>?code=750c9d02197a2d0a2a37b12155b5c3d8&state=<state>`
 
-  - Extract the `code` parameter from the response and send it to the Fidor server's [Access Token Request endpoint](#systems) `oauth/token` as described in [OAuth2 sec 4.1.3](https://tools.ietf.org/html/rfc6749#section-4.1.3). You will need to supply the following parameters in the body of a `POST` request, using `application/x-www-form-urlencoded` encoding:
+In this example the value of the Authorization Code is 750c9d02197a2d0a2a37b12155b5c3d8. You MUST check the `state` parameter to ensure it contains the same value you sent to the authorize endpoint. If not, you must discontinue processing at this point and should contact Fidor as this is likely an attempt to breach security!
 
-      - `grant_type` : "authorization_code"
-      - `code` : the code you received via http redirect (see above)
-      - `client_id` : the client_id that has been assigned to your app (see below)
-      - `redirect_url` : the same redirect URL provided in the authorization request (see above)
+In case authorization of your app failed, you will receive an [error response](#errors) from the server as described in
+[OAuth2 sec 4.1.2.1](https://tools.ietf.org/html/rfc6749#section-4.1.2.1). Authorization typically fails if the accountholder is not willing to allow your app to access their account.
 
-  - The http request contains an `Authorization` http header, containing the `client_id` and `client_secret` (see below) of your app.
+Please refer to [OAuth2 sec 4.1.2](https://tools.ietf.org/html/rfc6749#section-4.1.2) for details concerning this step of the OAuth process.
 
-  - !Deprecated! Alternatively, the `client_secret` may be provided `application/x-www-form-urlencoded` in the body of the request along with the other parameters.
+#### Retrieve the OAuth Token
 
-  - The server will return either an error (described in [OAuth2 sec 5.2](https://tools.ietf.org/html/rfc6749#section-5.2) or a JSON
-    response containing the `access_token`, token information and a `refresh_token`.
+After you extract the `code` parameter from the server response, it is send via POST to the [Access Token Request endpoint](#systems) `oauth/token` as described in [OAuth2 sec 4.1.3](https://tools.ietf.org/html/rfc6749#section-4.1.3). This request also contains following parameters in the body of a `POST` request, using `application/x-www-form-urlencoded` encoding:
 
-  - The access token will be of type ["Bearer"](https://tools.ietf.org/html/rfc6750) and needs to be included in the http `Authorization` header of subsequent requests to the API (see [Bearer Token Usage](https://tools.ietf.org/html/rfc6750#section-2.1))
+    - `grant_type` : "authorization_code"
+    - `code` : the code you received via http redirect (see above)
+    - `client_id` : the client_id that has been assigned to your app (see below)
+    - `redirect_uri` : the same redirect URL provided in the authorization request (see above)
 
-  - Once the `access_token` has expired, the `refresh_token` may be used in order to retrieve a new valid `access_token`. Refresh token requests are addressed to the same endpoint as authorization grant request, but contain the following parameter, as described in [OAuth2 §6](https://tools.ietf.org/html/rfc6749#section-6):
+This http request to the `token` endpoint is authenticated using [HTTP Basic Authentication](http://tools.ietf.org/html/rfc1945#section-11.1). The `client_id` and `client_secret` parameters of your app are used as the basic `userid-password` credentials. _!Deprecated! Alternatively, the `client_secret` may be provided `application/x-www-form-urlencoded` in the body of the request along with the other parameters._
+
+### Bearer and Refresh Tokens
+
+The server will either return  an error (described in [OAuth2 sec 5.2](https://tools.ietf.org/html/rfc6749#section-5.2) or a JSON response containing the `access_token`, token information and a `refresh_token`.
+
+The access token will be of type ["Bearer"](https://tools.ietf.org/html/rfc6750) and needs to be included in the http `Authorization` header of subsequent requests to the API (see [Bearer Token Usage](https://tools.ietf.org/html/rfc6750#section-2.1))
+
+Once the `access_token` has expired, the `refresh_token` may be used in order to retrieve a new valid `access_token`. Refresh token requests are addressed to the same endpoint as authorization grant request, but contain the following parameter, as described in [OAuth2 §6](https://tools.ietf.org/html/rfc6749#section-6):
 
       - `grant_type` : "refresh_token"
       - `refresh_token` : the refresh token you received in the authorization code flow, above
 
 
-The required parameters (`client_id`, `client_secret` and the `redirect_url`) are available in the App Manager:
+### Overview of OAuth Parameters
+The required parameters (`client_id`, `client_secret` and the `redirect_uri`) are available in the App Manager:
 
 Setting | Value (example)
 --------- | -----------
@@ -112,6 +131,9 @@ Callback URLs | http://localhost:4567
 Terms of service URL | http://myapp.com/tos
 Customer Service URL | http://myapp.com/customer
 Customer Service Email | likeaboss@myapp.com
+
+### More examples
+The OAuth process is a bit daunting at first and may take some attempts to get right. In case you hvae problems retrieving a token we've provided sample implementations that handle the OAuth process. Have a look at out [Starter Kits](https://github.com/fidor/fidor_starter_kits) to see how OAuth can be implemented.
 
 <aside class="warning">
   <strong>You must never share the Client Secret parameter with other people. This is your applications password.</strong><br/>
