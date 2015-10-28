@@ -49,9 +49,8 @@ For applications to simply control your our own bank account via a pure server s
 ###Accountholder perspective
 From the accountholder's perspective the process works as follows:
 
-  - the accountholder using your application is redirected to Fidor. In case they are not already logged in, they are asked to **enter  username and password**
-
-  - in case the accountholder has not previously authorized your app, the user is displayed the list of permissions your application is requesting and is **asked to confirm that the app is allowed to access their account with the given scope**.
+- the accountholder using your application is redirected to Fidor. In case they are not already logged in, they are asked to **enter  username and password**
+- in case the accountholder has not previously authorized your app, the user is displayed the list of permissions your application is requesting and is **asked to confirm that the app is allowed to access their account with the given scope**.
 
 Afterwards the accountholder is returned to your app which will make calls to the API and display the results.
 
@@ -73,11 +72,9 @@ In order to retrieve an OAuth  token to access an accountholder's account, first
 
 you will need to provide the following values:
 
-    - `redirect_uri` : the url on your server the client will be redirected to once the authorization has been completed successfully or falied. This needs to be one of the redirect urls configured for your application in the Application Manager (see below)
-
-    - `client_id` : the client_id that has been assigned to your app (see below)
-
-    - `state` : a random state value that will be returned to you
+- `redirect_uri` : the url on your server the client will be redirected to once the authorization has been completed successfully or falied. This needs to be one of the redirect urls configured for your application in the Application Manager (see below)
+- `client_id` : the client_id that has been assigned to your app (see below)
+- `state` : a random state value that will be returned to you
     
 For more details about this step, see [OAUTH2 sec 4.1.1](https://tools.ietf.org/html/rfc6749#section-4.1.1)
 
@@ -99,10 +96,10 @@ Please refer to [OAuth2 sec 4.1.2](https://tools.ietf.org/html/rfc6749#section-4
 
 After you extract the `code` parameter from the server response, it is send via POST to the [Access Token Request endpoint](#systems) `oauth/token` as described in [OAuth2 sec 4.1.3](https://tools.ietf.org/html/rfc6749#section-4.1.3). This request also contains following parameters in the body of a `POST` request, using `application/x-www-form-urlencoded` encoding:
 
-    - `grant_type` : "authorization_code"
-    - `code` : the code you received via http redirect (see above)
-    - `client_id` : the client_id that has been assigned to your app (see below)
-    - `redirect_uri` : the same redirect URL provided in the authorization request (see above)
+- `grant_type` : "authorization_code"
+- `code` : the code you received via http redirect (see above)
+- `client_id` : the client_id that has been assigned to your app (see below)
+- `redirect_uri` : the same redirect URL provided in the authorization request (see above)
 
 This http request to the `token` endpoint is authenticated using [HTTP Basic Authentication](http://tools.ietf.org/html/rfc1945#section-11.1). The `client_id` and `client_secret` parameters of your app are used as the basic `userid-password` credentials. _!Deprecated! Alternatively, the `client_secret` may be provided `application/x-www-form-urlencoded` in the body of the request along with the other parameters._
 
@@ -114,8 +111,12 @@ The access token will be of type ["Bearer"](https://tools.ietf.org/html/rfc6750)
 
 Once the `access_token` has expired, the `refresh_token` may be used in order to retrieve a new valid `access_token`. Refresh token requests are addressed to the same endpoint as authorization grant request, but contain the following parameter, as described in [OAuth2 §6](https://tools.ietf.org/html/rfc6749#section-6):
 
-      - `grant_type` : "refresh_token"
-      - `refresh_token` : the refresh token you received in the authorization code flow, above
+- `grant_type` : "refresh_token"
+- `refresh_token` : the refresh token you received in the authorization code flow, above
+
+### Token Revocation
+
+For security reasons, you should revoke a token after you no longer need it to ensure it is not misused. Token Revocation is handled according to [RFC 7009](https://tools.ietf.org/html/rfc7009). It's very simple, just post the token you wish to cancel to the revocation endpoint (`/oauth/revoke`) in a paramter key called `token`. This request needs to be authorized by `client_id` and `client_secret` parameters which are provided via HTTP Basic authentication. Both bearer tokens and refresh tokens can be canceled in the same manner.
 
 
 ### Overview of OAuth Parameters
