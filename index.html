@@ -298,58 +298,92 @@ using <a href="https://tools.ietf.org/html/rfc6749">OAuth 2</a>.</p>
 
 <p>For applications to simply control your our own bank account via a pure server side connection we soon will provide an improved approval process, OAuth flow and OAuth features. Also mobile applications require special treatment. Please get in contact with us via e-mail or leave a message in the approval submission form.</p>
 
-<h3 id="user-perspective">User perspective</h3>
+<h3 id="accountholder-perspective">Accountholder perspective</h3>
 
-<p>From the user&rsquo;s perspective the process works as follows:</p>
+<p>From the accountholder&rsquo;s perspective the process works as follows:</p>
 
 <ul>
-<li><p>the user is redirected to Fidor and in case they are not already logged in, is asked to <strong>enter their username and password</strong></p></li>
-<li><p>in case the user has not previously authorized your app, the user is displayed the list of permissions your application is requesting and is <strong>asked to confirm that the app is allowed to access their account with the given scope</strong>.</p></li>
-<li><p>finally, the user is redirected to your app which will make calls to the API.</p></li>
+<li>the accountholder using your application is redirected to Fidor. In case they are not already logged in, they are asked to <strong>enter  username and password</strong></li>
+<li>in case the accountholder has not previously authorized your app, the user is displayed the list of permissions your application is requesting and is <strong>asked to confirm that the app is allowed to access their account with the given scope</strong>.</li>
 </ul>
+
+<p>Afterwards the accountholder is returned to your app which will make calls to the API and display the results.</p>
 
 <h3 id="application-perspective">Application perspective</h3>
 
-<p>From the perspective of the application, the OAuth2 Authorization Code Grant flow needs to be implemented:</p>
+<p>From the perspective of your application, the OAuth2 process consists of three steps:</p>
+
+<ol>
+<li>you <strong>redirect</strong> the accountholder&rsquo;s browser to the <a href="#systems">request authorization endpoint</a> endpoint</li>
+<li>the <code class="prettyprint">request authorization endpoint</code> returns an <strong>Authorization Code</strong> to your server after the accountholder was successfully authenticated</li>
+<li>you <strong>retrieve the OAuth bearer token</strong> from Fidor by sending your <code class="prettyprint">client_id</code> and <code class="prettyprint">client_secret</code> to the <code class="prettyprint">token</code> endpoint along with the Authorization Code received in the previous step.</li>
+</ol>
+
+<p>This bearer token is used to authenticate calls to the API. These three steps are elaborated in detail in the following sections:</p>
+
+<h4 id="accountholder-redirect">Accountholder Redirect</h4>
+
+<p>In order to retrieve an OAuth  token to access an accountholder&rsquo;s account, first instruct your application to redirect the accountholder&rsquo;s browser to the <a href="#systems">request authorization endpoint</a>. Typically, this is done by returning an HTTP status of 3xx and the redirect location in an HTTP <code class="prettyprint">Location</code> header:</p>
+
+<p><code class="prettyprint">/oauth/authorize?redirect_uri=&lt;redirect_uri&gt;&amp;client_id=&lt;client_id&gt;&amp;state=&lt;state&gt;&amp;response_type=code</code></p>
+
+<p>you will need to provide the following values:</p>
 
 <ul>
-<li><p>the the app redirects th user to the <a href="#systems">request authorization endpoint</a> via http redirect:</p>
-
-<p><code class="prettyprint">/oauth/authorize?redirect_uri=&lt;redirect_url&gt;&amp;client_id=&lt;client_id&gt;&amp;state=&lt;state&gt;&amp;response_type=code</code></p></li>
-<li><p>you will need to provide the following values:</p>
-
-<ul>
-<li><code class="prettyprint">redirect_url</code> : the url on your server the client will be redirected to once the authorization has been completed successfully or falied. This needs to be one of the redirect urls configured for your application in the Application Manager (see below)</li>
+<li><code class="prettyprint">redirect_uri</code> : the url on your server the client will be redirected to once the authorization has been completed successfully or falied. This needs to be one of the redirect urls configured for your application in the Application Manager (see below)</li>
 <li><code class="prettyprint">client_id</code> : the client_id that has been assigned to your app (see below)</li>
-<li><code class="prettyprint">state</code> : a random state value that will be returned to you, see <a href="https://tools.ietf.org/html/rfc6749#section-4.1.1">OAUTH2 sec 4.1.1</a></li>
-</ul></li>
-<li><p>Once the Fidor server has authenticated the user and received authorization, it will redirect the user back to the <code class="prettyprint">redirect_url</code>
-you provided. Attached to this redirect url will be the provided <code class="prettyprint">state</code> parameter and a <code class="prettyprint">code</code> parameter.</p></li>
-<li><p>In case authorization of your app failed, you will receive an <a href="#errors">error response</a> from the server as described in
-<a href="https://tools.ietf.org/html/rfc6749#section-4.1.2.1">OAuth2 sec 4.1.2.1</a></p></li>
-<li><p>You MUST check the <code class="prettyprint">state</code> parameter to ensure it contains the same value you sent to the authorize endpoint. If not, you must discontinue processing at this point and should contact Fidor as this is likely an attempt to breach security!</p></li>
-<li><p>Extract the <code class="prettyprint">code</code> parameter from the response and send it to the Fidor server&rsquo;s <a href="#systems">Access Token Request endpoint</a> <code class="prettyprint">oauth/token</code> as described in <a href="https://tools.ietf.org/html/rfc6749#section-4.1.3">OAuth2 sec 4.1.3</a>. You will need to supply the following parameters in the body of a <code class="prettyprint">POST</code> request, using <code class="prettyprint">application/x-www-form-urlencoded</code> encoding:</p>
+<li><code class="prettyprint">state</code> : a random state value that will be returned to you</li>
+</ul>
+
+<p>For more details about this step, see <a href="https://tools.ietf.org/html/rfc6749#section-4.1.1">OAUTH2 sec 4.1.1</a></p>
+
+<h4 id="extract-the-authorization-code">Extract the Authorization Code</h4>
+
+<p>Once the Fidor server has authenticated the user and established authorization, it will redirect the user back to the <code class="prettyprint">redirect_uri</code>
+you provided. Attached to this redirect uri will be the provided <code class="prettyprint">state</code> parameter and a <code class="prettyprint">code</code> parameter. For example, you would receive a call from the accountholder&rsquo;s browser to:</p>
+
+<p><code class="prettyprint">&lt;redirect_uri&gt;?code=750c9d02197a2d0a2a37b12155b5c3d8&amp;state=&lt;state&gt;</code></p>
+
+<p>In this example the value of the Authorization Code is 750c9d02197a2d0a2a37b12155b5c3d8. You MUST check the <code class="prettyprint">state</code> parameter to ensure it contains the same value you sent to the authorize endpoint. If not, you must discontinue processing at this point and should contact Fidor as this is likely an attempt to breach security!</p>
+
+<p>In case authorization of your app failed, you will receive an <a href="#errors">error response</a> from the server as described in
+<a href="https://tools.ietf.org/html/rfc6749#section-4.1.2.1">OAuth2 sec 4.1.2.1</a>. Authorization typically fails if the accountholder is not willing to allow your app to access their account.</p>
+
+<p>Please refer to <a href="https://tools.ietf.org/html/rfc6749#section-4.1.2">OAuth2 sec 4.1.2</a> for details concerning this step of the OAuth process.</p>
+
+<h4 id="retrieve-the-oauth-token">Retrieve the OAuth Token</h4>
+
+<p>After you extract the <code class="prettyprint">code</code> parameter from the server response, it is send via POST to the <a href="#systems">Access Token Request endpoint</a> <code class="prettyprint">oauth/token</code> as described in <a href="https://tools.ietf.org/html/rfc6749#section-4.1.3">OAuth2 sec 4.1.3</a>. This request also contains following parameters in the body of a <code class="prettyprint">POST</code> request, using <code class="prettyprint">application/x-www-form-urlencoded</code> encoding:</p>
 
 <ul>
 <li><code class="prettyprint">grant_type</code> : &ldquo;authorization_code&rdquo;</li>
 <li><code class="prettyprint">code</code> : the code you received via http redirect (see above)</li>
 <li><code class="prettyprint">client_id</code> : the client_id that has been assigned to your app (see below)</li>
-<li><code class="prettyprint">redirect_url</code> : the same redirect URL provided in the authorization request (see above)</li>
-</ul></li>
-<li><p>The http request contains an <code class="prettyprint">Authorization</code> http header, containing the <code class="prettyprint">client_id</code> and <code class="prettyprint">client_secret</code> (see below) of your app.</p></li>
-<li><p>!Deprecated! Alternatively, the <code class="prettyprint">client_secret</code> may be provided <code class="prettyprint">application/x-www-form-urlencoded</code> in the body of the request along with the other parameters.</p></li>
-<li><p>The server will return either an error (described in <a href="https://tools.ietf.org/html/rfc6749#section-5.2">OAuth2 sec 5.2</a> or a JSON
-response containing the <code class="prettyprint">access_token</code>, token information and a <code class="prettyprint">refresh_token</code>.</p></li>
-<li><p>The access token will be of type <a href="https://tools.ietf.org/html/rfc6750">&ldquo;Bearer&rdquo;</a> and needs to be included in the http <code class="prettyprint">Authorization</code> header of subsequent requests to the API (see <a href="https://tools.ietf.org/html/rfc6750#section-2.1">Bearer Token Usage</a>)</p></li>
-<li><p>Once the <code class="prettyprint">access_token</code> has expired, the <code class="prettyprint">refresh_token</code> may be used in order to retrieve a new valid <code class="prettyprint">access_token</code>. Refresh token requests are addressed to the same endpoint as authorization grant request, but contain the following parameter, as described in <a href="https://tools.ietf.org/html/rfc6749#section-6">OAuth2 §6</a>:</p>
+<li><code class="prettyprint">redirect_uri</code> : the same redirect URL provided in the authorization request (see above)</li>
+</ul>
+
+<p>This http request to the <code class="prettyprint">token</code> endpoint is authenticated using <a href="http://tools.ietf.org/html/rfc1945#section-11.1">HTTP Basic Authentication</a>. The <code class="prettyprint">client_id</code> and <code class="prettyprint">client_secret</code> parameters of your app are used as the basic <code class="prettyprint">userid-password</code> credentials. <em>!Deprecated! Alternatively, the <code class="prettyprint">client_secret</code> may be provided <code class="prettyprint">application/x-www-form-urlencoded</code> in the body of the request along with the other parameters.</em></p>
+
+<h3 id="bearer-and-refresh-tokens">Bearer and Refresh Tokens</h3>
+
+<p>The server will either return  an error (described in <a href="https://tools.ietf.org/html/rfc6749#section-5.2">OAuth2 sec 5.2</a> or a JSON response containing the <code class="prettyprint">access_token</code>, token information and a <code class="prettyprint">refresh_token</code>.</p>
+
+<p>The access token will be of type <a href="https://tools.ietf.org/html/rfc6750">&ldquo;Bearer&rdquo;</a> and needs to be included in the http <code class="prettyprint">Authorization</code> header of subsequent requests to the API (see <a href="https://tools.ietf.org/html/rfc6750#section-2.1">Bearer Token Usage</a>)</p>
+
+<p>Once the <code class="prettyprint">access_token</code> has expired, the <code class="prettyprint">refresh_token</code> may be used in order to retrieve a new valid <code class="prettyprint">access_token</code>. Refresh token requests are addressed to the same endpoint as authorization grant request, but contain the following parameter, as described in <a href="https://tools.ietf.org/html/rfc6749#section-6">OAuth2 §6</a>:</p>
 
 <ul>
 <li><code class="prettyprint">grant_type</code> : &ldquo;refresh_token&rdquo;</li>
 <li><code class="prettyprint">refresh_token</code> : the refresh token you received in the authorization code flow, above</li>
-</ul></li>
 </ul>
 
-<p>The required parameters (<code class="prettyprint">client_id</code>, <code class="prettyprint">client_secret</code> and the <code class="prettyprint">redirect_url</code>) are available in the App Manager:</p>
+<h3 id="token-revocation">Token Revocation</h3>
+
+<p>For security reasons, you should revoke a token after you no longer need it to ensure it is not misused. Token Revocation is handled according to <a href="https://tools.ietf.org/html/rfc7009">RFC 7009</a>. It&rsquo;s very simple, just post the token you wish to cancel to the revocation endpoint (<code class="prettyprint">/oauth/revoke</code>) in a paramter key called <code class="prettyprint">token</code>. This request needs to be authorized by <code class="prettyprint">client_id</code> and <code class="prettyprint">client_secret</code> parameters which are provided via HTTP Basic authentication. Both bearer tokens and refresh tokens can be canceled in the same manner.</p>
+
+<h3 id="overview-of-oauth-parameters">Overview of OAuth Parameters</h3>
+
+<p>The required parameters (<code class="prettyprint">client_id</code>, <code class="prettyprint">client_secret</code> and the <code class="prettyprint">redirect_uri</code>) are available in the App Manager:</p>
 
 <table><thead>
 <tr>
@@ -390,6 +424,10 @@ response containing the <code class="prettyprint">access_token</code>, token inf
 <td>likeaboss@myapp.com</td>
 </tr>
 </tbody></table>
+
+<h3 id="more-examples">More examples</h3>
+
+<p>The OAuth process is a bit daunting at first and may take some attempts to get right. In case you hvae problems retrieving a token we&rsquo;ve provided sample implementations that handle the OAuth process. Have a look at out <a href="https://github.com/fidor/fidor_starter_kits">Starter Kits</a> to see how OAuth can be implemented.</p>
 
 <aside class="warning">
   <strong>You must never share the Client Secret parameter with other people. This is your applications password.</strong><br/>
@@ -1460,7 +1498,7 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 </tr>
 <tr>
 <td>creditcard_release</td>
-<td>Release pre-authorization and unblock amount</td>
+<td>Release pre-authorization and unblock amount  (<em>depricated, see</em> <code class="prettyprint">preauth</code>)</td>
 </tr>
 <tr>
 <td>creditcard_payout</td>
@@ -2095,11 +2133,11 @@ The sum of all current preauths can be seen with <code class="prettyprint">accou
 <p>Request body</p>
 </blockquote>
 <pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"account_id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"71616244"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"receiver"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kycfull@fidor.de"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"external_uid"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"1234567"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"amount"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"subject"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="w">
+  </span><span class="s2">"account_id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"37635844"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"receiver"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tracy@gmail.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"external_uid"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"0f25a5f8f"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"amount"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1500</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"subject"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Lunch, Monday. Thank you"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -2107,29 +2145,49 @@ The sum of all current preauths can be seen with <code class="prettyprint">accou
 <p>Response body</p>
 </blockquote>
 <pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"281"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"subject"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"71616244"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"receiver"</span><span class="p">:</span><span class="w"> </span><span class="s2">"71616244"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-18T15:38:23+01:00"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-18T15:38:25+01:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"940879"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"subject"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Lunch, Monday. Thank you"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"37635844"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7027"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"receiver"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tracy@gmail.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">1500</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending_receiver"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-08-27T21:33:20Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-08-27T21:33:20Z"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EUR"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"transaction_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"281"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"external_uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">
+  </span><span class="s2">"transaction_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"940879"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"external_uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0f25a5f8"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>Fidor offers you the possibility to transfer money to other Fidor users without even knowing their account number (&ldquo;Freunden Geld senden&rdquo;). To transfer the money you can use one of the following:
-- nickname
-- email address
-- mobile phone number
-- twitter nickname
-- account identification</p>
+<blockquote>
+<p>If you try to send a transfer twice</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">409</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"errors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"field"</span><span class="p">:</span><span class="w"> </span><span class="s2">"external_uid"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"must be unique"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"An order with this external_uid has already been placed"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
-<p>You can also initiate an internal transfer to the person, who doesn&rsquo;t yet have an account at Fidor bank. In this case the amount will be blocked and the recipient will be notified about the transferred amount and can open an account at Fidor bank to receive the money. The amount will be blocked for 14 days. During this period of time the recipient can create an account at Fidor and the money will be credited to his account. After the expiration of 14 days, the money will be credited back to the sender&rsquo;s account.</p>
+<p>Fidor offers you the possibility to transfer money to other Fidor users without even knowing their account number (&ldquo;Freunden Geld senden&rdquo;). To transfer the money you can use one of the following:</p>
+
+<ul>
+<li>nickname</li>
+<li>email address</li>
+<li>mobile phone number</li>
+<li>twitter nickname</li>
+<li>account identification</li>
+</ul>
+
+<p>You can also initiate an internal transfer to the person, who doesn&rsquo;t yet have an account at Fidor bank. In this case the amount will be blocked (see <code class="prettyprint">/preauths</code>) and the recipient will be notified about the transferred amount and that they can open an account at Fidor bank to collect the money. The amount will be blocked for 14 days. After that time,  the money will be credited back to the sender&rsquo;s account.</p>
+
+<h4 id="post-parameter">POST Parameter</h4>
 
 <table><thead>
 <tr>
@@ -2140,7 +2198,7 @@ The sum of all current preauths can be seen with <code class="prettyprint">accou
 </thead><tbody>
 <tr>
 <td>account_id</td>
-<td>Account identifier of the sender</td>
+<td>Account identifier of the sender (<code class="prettyprint">/accounts/id</code>)</td>
 <td>String</td>
 </tr>
 <tr>
@@ -2150,18 +2208,111 @@ The sum of all current preauths can be seen with <code class="prettyprint">accou
 </tr>
 <tr>
 <td>external_uid</td>
-<td>Unique ID of the creator of the transaction. In case a uid is reused for a transaction, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transaction status is unknown</td>
+<td>Unique ID given by the creator of the transfer. In case a uid is reused for a transfer, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transfer status is unknown</td>
 <td>String</td>
 </tr>
 <tr>
 <td>amount</td>
-<td>Amount of money you would like to send in account currency, in minor units, e.g. 1EUR is represented as 100. Must be greater than 0 e.g. at least one cent in EUR</td>
+<td>Amount of money you would like to send in account currency, in minor units, e.g. 1 EUR is represented as 100. Must be greater than 0 e.g. at least one cent in EUR</td>
 <td>Integer</td>
 </tr>
 <tr>
 <td>subject</td>
-<td>Subject of the transaction</td>
+<td>Subject of the transfer</td>
 <td>String</td>
+</tr>
+</tbody></table>
+
+<h4 id="response-parameter">Response Parameter</h4>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Format</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>ID of transfer</td>
+<td>Integer</td>
+</tr>
+<tr>
+<td>subject</td>
+<td>Subject of the transfer as stated</td>
+<td>String</td>
+</tr>
+<tr>
+<td>account_id</td>
+<td>Account identifier of the sender as stated</td>
+<td>String</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>Customer ID of the sender</td>
+<td>Integer</td>
+</tr>
+<tr>
+<td>receiver</td>
+<td>Recipient of the transfer as stated</td>
+<td>String</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>Amount as stated</td>
+<td>Integer</td>
+</tr>
+<tr>
+<td>state</td>
+<td>State of transfer</td>
+<td>String</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>Timestamp of creation</td>
+<td>String</td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>Timestamp of last update</td>
+<td>String</td>
+</tr>
+<tr>
+<td>currency</td>
+<td>Currency of transfer</td>
+<td>String</td>
+</tr>
+<tr>
+<td>transaction_id</td>
+<td>ID of the corresponding transaction</td>
+<td>Integer</td>
+</tr>
+<tr>
+<td>external_uid</td>
+<td>Unique external ID as stated</td>
+<td>String</td>
+</tr>
+</tbody></table>
+
+<h5 id="transfer-states">Transfer states</h5>
+
+<table><thead>
+<tr>
+<th>State</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>success</td>
+<td>Transfer was successful</td>
+</tr>
+<tr>
+<td>pending_receiver</td>
+<td>Transfer needs to be collected by receiver</td>
+</tr>
+<tr>
+<td>expired</td>
+<td>Transfer expired and the money was returned</td>
 </tr>
 </tbody></table>
 
@@ -2216,10 +2367,22 @@ The sum of all current preauths can be seen with <code class="prettyprint">accou
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>To transfer money to any country participating in the SEPA (Single Euro Payments Area) initiative  use the <code class="prettyprint">sepa_credit_transfers</code> endpoint
-<code class="prettyprint">POST https://api.fidor.de/sepa_credit_transfers</code></p>
+<blockquote>
+<p>If you try to send a transfer twice</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">409</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"errors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"field"</span><span class="p">:</span><span class="w"> </span><span class="s2">"external_uid"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"must be unique"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"An order with this external_uid has already been placed"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
-<p>If you want to send money to another bank account in Germany, you don&rsquo;t even have to provide the BIC - IBAN is enough.</p>
+<p>To transfer money to any country participating in the SEPA (Single Euro Payments Area) initiative use the <code class="prettyprint">sepa_credit_transfers</code> endpoint. If you want to send money to another bank account in Germany, you don&rsquo;t even have to provide the BIC. IBAN is enough in that case.</p>
 
 <table><thead>
 <tr>
@@ -2230,12 +2393,22 @@ The sum of all current preauths can be seen with <code class="prettyprint">accou
 </thead><tbody>
 <tr>
 <td>account_id</td>
+<td>Account identifier of the sender (<code class="prettyprint">/accounts/id</code>)</td>
+<td>String</td>
+</tr>
+<tr>
+<td>external_uid</td>
+<td>Unique ID of the creator of the transfer. In case a uid is reused for a transfer, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transfer status is unknown</td>
+<td>String</td>
+</tr>
+<tr>
+<td>account_id</td>
 <td>Account identifier of the sender</td>
 <td>String</td>
 </tr>
 <tr>
 <td>external_uid</td>
-<td>Unique ID of the creator of the transaction. In case a uid is reused for a transaction, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transaction status is unknown</td>
+<td>Unique ID given by the creator of the transfer. In case a uid is reused for a transfer, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transfer status is unknown</td>
 <td>String</td>
 </tr>
 <tr>
@@ -2279,6 +2452,14 @@ The sum of all current preauths can be seen with <code class="prettyprint">accou
 <td>String (date-time) ISO 8601 Date-Time</td>
 </tr>
 </tbody></table>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://api.fidor.de/sepa_credit_transfer</code>  <sub>index</sub></p>
+
+<p><code class="prettyprint">GET https://api.fidor.de/sepa_credit_transfer/{id}</code>  <sub>self</sub></p>
+
+<p><code class="prettyprint">POST https://api.fidor.de/sepa_credit_transfer</code>  <sub>create</sub></p>
 
 <h2 id="batch-transfer">Batch Transfer</h2>
 
