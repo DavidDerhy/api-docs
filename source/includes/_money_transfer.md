@@ -77,15 +77,15 @@ user_id | Customer ID of the sender | Integer
 receiver | Recipient of the transfer as stated | String
 amount | Amount as stated | Integer
 state | State of transfer | String
-created_at | Timestamp of creation | String 
-updated_at | Timestamp of last update | String 
+created_at | Timestamp of creation | String
+updated_at | Timestamp of last update | String
 currency | Currency of transfer | String
 transaction_id | ID of the corresponding transaction | Integer
 external_uid | Unique external ID as stated  | String
 
 ##### Transfer states
-State | Description 
---------- | ----------- 
+State | Description
+--------- | -----------
 success | Transfer was successful
 pending_receiver | Transfer needs to be collected by receiver
 expired | Transfer expired and the money was returned
@@ -313,32 +313,3 @@ PREVIEW: A batch transfer can contain multiple transfers which are processed asy
 `GET https://api.fidor.de/batch_transfers/{id}`  <sub>self</sub>
 
 `POST https://api.fidor.de/batch_transfers`  <sub>create</sub>
-
-##Coming Soon - Extended Money Operations
-
-In order to create a SEPA Direct Debit you have to create a SEPA Mandate first. Not every Fidor customer is eligible to create SEPA Mandates. If you are interested in SEPA Direct Debits and do not have a required account for creating SEPA Mandates you will need to contact Fidor first.
-
-### HTTP Request
-
-`GET https://api.fidor.de/sepa_direct_debits` <sub>index</sub>
-
-`GET https://api.fidor.de/sepa_direct_debits/{id}` <sub>self</sub>
-
-`POST https://api.fidor.de/sepa_direct_debits` <sub>create</sub>
-
-###Creating SEPA Mandate
-
-###Creating SEPA Direct Debit
-
-###Batch Direct Debit
-
-*PREVIEW:* A direct debit batch contains multiple direct debits which are processed asynchronously.
-
-`GET https://api.fidor.de/batch_direct_debits/{id}`
-<sub>self</sub>
-
-`GET https://api.fidor.de/batch_direct_debits`
-<sub>instances</sub>
-
-`POST https://api.fidor.de/batch_direct_debits`
-<sub>create</sub>

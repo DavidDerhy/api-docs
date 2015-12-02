@@ -13,6 +13,7 @@ includes:
   - approval_operation
   - basic_data
   - money_transfer
+  - sepa_mm_dd
   - trust_account
   - errors
 
