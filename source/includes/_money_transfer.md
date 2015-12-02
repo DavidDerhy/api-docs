@@ -173,11 +173,11 @@ updated_at | Last update date-time | String (date-time) ISO 8601 Date-Time
 
 
 ### HTTP Request
-`GET https://api.fidor.de/sepa_credit_transfer`  <sub>index</sub>
+`GET https://api.fidor.de/sepa_credit_transfers`  <sub>index</sub>
 
-`GET https://api.fidor.de/sepa_credit_transfer/{id}`  <sub>self</sub>
+`GET https://api.fidor.de/sepa_credit_transfers/{id}`  <sub>self</sub>
 
-`POST https://api.fidor.de/sepa_credit_transfer`  <sub>create</sub>
+`POST https://api.fidor.de/sepa_credit_transfers`  <sub>create</sub>
 
 
 
