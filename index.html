@@ -2594,11 +2594,35 @@ The sum of all current preauths can be seen with <code class="prettyprint">accou
 
 <p><code class="prettyprint">POST https://api.fidor.de/batch_transfers</code>  <sub>create</sub></p>
 
-<h2 id="coming-soon---extended-money-operations">Coming Soon - Extended Money Operations</h2>
+          <h1 id="sepa-mandates-and-direct-debits">Sepa Mandates and Direct Debits</h1>
 
 <p>In order to create a SEPA Direct Debit you have to create a SEPA Mandate first. Not every Fidor customer is eligible to create SEPA Mandates. If you are interested in SEPA Direct Debits and do not have a required account for creating SEPA Mandates you will need to contact Fidor first.</p>
 
-<h3 id="http-request">HTTP Request</h3>
+<p>To be able to create mandates you have to acquire a Unique Creditor Identifier.</p>
+
+<p>The Creditor Identifier for Germany is precisely 18 characters in length and is structured as follows</p>
+
+<ul>
+<li>The first two characters represent the ISO country code for Germany (DE) as the country issuing the Creditor Identifier.</li>
+<li>The third and fourth characters are the check digits which are calculated in compliance with the IBAN check digits (ISO 13616) without taking characters five to seven (Creditor Business Code) into account.</li>
+<li>The fifth, sixth and seventh characters in the sequence signify the Creditor Business Code for which the direct debit creditor may select alphanumeric characters to denote individual business areas or branches specific to his requirements. The use of blanks, special characters and umlauts is not permitted. As a rule, the three characters entered here are the letters “ZZZ”.</li>
+<li>The remaining characters 8 to 18 signify the national identifier for the direct debit creditor and are numbered in consecutive ascending order. Until further notice, the eighth character in the Creditor Identifier will always be &ldquo;0&rdquo;.</li>
+</ul>
+
+<p>You can find more information about how to acquire a UCI (Unique Creditor Identifier) by following this link:
+<a href="https://www.bundesbank.de/Redaktion/EN/Standardartikel/Tasks/Payment_systems/sepa_creditor_identifier.html">Creditor Identifier</a></p>
+
+<h2 id="http-requests">HTTP Requests</h2>
+
+<p><code class="prettyprint">GET http://api.fidor.de/creditor_identities</code> <sub>index</sub></p>
+
+<p><code class="prettyprint">GET http://api.fidor.de/sepa_mandates</code> <sub>index</sub></p>
+
+<p><code class="prettyprint">GET http://api.fidor.de/sepa_mandates/{id}</code> <sub>self</sub></p>
+
+<p><code class="prettyprint">POST http://api.fidor.de/sepa_mandates</code> <sub>create</sub></p>
+
+<p><code class="prettyprint">PUT http://api.fidor.de/sepa_mandates/{id}</code> <sub>update</sub></p>
 
 <p><code class="prettyprint">GET https://api.fidor.de/sepa_direct_debits</code> <sub>index</sub></p>
 
@@ -2606,22 +2630,292 @@ The sum of all current preauths can be seen with <code class="prettyprint">accou
 
 <p><code class="prettyprint">POST https://api.fidor.de/sepa_direct_debits</code> <sub>create</sub></p>
 
-<h3 id="creating-sepa-mandate">Creating SEPA Mandate</h3>
+<h2 id="creditor-identifiers">Creditor Identifiers</h2>
 
-<h3 id="creating-sepa-direct-debit">Creating SEPA Direct Debit</h3>
+<blockquote>
+<p>GET http://api.fidor.de/creditor_identities</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GB56ZZZDFFGFFO00000020150006"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345678"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-04-07T13:33:59Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-04-07T15:54:48Z"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DE37ZZZ08000000001"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345678"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-04-07T13:46:08Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-04-08T08:45:33Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"collection"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"current_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"per_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"total_entries"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"total_pages"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
-<h3 id="batch-direct-debit">Batch Direct Debit</h3>
+<p>Once you acquired one or multiple UCIs (Unique Creditor Identifiers) you have to contact Fidor.
+We will store your UCIs related credentials in our system.
+To get the information about Creditor Identifiers available for your use, you have to call the <code class="prettyprint">/creditor_identities</code> endpoint.</p>
+
+<p>You will have to use one of the available <code class="prettyprint">creditor_identities</code> to create <code class="prettyprint">sepa_mandates</code>.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Format</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>Unique Creditor Identifier</td>
+<td>String</td>
+</tr>
+<tr>
+<td>account_id</td>
+<td>Account identifier of the sender (<code class="prettyprint">/accounts/id</code>)</td>
+<td>String</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>Creation date-time, never changes</td>
+<td>String (date-time) ISO 8601 Date-Time</td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>Last update date-time</td>
+<td>String (date-time) ISO 8601 Date-Time</td>
+</tr>
+</tbody></table>
+
+<h2 id="creating-sepa-mandate">Creating SEPA Mandate</h2>
+
+<p>Once the SEPA mandate is stored successfully, you have the possibility to change the mandate by issuing a <code class="prettyprint">PUT</code> request to <code class="prettyprint">/sepa_mandates/:id</code>.</p>
+
+<blockquote>
+<p>POST http://api.fidor.de/sepa_mandates</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">       
+  </span><span class="s2">"creditor_identity_id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"DE37ZZZ08000000001"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"external_uid"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"666"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mandate_reference"</span><span class="p">:</span><span class="w"> </span><span class="s2">"666"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"sequence"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RCUR"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cor1_option"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mr."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Walter White"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"walter@heisenberg.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_address_line1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"308 Negra Arroyo Lane"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_address_line2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Albuquerque, New Mexico, 87104"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_iban"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DE08100100100666666666"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_bic"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FDDODEMMXXX"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"signature_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-04-07"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"valid_from_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-18"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<blockquote>
+<p>GET http://api.fidor.de/sepa_mandates/:id</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"66666"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customer_id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"66666666"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"creditor_identity_id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"DE37ZZZ08000000001"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"external_uid"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"666"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"mandate_reference"</span><span class="p">:</span><span class="w"> </span><span class="s2">"666"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"sequence"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RCUR"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"cor1_option"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mr."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Walter White"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"walter@heisenberg.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_address_line1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"308 Negra Arroyo Lane"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_address_line2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Albuquerque, New Mexico, 87104"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_iban"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DE08100100100666666666"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_bic"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FDDODEMMXXX"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_ultimate_name"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_signature_location"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"signature_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-04-07"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"valid_from_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-18"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-25T12:43:55Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-11-25T12:43:55Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<blockquote>
+<p>PUT http://api.fidor.de/sepa_mandates/:id</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"remote_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mr."</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Walter Black"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"no@drugs.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_address_line1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"545 Fifth Avenue"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_address_line2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New York, New York, 10021"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"remote_country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Format</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>creditor_identity_id</td>
+<td>Unique Creditor Identifier</td>
+<td>String</td>
+</tr>
+<tr>
+<td>external_uid</td>
+<td>Unique ID of the creator of the transfer. In case a uid is reused for a transfer, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transfer status is unknown</td>
+<td>String</td>
+</tr>
+<tr>
+<td>mandate_reference</td>
+<td>Unique Reference of the Mandate</td>
+<td>String</td>
+</tr>
+<tr>
+<td>sequence</td>
+<td>Recurring or One-Time</td>
+<td>String (&ldquo;RCUR&rdquo; or &ldquo;OOFF&rdquo;)</td>
+</tr>
+<tr>
+<td>cor1_option</td>
+<td>Use COR-1 Option</td>
+<td>String (&ldquo;0&rdquo; or &ldquo;1&rdquo;)</td>
+</tr>
+<tr>
+<td>remote_title</td>
+<td>Title / Salutation of Debtor</td>
+<td>String (&ldquo;Mr., &quot;Mrs.&rdquo;)</td>
+</tr>
+<tr>
+<td>remote_name</td>
+<td>Full name of the debtor</td>
+<td>String</td>
+</tr>
+<tr>
+<td>remote_email</td>
+<td>Email Address of the debtor</td>
+<td>String</td>
+</tr>
+<tr>
+<td>remote_address_line1</td>
+<td>Street and street number of the debtor</td>
+<td>String</td>
+</tr>
+<tr>
+<td>remote_address_line2</td>
+<td>ZIP and City of the debtor</td>
+<td>String</td>
+</tr>
+<tr>
+<td>remote_country</td>
+<td>Country of the</td>
+<td>String (Country Code)</td>
+</tr>
+<tr>
+<td>remote_iban</td>
+<td>IBAN of the transaction&rsquo;s debtor</td>
+<td>String</td>
+</tr>
+<tr>
+<td>remote_bic</td>
+<td>BIC of the transaction&rsquo;s debtor</td>
+<td>String</td>
+</tr>
+<tr>
+<td>signature_date</td>
+<td>Date of mandate signature</td>
+<td>String (Date)</td>
+</tr>
+<tr>
+<td>valid_from_date</td>
+<td>Date, mandate is valid from</td>
+<td>String (Date)</td>
+</tr>
+</tbody></table>
+
+<h2 id="creating-sepa-direct-debit">Creating SEPA Direct Debit</h2>
+
+<blockquote>
+<p>POST https://api.fidor.de/sepa_direct_debits</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"external_uid"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"666"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"mandate_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"666"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"account_id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"66666666"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"eref"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"6"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"amount"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"10000"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"subject"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"We're taking your money back, Walter!"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"collection_date"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-04-27"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Once you created a <code class="prettyprint">sepa_mandate</code> you can go on and create a corresponding <code class="prettyprint">sepa_direct_debit</code>. In order to do so you have to make a <code class="prettyprint">POST</code> request to <code class="prettyprint">/sepa_direct_debits</code> endpoint with following request body.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Format</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>external_uid</td>
+<td>Unique ID of the creator of the transfer. In case a uid is reused for a transfer, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transfer status is unknown</td>
+<td>String</td>
+</tr>
+<tr>
+<td>mandate_id</td>
+<td>Unique Reference of the Mandate</td>
+<td>String</td>
+</tr>
+<tr>
+<td>account_id</td>
+<td>Account identifier of the sender</td>
+<td>String</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>Amount of money you would like to debit from the debtor, in minor units, e.g. 1EUR is represented as 100.</td>
+<td>Integer</td>
+</tr>
+<tr>
+<td>currency</td>
+<td>Currency of Account or Amount. ISO 4217 alpha-3 - 3 letter upcase e.g EUR</td>
+<td>String (enum)</td>
+</tr>
+<tr>
+<td>subject</td>
+<td>Subject of the direct debit</td>
+<td>String</td>
+</tr>
+<tr>
+<td>collection_date</td>
+<td>Date of the money collection</td>
+<td>String (Date)</td>
+</tr>
+</tbody></table>
+
+<h2 id="batch-direct-debit">Batch Direct Debit</h2>
 
 <p><em>PREVIEW:</em> A direct debit batch contains multiple direct debits which are processed asynchronously.</p>
 
-<p><code class="prettyprint">GET https://api.fidor.de/batch_direct_debits/{id}</code>
-<sub>self</sub></p>
+<p><code class="prettyprint">GET https://api.fidor.de/batch_direct_debits/{id}</code> <sub>self</sub></p>
 
-<p><code class="prettyprint">GET https://api.fidor.de/batch_direct_debits</code>
-<sub>instances</sub></p>
+<p><code class="prettyprint">GET https://api.fidor.de/batch_direct_debits</code> <sub>instances</sub></p>
 
-<p><code class="prettyprint">POST https://api.fidor.de/batch_direct_debits</code>
-<sub>create</sub></p>
+<p><code class="prettyprint">POST https://api.fidor.de/batch_direct_debits</code> <sub>create</sub></p>
 
           <h1 id="transfer-approvals---trust-account">Transfer Approvals - Trust Account</h1>
 
