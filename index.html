@@ -80,6 +80,12 @@
 <td>customers</td>
 </tr>
 <tr>
+<td>POST</td>
+<td><a href="#create-a-customer"><code class="prettyprint">/customers</code></a></td>
+<td>Create customer object</td>
+<td>customer</td>
+</tr>
+<tr>
 <td>GET</td>
 <td><a href="#accounts"><code class="prettyprint">/accounts</code></a></td>
 <td>Get customer&rsquo;s bank accounts</td>
@@ -161,7 +167,7 @@
 <td>POST</td>
 <td><a href="#creating-sepa-direct-debit"><code class="prettyprint">sepa_direct_debits</code></a></td>
 <td>Create new SEPA Direct Debit</td>
-<td>sepa_direct_debits</td>
+<td>sepa_direct_debit</td>
 </tr>
 </tbody></table>
 
@@ -708,7 +714,7 @@ https://api.fidor.de/preauths?page=1&amp;per_page=20</p>
 
 <p>All bank customers can see what applications they &ldquo;installed&rdquo; or &ldquo;subscribed to&rdquo; and get a detailed view of the rights they have granted to those applications. On the same page customers can &ldquo;uninstall&rdquo; applications and thus revoke rights. You will not be notified of revoked authorizations and must handle resulting errors during API calls.</p>
 
-          <h1 id="basic-data">Basic Data</h1>
+          <h1 id="core-resources">Core Resources</h1>
 
 <h2 id="users">Users</h2>
 
@@ -857,7 +863,7 @@ https://api.fidor.de/preauths?page=1&amp;per_page=20</p>
 </tr>
 <tr>
 <td>maiden_name</td>
-<td>Customer&rsquo;s maide name</td>
+<td>Customer&rsquo;s maiden name</td>
 <td>String</td>
 </tr>
 <tr>
@@ -872,7 +878,7 @@ https://api.fidor.de/preauths?page=1&amp;per_page=20</p>
 </tr>
 <tr>
 <td>adr_post_code</td>
-<td>Postcode of the customer</td>
+<td>Postal code of the customer</td>
 <td>String</td>
 </tr>
 <tr>
@@ -907,7 +913,7 @@ https://api.fidor.de/preauths?page=1&amp;per_page=20</p>
 </tr>
 <tr>
 <td>birthday</td>
-<td>Customer&rsquo;s birhday e.g. &ldquo;1973-07-02&rdquo;</td>
+<td>Customer&rsquo;s birthdate e.g. &ldquo;1973-07-02&rdquo;</td>
 <td>Date</td>
 </tr>
 <tr>
@@ -923,7 +929,7 @@ https://api.fidor.de/preauths?page=1&amp;per_page=20</p>
 <tr>
 <td>marital_status</td>
 <td>Customer&rsquo;s marital status</td>
-<td>Integer (enum) - 1: single, 2: married, 3: widowed, 4: divorced, 5: seperated, 6: de facto</td>
+<td>Integer (enum) - 1: single, 2: married, 3: widowed, 4: divorced, 5: separated, 6: de facto</td>
 </tr>
 <tr>
 <td>religion</td>
@@ -955,10 +961,303 @@ https://api.fidor.de/preauths?page=1&amp;per_page=20</p>
 <td>Last update date-time. ISO 8601 Date-Time e.g. &ldquo;2015-02-04T04:08:54+01:00&rdquo;</td>
 <td>Datetime</td>
 </tr>
+</tbody></table>
+
+<h2 id="create-a-customer">Create a Customer</h2>
+
+<h3 id="check-msisdn">Check MSISDN</h3>
+
+<blockquote>
+<p>POST https://apm.fidor.de/msisdn/check</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"msisdn"</span><span class="w">        </span><span class="p">:</span><span class="w"> </span><span class="s2">"491666666666"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"os_type"</span><span class="w">       </span><span class="p">:</span><span class="w"> </span><span class="s2">"Android"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"affiliate_uid"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"1398b666-6666-6666-6666-666666666666"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre><code class="highlight plaintext">Tm7YvR1ttXvSwWAs0t9Kz1Z6dwY6XcrKzH21gBpgyBRisIzn4R2X8DOAlqEV5Z44aXsN8A
+</code></pre>
+
+<p>In order to create a customer object the mobile phone number of the customer you&rsquo;re about to create has to be verified first.</p>
+
+<table><thead>
 <tr>
-<td>creditor_identifier</td>
-<td>Creditor Identifier ID set if the customer wants to create direct debits</td>
+<th>Arguments</th>
+<th>Description</th>
+<th>Format</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>msisdn</td>
+<td>Mobile phone Number in MSISDN format</td>
+<td>String in <a href='http://www.msisdn.org/' target='_blank'>MSISDN format</a></td>
+</tr>
+<tr>
+<td>os_type</td>
+<td>OS type of the customer&rsquo;s mobile device</td>
+<td>String (enum) - &ldquo;iOS&rdquo; or &ldquo;Android&rdquo;</td>
+</tr>
+<tr>
+<td>affiliate_uid</td>
+<td>Unique identifier of the affiliate for which customer is created</td>
+<td>String (e.g. <code class="prettyprint">&quot;1398b666-6666-6666-6666-666666666666&quot;</code>)</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+  As a result of this call you will get a code back that you have to send alongside the `/msisdn/verify` call.
+</aside>
+
+<h3 id="verify-msisdn">Verify MSISDN</h3>
+
+<blockquote>
+<p>POST https://apm.fidor.de/msisdn/verify</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"msisdn"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"491666666666"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"code"</span><span class="w">   </span><span class="p">:</span><span class="w"> </span><span class="s2">"Tm7YvR1ttXvSwWAs0t9Kz1Z6dwY6XcrKzH21gBpgyBRisIzn4R2X8DOAlqEV5Z44aXsN8A"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre><code class="highlight plaintext">rfjjEEwooyf1vYg-5rIu-VZVtIegy9DvsNWSq3pVfDIz9jVmUW3UsPnoARvbbhFFMuBHtg
+</code></pre>
+
+<p>Once you acquired a token for you mobile phone number verification. You have to assemble a verify request as following:</p>
+
+<table><thead>
+<tr>
+<th>Arguments</th>
+<th>Description</th>
+<th>Format</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>msisdn</td>
+<td>Mobile phone Number in MSISDN format</td>
+<td>String in <a href='http://www.msisdn.org/' target='_blank'>MSISDN format</a></td>
+</tr>
+<tr>
+<td>code</td>
+<td>Verification code you acquired in the <code class="prettyprint">/msisdn/check</code> step</td>
 <td>String</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+  As a result of this call you will get a code back that you have to send alongside the `POST /users` call.
+</aside>
+
+<h3 id="create-customer-object">Create Customer Object</h3>
+
+<blockquote>
+<p>POST https://api.fidor.de/customers</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"affiliate_uid"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;your affiliate_uid we provide you with&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="s2">"walther@heisenberg.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"password"</span><span class="p">:</span><span class="s2">"superDuperSecret"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"adr_mobile"</span><span class="p">:</span><span class="s2">"4917666666666"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"first_name"</span><span class="p">:</span><span class="s2">"Walther"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"additional_first_name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Heisenberg"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"last_name"</span><span class="p">:</span><span class="s2">"White"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"occupation"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"gender"</span><span class="p">:</span><span class="s2">"m"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"birthplace"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Albuquerque"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"birthday"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"1957-09-07"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"nationality"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"marital_status"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"adr_street"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Negra Arroyo Lane"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"adr_street_number"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"308"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"adr_post_code"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"87111"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"adr_city"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Albuquerque"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"adr_country"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"tos"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"privacy_policy"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"own_interest"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"us_citizen"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"us_tax_payer"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"newsletter"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"verification_token"</span><span class="p">:</span><span class="s2">"rrfjjEEwooyf1vYg-5rIu-VZVtIegy9DvsNWSq3pVfDIz9jVmUW3UsPnoARvbbhFFMuBHtg"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Creates a new customer object.</p>
+
+<table><thead>
+<tr>
+<th>Arguments</th>
+<th>Description</th>
+<th>Format</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>affiliate_uid</td>
+<td>Unique identifier of the affiliate for which customer is created</td>
+<td>String (e.g. <code class="prettyprint">&quot;1398b666-6666-6666-6666-666666666666&quot;</code>)</td>
+</tr>
+<tr>
+<td>email</td>
+<td>The customer&rsquo;s email address - same as the user&rsquo;s email address</td>
+<td>String</td>
+</tr>
+<tr>
+<td>password</td>
+<td>Try to choose a secure password</td>
+<td>String</td>
+</tr>
+<tr>
+<td>adr_mobile</td>
+<td>Tell us your mobile phone number. We won&rsquo;t call you, promise! :)</td>
+<td>String in <a href='http://www.msisdn.org/' target='_blank'>MSISDN format</a></td>
+</tr>
+<tr>
+<td>tile</td>
+<td>Salutation</td>
+<td>Integer (enum), e.g. e.g 1 - <code class="prettyprint">&quot;Mr.&quot;</code> or 2 - <code class="prettyprint">&quot;Mrs.&quot;</code></td>
+</tr>
+<tr>
+<td>first_name</td>
+<td>Customer&rsquo;s first name</td>
+<td>String</td>
+</tr>
+<tr>
+<td>last_name</td>
+<td>Customer&rsquo;s last name</td>
+<td>String</td>
+</tr>
+<tr>
+<td>additional_first_name</td>
+<td>If you have an additional name just put it in here</td>
+<td>String</td>
+</tr>
+<tr>
+<td>occupation</td>
+<td>Customer&rsquo;s current occupation</td>
+<td>Integer (enum) 1 - employee, 2 - executive, 3 - self-employed, 4 - freelancer, 5 - student, 6 - trainee, 7 - retired, 8 - privatier, 9 - unemployed&quot;</td>
+</tr>
+<tr>
+<td>gender</td>
+<td>Customer&rsquo;s gender</td>
+<td>String (enum) - Valid Values: &ldquo;m&rdquo;, &ldquo;f&rdquo;</td>
+</tr>
+<tr>
+<td>birthplace</td>
+<td>City of customer&rsquo;s birth</td>
+<td>String</td>
+</tr>
+<tr>
+<td>birthday</td>
+<td>Customer&rsquo;s birthdate e.g. &ldquo;1973-07-02&rdquo;</td>
+<td>Date</td>
+</tr>
+<tr>
+<td>nationality</td>
+<td>Customer&rsquo;s nationality - Country code as defined in ISO3166 alpha2. e.g &ldquo;DE&rdquo;, &ldquo;GB&rdquo;</td>
+<td>String</td>
+</tr>
+<tr>
+<td>marital_status</td>
+<td>Customer&rsquo;s marital status</td>
+<td>String (enum) - 1: single, 2: married, 3: widowed, 4: divorced, 5: separated, 6: de facto</td>
+</tr>
+<tr>
+<td>adr_street</td>
+<td>Street address of the customer</td>
+<td>String</td>
+</tr>
+<tr>
+<td>adr_street_number</td>
+<td>House number</td>
+<td>String</td>
+</tr>
+<tr>
+<td>adr_post_code</td>
+<td>Postal code of the customer</td>
+<td>String</td>
+</tr>
+<tr>
+<td>adr_city</td>
+<td>City customer lives in</td>
+<td>String</td>
+</tr>
+<tr>
+<td>adr_country</td>
+<td>Country customer lives in</td>
+<td>String</td>
+</tr>
+<tr>
+<td>verification_token</td>
+<td>Verification token from <code class="prettyprint">/msisdn/verify</code> call</td>
+<td>String e.g. <code class="prettyprint">&quot;rfjjEEwooyf1vYg-5rIu-VZVtIegy9DvsNWSq3pVfDIz9jVmUW3UsPnoARvbbhFFMuBHtg&quot;</code></td>
+</tr>
+<tr>
+<td>nick</td>
+<td>Nickname used in community - can be used as login</td>
+<td>String</td>
+</tr>
+<tr>
+<td>maiden_name</td>
+<td>Customer&rsquo;s maiden name</td>
+<td>String</td>
+</tr>
+<tr>
+<td>adr_phone</td>
+<td>Customer&rsquo;s phone number</td>
+<td>String</td>
+</tr>
+<tr>
+<td>adr_mobile</td>
+<td>Customer&rsquo;s mobile phone number</td>
+<td>String</td>
+</tr>
+<tr>
+<td>adr_fax</td>
+<td>Customer&rsquo;s fax number</td>
+<td>String</td>
+</tr>
+<tr>
+<td>adr_businessphone</td>
+<td>Customer&rsquo;s business phone number</td>
+<td>String</td>
+</tr>
+<tr>
+<td>tos</td>
+<td>Terms of Service</td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td>privacy_policy</td>
+<td>Privacy Policy</td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td>own_interest</td>
+<td>Identifies if you act in your own interest</td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td>us_citizen</td>
+<td>Please tell us if you hold US citizenship</td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td>us_tax_payer</td>
+<td>And have to pay the taxes in US</td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td>newsletter</td>
+<td>Wanna get Fidor&rsquo;s newsletter?</td>
+<td>Boolean</td>
 </tr>
 </tbody></table>
 
