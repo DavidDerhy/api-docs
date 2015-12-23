@@ -1,4 +1,4 @@
-#Basic Data
+#Core Resources
 
 ##Users
 > GET https://api.fidor.de/users/current
@@ -27,7 +27,7 @@ updated_at | Last update date-time | String (date-time) ISO 8601 Date-Time
 `GET https://api.fidor.de/users/current` <sub>current user</sub>
 
 
-##Customers
+## Customers
 > GET https://api.fidor.de/customers
 
 ```json
@@ -83,27 +83,162 @@ last_name | Customer's last name | String
 gender | Customer's gender | String (enum) - Valid Values: "m", "f"
 title | Salutation e.g "Mr." or "Mrs." | Enum
 nick | Nickname used in community - can be used as login  | String
-maiden_name | Customer's maide name | String
+maiden_name | Customer's maiden name | String
 adr_street | Street address of the customer | String
 adr_street_number | House number | String
-adr_post_code | Postcode of the customer | String
+adr_post_code | Postal code of the customer | String
 adr_city | City customer lives in | String
 adr_country | Country customer lives in | String
 adr_phone | Customer's phone number | String
 adr_mobile | Customer's mobile phone number | String
 adr_fax | Customer's fax number | String
 adr_businessphone | Customer's business phone number | String
-birthday | Customer's birhday e.g. "1973-07-02" | Date
+birthday | Customer's birthdate e.g. "1973-07-02" | Date
 is_verified | Indicates whether KYC has been performed | Boolean
 nationality | Customer's nationality - Country code as defined in ISO3166 alpha2. e.g "DE", "GB" | String
-marital_status | Customer's marital status | Integer (enum) - 1: single, 2: married, 3: widowed, 4: divorced, 5: seperated, 6: de facto
+marital_status | Customer's marital status | Integer (enum) - 1: single, 2: married, 3: widowed, 4: divorced, 5: separated, 6: de facto
 religion | Customer's religion - denomination for tax reasons. 0: no information, 1: no denomination, 2: Protestant, 3: Roman-Catholic, 4-18: Other denominations| Integer (enum) - Valid Values "0", "1", "2", "3", "4", "5", "6", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", 18"
 id_card_registration_city | The | String
 id_card_number | The number of customer's identity document |
 id_card_valid_until | The expiration date of customer's identity document| String (date)
 created_at | Creation date-time, never changes. ISO 8601 Date-Time e.g. "2014-10-10T17:41:58+02:00" | Datetime
 updated_at | Last update date-time. ISO 8601 Date-Time e.g. "2015-02-04T04:08:54+01:00" | Datetime
-creditor_identifier | Creditor Identifier ID set if the customer wants to create direct debits | String
+
+##Create a Customer
+
+### Check MSISDN
+
+> POST https://apm.fidor.de/msisdn/check
+
+```
+{
+  "msisdn"        : "491666666666",
+  "os_type"       : "Android",
+  "affiliate_uid" : "1398b666-6666-6666-6666-666666666666"
+}
+```
+
+> Response
+
+```
+Tm7YvR1ttXvSwWAs0t9Kz1Z6dwY6XcrKzH21gBpgyBRisIzn4R2X8DOAlqEV5Z44aXsN8A
+```
+
+In order to create a customer object the mobile phone number of the customer you're about to create has to be verified first.
+
+Arguments | Description | Format
+--------- | ----------- | -----------
+msisdn | Mobile phone Number in MSISDN format | String in <a href='http://www.msisdn.org/' target='_blank'>MSISDN format</a>  
+os_type | OS type of the customer's mobile device | String (enum) - "iOS" or "Android"
+affiliate_uid | Unique identifier of the affiliate for which customer is created | String (e.g. `"1398b666-6666-6666-6666-666666666666"`)
+
+<aside class="notice">
+  As a result of this call you will get a code back that you have to send alongside the `/msisdn/verify` call.
+</aside>
+
+
+### Verify MSISDN
+
+> POST https://apm.fidor.de/msisdn/verify
+
+```
+{
+  "msisdn" : "491666666666",
+  "code"   : "Tm7YvR1ttXvSwWAs0t9Kz1Z6dwY6XcrKzH21gBpgyBRisIzn4R2X8DOAlqEV5Z44aXsN8A"
+}
+```
+
+> Response
+
+```
+rfjjEEwooyf1vYg-5rIu-VZVtIegy9DvsNWSq3pVfDIz9jVmUW3UsPnoARvbbhFFMuBHtg
+```
+
+Once you acquired a token for you mobile phone number verification. You have to assemble a verify request as following:
+
+Arguments | Description | Format
+--------- | ----------- | -----------
+msisdn | Mobile phone Number in MSISDN format | String in <a href='http://www.msisdn.org/' target='_blank'>MSISDN format</a>  
+code | Verification code you acquired in the `/msisdn/check` step | String
+
+<aside class="notice">
+  As a result of this call you will get a code back that you have to send alongside the `POST /users` call.
+</aside>
+
+
+
+### Create Customer Object
+
+> POST https://api.fidor.de/customers
+
+```
+{
+  "affiliate_uid" : "<your affiliate_uid we provide you with>",
+  "email":"walther@heisenberg.com",
+  "password":"superDuperSecret",
+  "adr_mobile":"4917666666666",
+  "title":1,
+  "first_name":"Walther",
+  "additional_first_name" : "Heisenberg",
+  "last_name":"White",
+  "occupation" : "1",
+  "gender":"m",
+  "birthplace" : "Albuquerque",
+  "birthday" : "1957-09-07",
+  "nationality" : "US",
+  "marital_status" : "1",
+  "adr_street" : "Negra Arroyo Lane",
+  "adr_street_number" : "308",
+  "adr_post_code" : "87111",
+  "adr_city" : "Albuquerque",
+  "adr_country" : "US",
+  "tos":true,
+  "privacy_policy":true,
+  "own_interest":true,
+  "us_citizen":true,
+  "us_tax_payer":true,
+  "newsletter":true,
+  "verification_token":"rrfjjEEwooyf1vYg-5rIu-VZVtIegy9DvsNWSq3pVfDIz9jVmUW3UsPnoARvbbhFFMuBHtg"
+}
+```
+
+Creates a new customer object.
+
+
+Arguments | Description | Format
+--------- | ----------- | -----------
+affiliate_uid | Unique identifier of the affiliate for which customer is created | String (e.g. `"1398b666-6666-6666-6666-666666666666"`)
+email | The customer's email address - same as the user's email address | String
+password | Try to choose a secure password | String
+adr_mobile | Tell us your mobile phone number. We won't call you, promise! :) | String in <a href='http://www.msisdn.org/' target='_blank'>MSISDN format</a>
+tile | Salutation | Integer (enum), e.g. e.g 1 - `"Mr."` or 2 - `"Mrs."`
+first_name | Customer's first name | String
+last_name | Customer's last name | String
+additional_first_name | If you have an additional name just put it in here | String
+occupation | Customer's current occupation | Integer (enum) 1 - employee, 2 - executive, 3 - self-employed, 4 - freelancer, 5 - student, 6 - trainee, 7 - retired, 8 - privatier, 9 - unemployed"
+gender | Customer's gender | String (enum) - Valid Values: "m", "f"
+birthplace | City of customer's birth | String
+birthday | Customer's birthdate e.g. "1973-07-02" | Date
+nationality | Customer's nationality - Country code as defined in ISO3166 alpha2. e.g "DE", "GB" | String
+marital_status | Customer's marital status | String (enum) - 1: single, 2: married, 3: widowed, 4: divorced, 5: separated, 6: de facto
+adr_street | Street address of the customer | String
+adr_street_number | House number | String
+adr_post_code | Postal code of the customer | String
+adr_city | City customer lives in | String
+adr_country | Country customer lives in | String
+verification_token | Verification token from `/msisdn/verify` call | String e.g. `"rfjjEEwooyf1vYg-5rIu-VZVtIegy9DvsNWSq3pVfDIz9jVmUW3UsPnoARvbbhFFMuBHtg"`
+nick | Nickname used in community - can be used as login  | String
+maiden_name | Customer's maiden name | String
+adr_phone | Customer's phone number | String
+adr_mobile | Customer's mobile phone number | String
+adr_fax | Customer's fax number | String
+adr_businessphone | Customer's business phone number | String
+tos | Terms of Service | Boolean
+privacy_policy | Privacy Policy | Boolean
+own_interest | Identifies if you act in your own interest | Boolean
+us_citizen | Please tell us if you hold US citizenship | Boolean
+us_tax_payer | And have to pay the taxes in US | Boolean
+newsletter | Wanna get Fidor's newsletter? | Boolean
 
 ## Accounts
 

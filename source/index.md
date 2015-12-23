@@ -44,6 +44,7 @@ Method | Endpoint | Usage | Returns
 --------- | ----------- | --------- | -----------
 GET | [`/users/current`](#users) | Get user's data | users
 GET | [`/customers`](#customers) | Get customer data | customers
+POST | [`/customers`](#create-a-customer) | Create customer object | customer
 GET | [`/accounts`](#accounts) | Get customer's bank accounts | accounts
 POST | [`/internal_transfers`](#internal-transfer---fidor-to-fidor) | Send money to another fidor user |
 GET | [`/internal_transfers`](#internal-transfer---fidor-to-fidor) | Get all fidor-to-fidor transfers for the current user | internal transfer
@@ -57,7 +58,7 @@ GET | [`/sepa_mandates/`](#creating-sepa-mandate) | GET previously created SEPA 
 POST | [`/sepa_mandates`](#creating-sepa-mandate) | Create a SEPA Mandate | sepa_mandate
 PUT | [`/sepa_mandates/:id`](#creating-sepa-mandate) | Update previously created SEPA Mandate | sepa_mandate
 GET | [`sepa_direct_debits`](#creating-sepa-direct-debit) | GET previously created SEPA Direct Debit | sepa_direct_debits
-POST | [`sepa_direct_debits`](#creating-sepa-direct-debit) | Create new SEPA Direct Debit | sepa_direct_debits
+POST | [`sepa_direct_debits`](#creating-sepa-direct-debit) | Create new SEPA Direct Debit | sepa_direct_debit
 
 
 ## Systems
