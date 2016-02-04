@@ -59,13 +59,13 @@ Fidor offers you the possibility to transfer money to other Fidor users without 
 You can also initiate an internal transfer to the person, who doesn't yet have an account at Fidor bank. In this case the amount will be blocked (see `/preauths`) and the recipient will be notified about the transferred amount and that they can open an account at Fidor bank to collect the money. The amount will be blocked for 14 days. After that time,  the money will be credited back to the sender's account.
 
 ####POST Parameter
-Parameter | Description | Format
---------- | ----------- | -----------
-account_id | Account identifier of the sender (`/accounts/id`)| String
-receiver | Recipient of the transfer. Possible values are: Fidor nickname, Fidor account identifier, twitter nickname, email address, mobile phone number | String
-external_uid | Unique ID given by the creator of the transfer. In case a uid is reused for a transfer, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transfer status is unknown | String
-amount | Amount of money you would like to send in account currency, in minor units, e.g. 1 EUR is represented as 100. Must be greater than 0 e.g. at least one cent in EUR | Integer
-subject | Subject of the transfer| String
+Parameter | Description | Format | Mandatory
+--------- | ----------- | ----------- | -----------
+account_id | Account identifier of the sender (`/accounts/id`)| String | x
+receiver | Recipient of the transfer. Possible values are: Fidor nickname, Fidor account identifier, twitter nickname, email address, mobile phone number | String | x
+external_uid | Unique ID given by the creator of the transfer. In case a uid is reused for a transfer, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transfer status is unknown | String | x
+amount | Amount of money you would like to send in account currency, in minor units, e.g. 1 EUR is represented as 100. Must be greater than 0 e.g. at least one cent in EUR | Integer | x
+subject | Subject of the transfer| String |
 
 #### Response Parameter
 Parameter | Description | Format
@@ -156,20 +156,18 @@ Request on `/internal_transfers` with the method POST.
 
 To transfer money to any country participating in the SEPA (Single Euro Payments Area) initiative use the `sepa_credit_transfers` endpoint. If you want to send money to another bank account in Germany, you don't even have to provide the BIC. IBAN is enough in that case.
 
-Parameter | Description | Format
---------- | ----------- | -----------
-account_id | Account identifier of the sender (`/accounts/id`)| String
-external_uid | Unique ID of the creator of the transfer. In case a uid is reused for a transfer, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transfer status is unknown | String
-account_id | Account identifier of the sender | String
-external_uid | Unique ID given by the creator of the transfer. In case a uid is reused for a transfer, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transfer status is unknown | String
-remote_iban | IBAN of the recipient's bank account | String
-remote_bic | BIC of the recipient's bank account. Optional for transfers between two German bank accounts | String (11 characters!)
-remote_name | Recipient's full name | String
-amount | Amount of money you would like to send in in account currency, in minor units, e.g. 1EUR is represented as 100. | Integer
-currency |Currency of Account or Amount. ISO 4217 alpha-3 - 3 letter upcase e.g EUR | String (enum)
-subject | Subject of the transfer | String
-created_at | Creation date-time, never changes | String (date-time) ISO 8601 Date-Time
-updated_at | Last update date-time | String (date-time) ISO 8601 Date-Time
+Parameter | Description | Format | Mandatory
+--------- | ----------- | ----------- | -----------
+account_id | Account identifier of the sender (`/accounts/id`)| String | x
+external_uid | Unique ID given by the creator of the transfer. In case a uid is reused for a transfer, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transfer status is unknown | String | x
+remote_iban | IBAN of the recipient's bank account | String | x
+remote_bic | BIC of the recipient's bank account. Optional for transfers between two German bank accounts | String (11 characters!) |
+remote_name | Recipient's full name | String | x
+amount | Amount of money you would like to send in in account currency, in minor units, e.g. 1EUR is represented as 100. | Integer | x
+currency |Currency of Account or Amount. ISO 4217 alpha-3 - 3 letter upcase e.g EUR | String (enum) |
+subject | Subject of the transfer | String |
+created_at | Creation date-time, never changes | String (date-time) ISO 8601 Date-Time |
+updated_at | Last update date-time | String (date-time) ISO 8601 Date-Time |
 
 
 ### HTTP Request

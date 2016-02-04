@@ -205,40 +205,40 @@ code | Verification code you acquired in the `/msisdn/check` step | String
 Creates a new customer object.
 
 
-Arguments | Description | Format
---------- | ----------- | -----------
-affiliate_uid | Unique identifier of the affiliate for which customer is created | String (e.g. `"1398b666-6666-6666-6666-666666666666"`)
+Arguments | Description | Format | Mandatory
+--------- | ----------- | ----------- | -----------
+affiliate_uid | Unique identifier of the affiliate for which customer is created | String (e.g. `"1398b666-6666-6666-6666-666666666666"`) | x
 email | The customer's email address - same as the user's email address | String
-password | Try to choose a secure password | String
-adr_mobile | Tell us your mobile phone number. We won't call you, promise! :) | String in <a href='http://www.msisdn.org/' target='_blank'>MSISDN format</a>
+password | Try to choose a secure password | String | x
+adr_mobile | Tell us your mobile phone number. We won't call you, promise! :) | String in <a href='http://www.msisdn.org/' target='_blank'>MSISDN format</a> | x
 tile | Salutation | Integer (enum), e.g. e.g 1 - `"Mr."` or 2 - `"Mrs."`
-first_name | Customer's first name | String
-last_name | Customer's last name | String
-additional_first_name | If you have an additional name just put it in here | String
-occupation | Customer's current occupation | Integer (enum) 1 - employee, 2 - executive, 3 - self-employed, 4 - freelancer, 5 - student, 6 - trainee, 7 - retired, 8 - privatier, 9 - unemployed"
-gender | Customer's gender | String (enum) - Valid Values: "m", "f"
-birthplace | City of customer's birth | String
-birthday | Customer's birthdate e.g. "1973-07-02" | Date
-nationality | Customer's nationality - Country code as defined in ISO3166 alpha2. e.g "DE", "GB" | String
-marital_status | Customer's marital status | String (enum) - 1: single, 2: married, 3: widowed, 4: divorced, 5: separated, 6: de facto
-adr_street | Street address of the customer | String
-adr_street_number | House number | String
-adr_post_code | Postal code of the customer | String
-adr_city | City customer lives in | String
-adr_country | Country customer lives in | String
-verification_token | Verification token from `/msisdn/verify` call | String e.g. `"rfjjEEwooyf1vYg-5rIu-VZVtIegy9DvsNWSq3pVfDIz9jVmUW3UsPnoARvbbhFFMuBHtg"`
-nick | Nickname used in community - can be used as login  | String
-maiden_name | Customer's maiden name | String
-adr_phone | Customer's phone number | String
-adr_mobile | Customer's mobile phone number | String
-adr_fax | Customer's fax number | String
-adr_businessphone | Customer's business phone number | String
-tos | Terms of Service | Boolean
-privacy_policy | Privacy Policy | Boolean
-own_interest | Identifies if you act in your own interest | Boolean
-us_citizen | Please tell us if you hold US citizenship | Boolean
-us_tax_payer | And have to pay the taxes in US | Boolean
-newsletter | Wanna get Fidor's newsletter? | Boolean
+first_name | Customer's first name | String | x
+last_name | Customer's last name | String | x
+additional_first_name | If you have an additional name just put it in here | String |
+occupation | Customer's current occupation | Integer (enum) 1 - employee, 2 - executive, 3 - self-employed, 4 - freelancer, 5 - student, 6 - trainee, 7 - retired, 8 - privatier, 9 - unemployed" |
+gender | Customer's gender | String (enum) - Valid Values: "m", "f" | x
+birthplace | City of customer's birth | String |
+birthday | Customer's birthdate e.g. "1973-07-02" | Date | x
+nationality | Customer's nationality - Country code as defined in ISO3166 alpha2. e.g "DE", "GB" | String |
+marital_status | Customer's marital status | String (enum) - 1: single, 2: married, 3: widowed, 4: divorced, 5: separated, 6: de facto |
+adr_street | Street address of the customer | String |
+adr_street_number | House number | String |
+adr_post_code | Postal code of the customer | String |
+adr_city | City customer lives in | String |
+adr_country | Country customer lives in | String |
+verification_token | Verification token from `/msisdn/verify` call | String e.g. `"rfjjEEwooyf1vYg-5rIu-VZVtIegy9DvsNWSq3pVfDIz9jVmUW3UsPnoARvbbhFFMuBHtg"` | x
+nick | Nickname used in community - can be used as login  | String |
+maiden_name | Customer's maiden name | String |
+adr_phone | Customer's phone number | String |
+adr_mobile | Customer's mobile phone number | String | x
+adr_fax | Customer's fax number | String |
+adr_businessphone | Customer's business phone number | String |
+tos | Terms of Service | Boolean | x
+privacy_policy | Privacy Policy | Boolean | x
+own_interest | Identifies if you act in your own interest | Boolean | x
+us_citizen | Please tell us if you hold US citizenship | Boolean | x
+us_tax_payer | And have to pay the taxes in US | Boolean | x
+newsletter | Wanna get Fidor's newsletter? | Boolean |
 
 ## Accounts
 
