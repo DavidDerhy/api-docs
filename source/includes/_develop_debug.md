@@ -101,7 +101,7 @@ After you extract the `code` parameter from the server response, it is send via 
 - `client_id` : the client_id that has been assigned to your app (see below)
 - `redirect_uri` : the same redirect URL provided in the authorization request (see above)
 
-This http request to the `token` endpoint is authenticated using [HTTP Basic Authentication](http://tools.ietf.org/html/rfc1945#section-11.1). The `client_id` and `client_secret` parameters of your app are used as the basic `userid-password` credentials. _!Deprecated! Alternatively, the `client_secret` may be provided `application/x-www-form-urlencoded` in the body of the request along with the other parameters._
+This http request to the `token` endpoint is authenticated using [HTTP Basic Authentication](http://tools.ietf.org/html/rfc1945#section-11.1). The `client_id` and `client_secret` parameters of your app are used as the basic `userid-password` credentials.
 
 ### Bearer and Refresh Tokens
 
