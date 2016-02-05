@@ -404,7 +404,7 @@ you provided. Attached to this redirect uri will be the provided <code class="pr
 <li><code class="prettyprint">redirect_uri</code> : the same redirect URL provided in the authorization request (see above)</li>
 </ul>
 
-<p>This http request to the <code class="prettyprint">token</code> endpoint is authenticated using <a href="http://tools.ietf.org/html/rfc1945#section-11.1">HTTP Basic Authentication</a>. The <code class="prettyprint">client_id</code> and <code class="prettyprint">client_secret</code> parameters of your app are used as the basic <code class="prettyprint">userid-password</code> credentials. <em>!Deprecated! Alternatively, the <code class="prettyprint">client_secret</code> may be provided <code class="prettyprint">application/x-www-form-urlencoded</code> in the body of the request along with the other parameters.</em></p>
+<p>This http request to the <code class="prettyprint">token</code> endpoint is authenticated using <a href="http://tools.ietf.org/html/rfc1945#section-11.1">HTTP Basic Authentication</a>. The <code class="prettyprint">client_id</code> and <code class="prettyprint">client_secret</code> parameters of your app are used as the basic <code class="prettyprint">userid-password</code> credentials.</p>
 
 <h3 id="bearer-and-refresh-tokens">Bearer and Refresh Tokens</h3>
 
@@ -1097,167 +1097,200 @@ https://api.fidor.de/preauths?page=1&amp;per_page=20</p>
 <th>Arguments</th>
 <th>Description</th>
 <th>Format</th>
+<th>Mandatory</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>affiliate_uid</td>
 <td>Unique identifier of the affiliate for which customer is created</td>
 <td>String (e.g. <code class="prettyprint">&quot;1398b666-6666-6666-6666-666666666666&quot;</code>)</td>
+<td>x</td>
 </tr>
 <tr>
 <td>email</td>
 <td>The customer&rsquo;s email address - same as the user&rsquo;s email address</td>
 <td>String</td>
+<td></td>
 </tr>
 <tr>
 <td>password</td>
 <td>Try to choose a secure password</td>
 <td>String</td>
+<td>x</td>
 </tr>
 <tr>
 <td>adr_mobile</td>
 <td>Tell us your mobile phone number. We won&rsquo;t call you, promise! :)</td>
 <td>String in <a href='http://www.msisdn.org/' target='_blank'>MSISDN format</a></td>
+<td>x</td>
 </tr>
 <tr>
 <td>tile</td>
 <td>Salutation</td>
 <td>Integer (enum), e.g. e.g 1 - <code class="prettyprint">&quot;Mr.&quot;</code> or 2 - <code class="prettyprint">&quot;Mrs.&quot;</code></td>
+<td></td>
 </tr>
 <tr>
 <td>first_name</td>
 <td>Customer&rsquo;s first name</td>
 <td>String</td>
+<td>x</td>
 </tr>
 <tr>
 <td>last_name</td>
 <td>Customer&rsquo;s last name</td>
 <td>String</td>
+<td>x</td>
 </tr>
 <tr>
 <td>additional_first_name</td>
 <td>If you have an additional name just put it in here</td>
 <td>String</td>
+<td></td>
 </tr>
 <tr>
 <td>occupation</td>
 <td>Customer&rsquo;s current occupation</td>
 <td>Integer (enum) 1 - employee, 2 - executive, 3 - self-employed, 4 - freelancer, 5 - student, 6 - trainee, 7 - retired, 8 - privatier, 9 - unemployed&quot;</td>
+<td></td>
 </tr>
 <tr>
 <td>gender</td>
 <td>Customer&rsquo;s gender</td>
 <td>String (enum) - Valid Values: &ldquo;m&rdquo;, &ldquo;f&rdquo;</td>
+<td>x</td>
 </tr>
 <tr>
 <td>birthplace</td>
 <td>City of customer&rsquo;s birth</td>
 <td>String</td>
+<td></td>
 </tr>
 <tr>
 <td>birthday</td>
 <td>Customer&rsquo;s birthdate e.g. &ldquo;1973-07-02&rdquo;</td>
 <td>Date</td>
+<td>x</td>
 </tr>
 <tr>
 <td>nationality</td>
 <td>Customer&rsquo;s nationality - Country code as defined in ISO3166 alpha2. e.g &ldquo;DE&rdquo;, &ldquo;GB&rdquo;</td>
 <td>String</td>
+<td></td>
 </tr>
 <tr>
 <td>marital_status</td>
 <td>Customer&rsquo;s marital status</td>
 <td>String (enum) - 1: single, 2: married, 3: widowed, 4: divorced, 5: separated, 6: de facto</td>
+<td></td>
 </tr>
 <tr>
 <td>adr_street</td>
 <td>Street address of the customer</td>
 <td>String</td>
+<td></td>
 </tr>
 <tr>
 <td>adr_street_number</td>
 <td>House number</td>
 <td>String</td>
+<td></td>
 </tr>
 <tr>
 <td>adr_post_code</td>
 <td>Postal code of the customer</td>
 <td>String</td>
+<td></td>
 </tr>
 <tr>
 <td>adr_city</td>
 <td>City customer lives in</td>
 <td>String</td>
+<td></td>
 </tr>
 <tr>
 <td>adr_country</td>
 <td>Country customer lives in</td>
 <td>String</td>
+<td></td>
 </tr>
 <tr>
 <td>verification_token</td>
 <td>Verification token from <code class="prettyprint">/msisdn/verify</code> call</td>
 <td>String e.g. <code class="prettyprint">&quot;rfjjEEwooyf1vYg-5rIu-VZVtIegy9DvsNWSq3pVfDIz9jVmUW3UsPnoARvbbhFFMuBHtg&quot;</code></td>
+<td>x</td>
 </tr>
 <tr>
 <td>nick</td>
 <td>Nickname used in community - can be used as login</td>
 <td>String</td>
+<td></td>
 </tr>
 <tr>
 <td>maiden_name</td>
 <td>Customer&rsquo;s maiden name</td>
 <td>String</td>
+<td></td>
 </tr>
 <tr>
 <td>adr_phone</td>
 <td>Customer&rsquo;s phone number</td>
 <td>String</td>
+<td></td>
 </tr>
 <tr>
 <td>adr_mobile</td>
 <td>Customer&rsquo;s mobile phone number</td>
 <td>String</td>
+<td>x</td>
 </tr>
 <tr>
 <td>adr_fax</td>
 <td>Customer&rsquo;s fax number</td>
 <td>String</td>
+<td></td>
 </tr>
 <tr>
 <td>adr_businessphone</td>
 <td>Customer&rsquo;s business phone number</td>
 <td>String</td>
+<td></td>
 </tr>
 <tr>
 <td>tos</td>
 <td>Terms of Service</td>
 <td>Boolean</td>
+<td>x</td>
 </tr>
 <tr>
 <td>privacy_policy</td>
 <td>Privacy Policy</td>
 <td>Boolean</td>
+<td>x</td>
 </tr>
 <tr>
 <td>own_interest</td>
 <td>Identifies if you act in your own interest</td>
 <td>Boolean</td>
+<td>x</td>
 </tr>
 <tr>
 <td>us_citizen</td>
 <td>Please tell us if you hold US citizenship</td>
 <td>Boolean</td>
+<td>x</td>
 </tr>
 <tr>
 <td>us_tax_payer</td>
 <td>And have to pay the taxes in US</td>
 <td>Boolean</td>
+<td>x</td>
 </tr>
 <tr>
 <td>newsletter</td>
 <td>Wanna get Fidor&rsquo;s newsletter?</td>
 <td>Boolean</td>
+<td></td>
 </tr>
 </tbody></table>
 
@@ -2529,32 +2562,38 @@ The sum of all current preauths can be seen with <code class="prettyprint">accou
 <th>Parameter</th>
 <th>Description</th>
 <th>Format</th>
+<th>Mandatory</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>account_id</td>
 <td>Account identifier of the sender (<code class="prettyprint">/accounts/id</code>)</td>
 <td>String</td>
+<td>x</td>
 </tr>
 <tr>
 <td>receiver</td>
 <td>Recipient of the transfer. Possible values are: Fidor nickname, Fidor account identifier, twitter nickname, email address, mobile phone number</td>
 <td>String</td>
+<td>x</td>
 </tr>
 <tr>
 <td>external_uid</td>
 <td>Unique ID given by the creator of the transfer. In case a uid is reused for a transfer, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transfer status is unknown</td>
 <td>String</td>
+<td>x</td>
 </tr>
 <tr>
 <td>amount</td>
 <td>Amount of money you would like to send in account currency, in minor units, e.g. 1 EUR is represented as 100. Must be greater than 0 e.g. at least one cent in EUR</td>
 <td>Integer</td>
+<td>x</td>
 </tr>
 <tr>
 <td>subject</td>
 <td>Subject of the transfer</td>
 <td>String</td>
+<td></td>
 </tr>
 </tbody></table>
 
@@ -2724,67 +2763,68 @@ The sum of all current preauths can be seen with <code class="prettyprint">accou
 <th>Parameter</th>
 <th>Description</th>
 <th>Format</th>
+<th>Mandatory</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>account_id</td>
 <td>Account identifier of the sender (<code class="prettyprint">/accounts/id</code>)</td>
 <td>String</td>
-</tr>
-<tr>
-<td>external_uid</td>
-<td>Unique ID of the creator of the transfer. In case a uid is reused for a transfer, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transfer status is unknown</td>
-<td>String</td>
-</tr>
-<tr>
-<td>account_id</td>
-<td>Account identifier of the sender</td>
-<td>String</td>
+<td>x</td>
 </tr>
 <tr>
 <td>external_uid</td>
 <td>Unique ID given by the creator of the transfer. In case a uid is reused for a transfer, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transfer status is unknown</td>
 <td>String</td>
+<td>x</td>
 </tr>
 <tr>
 <td>remote_iban</td>
 <td>IBAN of the recipient&rsquo;s bank account</td>
 <td>String</td>
+<td>x</td>
 </tr>
 <tr>
 <td>remote_bic</td>
 <td>BIC of the recipient&rsquo;s bank account. Optional for transfers between two German bank accounts</td>
 <td>String (11 characters!)</td>
+<td></td>
 </tr>
 <tr>
 <td>remote_name</td>
 <td>Recipient&rsquo;s full name</td>
 <td>String</td>
+<td>x</td>
 </tr>
 <tr>
 <td>amount</td>
 <td>Amount of money you would like to send in in account currency, in minor units, e.g. 1EUR is represented as 100.</td>
 <td>Integer</td>
+<td>x</td>
 </tr>
 <tr>
 <td>currency</td>
 <td>Currency of Account or Amount. ISO 4217 alpha-3 - 3 letter upcase e.g EUR</td>
 <td>String (enum)</td>
+<td></td>
 </tr>
 <tr>
 <td>subject</td>
 <td>Subject of the transfer</td>
 <td>String</td>
+<td></td>
 </tr>
 <tr>
 <td>created_at</td>
 <td>Creation date-time, never changes</td>
 <td>String (date-time) ISO 8601 Date-Time</td>
+<td></td>
 </tr>
 <tr>
 <td>updated_at</td>
 <td>Last update date-time</td>
 <td>String (date-time) ISO 8601 Date-Time</td>
+<td></td>
 </tr>
 </tbody></table>
 
