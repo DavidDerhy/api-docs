@@ -75,7 +75,7 @@ you will need to provide the following values:
 - `redirect_uri` : the url on your server the client will be redirected to once the authorization has been completed successfully or falied. This needs to be one of the redirect urls configured for your application in the Application Manager (see below)
 - `client_id` : the client_id that has been assigned to your app (see below)
 - `state` : a random state value that will be returned to you
-    
+
 For more details about this step, see [OAUTH2 sec 4.1.1](https://tools.ietf.org/html/rfc6749#section-4.1.1)
 
 #### Extract the Authorization Code
@@ -143,7 +143,7 @@ The OAuth process is a bit daunting at first and may take some attempts to get r
 
 ##Check Headers
 ```bash
-curl --header "Accept : application/vnd.fidor.de; version=1,text/json" --header "Content-Type : application/json" --header "Authorization : Bearer <your token>" https://api.fidor.de/users/current
+curl --header "Accept: application/vnd.fidor.de; version=1,text/json" --header "Content-Type: application/json" --header "Authorization: Bearer <your token>" https://api.fidor.de/users/current
 ```
 
 To successfully communicate with the Fidor API, you must provide 3 headers:
