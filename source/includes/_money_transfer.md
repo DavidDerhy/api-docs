@@ -2,7 +2,7 @@
 We differentiate between different types of money transfers. In general we distinguish between the Fidor internal transfers (Fidor to Fidor money transfer) and external transfers (SEPA, GMT, FPS, BACS etc.).
 
 ##Internal Transfer - Fidor to Fidor
-> Request body
+> POST https://api.fidor.de/internal_transfers
 
 ```json
 {
@@ -48,7 +48,7 @@ We differentiate between different types of money transfers. In general we disti
 }
 ```
 
-Fidor offers you the possibility to transfer money to other Fidor users without even knowing their account number ("Freunden Geld senden"). To transfer the money you can use one of the following:
+Fidor offers you the possibility to transfer money to other Fidor users with the `internal_transfers` endpoint without even knowing their account number ("Freunden Geld senden"). To transfer the money you can use one of the following:
 
 - nickname
 - email address
@@ -98,13 +98,8 @@ expired | Transfer expired and the money was returned
 
 `POST https://api.fidor.de/internal_transfers`  <sub>create</sub>
 
-### Example:
-`POST https://api.fidor.de/internal_transfers`
-
-Request on `/internal_transfers` with the method POST.
-
 ##SEPA Credit Transfer
-> Request body
+> POST https://api.fidor.de/sepa_credit_transfers
 
 ```json
 {
@@ -154,7 +149,7 @@ Request on `/internal_transfers` with the method POST.
 }
 ```
 
-To transfer money to any country participating in the SEPA (Single Euro Payments Area) initiative use the `sepa_credit_transfers` endpoint. If you want to send money to another bank account in Germany, you don't even have to provide the BIC. IBAN is enough in that case.
+To transfer money to any country participating in the SEPA (Single Euro Payments Area) Initiative use the `sepa_credit_transfers` endpoint. If you want to send money to another bank account in Germany, you don't even have to provide the BIC. IBAN is enough in that case.
 
 Parameter | Description | Format | Mandatory
 --------- | ----------- | ----------- | -----------
