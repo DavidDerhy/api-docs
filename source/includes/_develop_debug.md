@@ -95,7 +95,7 @@ Please refer to [OAuth2 sec 4.1.2](https://tools.ietf.org/html/rfc6749#section-4
 > https://apm.fidor.de/oauth/token?grant_type=authorization_code&code=db997fa3aaba429a1a331c3ad36484e1&redirect_uri=https://localhost/gettoken.php&client_id=7e046a3c7c297e6e
 
 ```
-Authorization: Basic ‘base64 encoded “7e046a3c7c297e6e:5678231eadc19002cea974dc527aeafe”‘
+Authorization: Basic 'base64 encoded "7e046a3c7c297e6e:5678231eadc19002cea974dc527aeafe"'
 ```
 
 > Response
@@ -135,7 +135,7 @@ Once the `access_token` has expired, the `refresh_token` may be used in order to
 > https://apm.fidor.de/oauth/revoke?token=2013a0a2c0257fe218cadc67b5b30bcf
 
 ```
-Authorization: Basic ‘base64 encoded “7e046a3c7c297e6e:5678231eadc19002cea974dc527aeafe”‘
+Authorization: Basic 'base64 encoded "7e046a3c7c297e6e:5678231eadc19002cea974dc527aeafe"'
 ```
 
 
