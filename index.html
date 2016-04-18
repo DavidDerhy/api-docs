@@ -283,7 +283,7 @@ To get started all you need is a (free) Fidor Community Account.</p>
 
           <h1 id="develop-and-debug">Develop and Debug</h1>
 
-<p>The developer tools <a href="https://developer.fidortecs.com/api-browser/">API browser</a>, <a href="https://github.com/fidor/fidor_schema">Fidor schema</a>, <a href="https://github.com/fidor/fidor_starter_kits">Fidor starter kits</a>, <a href="https://apm.fidor.de/">Application Manager</a>, sandbox environment and <a href="https://developer.fidor.de/">developer community</a>  are provided free of charge. You only pay for API usage once you submit your application for approval and it goes live.</p>
+<p>The developer tools <a href="https://github.com/fidor/fidor_schema">Fidor schema</a>, <a href="https://github.com/fidor/fidor_starter_kits">Fidor starter kits</a>, <a href="https://apm.fidor.de/">Application Manager</a>, sandbox environment and <a href="https://developer.fidor.de/">developer community</a>  are provided free of charge. You only pay for API usage once you submit your application for approval and it goes live.</p>
 
 <h2 id="add-and-change-scopes">Add and Change Scopes</h2>
 
@@ -292,7 +292,9 @@ Here your can also select whether your application only needs access to your own
 
 <h2 id="sandbox">Sandbox</h2>
 
-<p>For every new application a dedicated sandbox environment (account simulation) is created. The sandbox comes with some test data, so that you can start developing your application against the sandbox immediately.</p>
+<p>Our sandbox environment offers an account simulation with the most important API functions. So once developed and tested with the sandbox environment, your application should be production ready.</p>
+
+<p>For every new application a dedicated sandbox account is automatically  created. The sandbox comes with some test data, so that you can start developing your application against the sandbox immediately.</p>
 
 <p>To connect your application to the sandbox use the following URLs:</p>
 
@@ -314,7 +316,9 @@ Here your can also select whether your application only needs access to your own
 
 <p>Along with this simulated bank accounts a <em>sandbox user</em> (with login and password) is created. A sandbox user is required during the authentication against the sandbox. You can see the login credential of this sandbox user when you select the sandbox tab in the Application Manager.</p>
 
-<p>Our sandbox environment offers you the same functionality as the live API. So once developed and tested against the sandbox environment, your application will be production ready.</p>
+<p>There you also find a button to reset the sandbox data if needed, and to retrieve and reset OAuth access tokens (for the sandbox only).</p>
+
+<p>Please note that the sandbox is not (yet) a full CBS simulation. Restrictions include that you cannot create new customers, you cannot create accounts or sub accounts. And you cannot send money from one sandbox to another.</p>
 
 <h2 id="understand-oauth">Understand OAuth</h2>
 
