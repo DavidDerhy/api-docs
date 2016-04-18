@@ -54,19 +54,20 @@ This bearer token is used to authenticate calls to the API. These three steps ar
 
 #### Accountholder Redirect
 
-> https://apm.fidor.de/oauth/authorize?client_id=7e046a3c7c297e6e&redirect_uri=http://localhost/gettoken.php&state=99MagiCat99&response_type=code
+> https://apm.fidor.de/oauth/authorize?client_id=\<your client_id>&redirect_uri=\<your callback_uri>&state=99MagiCat99&response_type=code
+
 
 > Response with redirect to application if authentication and authorization was successful
 
 ```
 Status: 302 Found
-Location: http://localhost/gettoken.php?code=db997fa3aaba429a1a331c3ad36484e1&state=99MagicCat99
+Location: <callback_uri>?code=db997fa3aaba429a1a331c3ad36484e1&state=99MagicCat99
 ```
 
 
 In order to retrieve an OAuth token to access an accountholder's account, first instruct your application to redirect the accountholder's browser to the request authorization endpoint.
 
-      `/oauth/authorize?redirect_uri=<redirect_uri>&client_id=<client_id>&state=<state>&response_type=code`
+      `/oauth/authorize?redirect_uri=<callback_uri>&client_id=<client_id>&state=<state>&response_type=code`
 
 you will need to provide the following values:
 
@@ -92,10 +93,10 @@ Please refer to [OAuth2 sec 4.1.2](https://tools.ietf.org/html/rfc6749#section-4
 
 #### Retrieve the OAuth Token
 
-> https://apm.fidor.de/oauth/token?grant_type=authorization_code&code=db997fa3aaba429a1a331c3ad36484e1&redirect_uri=https://localhost/gettoken.php&client_id=7e046a3c7c297e6e
+> https://apm.fidor.de/oauth/token?grant_type=authorization_code&code=db997fa3aaba429a1a331c3ad36484e1&redirect_uri=\<callback_uri>&client_id=\<client_id>
 
 ```
-Authorization: Basic 'base64 encoded "7e046a3c7c297e6e:5678231eadc19002cea974dc527aeafe"'
+Authorization: Basic 'base64 encoded "<client_id>:<client_secret>"'
 ```
 
 > Response
@@ -135,7 +136,7 @@ Once the `access_token` has expired, the `refresh_token` may be used in order to
 > https://apm.fidor.de/oauth/revoke?token=2013a0a2c0257fe218cadc67b5b30bcf
 
 ```
-Authorization: Basic 'base64 encoded "7e046a3c7c297e6e:5678231eadc19002cea974dc527aeafe"'
+Authorization: Basic 'base64 encoded "<client_id>:<client_secret>"'
 ```
 
 
