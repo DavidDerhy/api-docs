@@ -317,20 +317,10 @@ Here your can also select whether your application only needs access to your own
 <p>Our sandbox environment offers you the same functionality as the live API. So once developed and tested against the sandbox environment, your application will be production ready.</p>
 
 <h2 id="understand-oauth">Understand OAuth</h2>
-<pre><code class="highlight plaintext">  /ffffff   /ffffff              /ff     /ff
- /ff__  ff /ff__  ff            | ff    | ff
-| ff  \ ff| ff  \ ff /ff   /ff /ffffff  | fffffff
-| ff  | ff| ffffffff| ff  | ff|_  ff_/  | ff__  ff
-| ff  | ff| ff__  ff| ff  | ff  | ff    | ff  \ ff
-| ff  | ff| ff  | ff| ff  | ff  | ff /ff| ff  | ff
-|  ffffff/| ff  | ff|  ffffff/  |  ffff/| ff  | ff
- \______/ |__/  |__/ \______/    \___/  |__/  |__/
-</code></pre>
 
 <p>The Fidor API offers many functions to retrieve information from your and other people&rsquo;s bank accounts, community accounts and much more. The extent of access your application needs is configured when you define the <em>scope</em> of your application in the Application Manager.</p>
 
-<p>In order to actually access the account and retrieve the requested data, the account holder needs to authorize your application and allow it to access their account. This is achieved
-using <a href="https://tools.ietf.org/html/rfc6749">OAuth 2</a>.</p>
+<p>In order to actually access the account and retrieve the requested data, the account holder needs to authorize your application and allow it to access their account. This is achieved using <a href="https://tools.ietf.org/html/rfc6749">OAuth 2</a>.</p>
 
 <h3 id="client-facing-apps-vs.-server-side-connection">Client facing apps vs. server side connection</h3>
 
@@ -338,14 +328,14 @@ using <a href="https://tools.ietf.org/html/rfc6749">OAuth 2</a>.</p>
 
 <p>The primarily supported authentication method from Fidor is the 3 legged OAuth2 flow, that is particularly useful for server based client-facing apps and supports 3rd party application providing. The following discussion and documentation is based on that mode.</p>
 
-<p>For applications to simply control your our own bank account via a pure server side connection we soon will provide an improved approval process, OAuth flow and OAuth features. Also mobile applications require special treatment. Please get in contact with us via e-mail or leave a message in the approval submission form.</p>
+<p>For applications to simply control your our own bank account via a pure server side connection we soon will provide an improved approval process, OAuth flow and OAuth features. Also mobile applications require special treatment. Please follow the discussion in the <a href="https://developer.fidor.de/community/forum/api-discussion/">Developer Community</a>, get in contact with us via e-mail or leave a message in the approval submission form.</p>
 
 <h3 id="accountholder-perspective">Accountholder perspective</h3>
 
 <p>From the accountholder&rsquo;s perspective the process works as follows:</p>
 
 <ul>
-<li>the accountholder using your application is redirected to Fidor. In case they are not already logged in, they are asked to <strong>enter  username and password</strong></li>
+<li>the accountholder using your application is redirected to Fidor. In case they are not already logged in, they are asked to <strong>enter username and password</strong></li>
 <li>in case the accountholder has not previously authorized your app, the user is displayed the list of permissions your application is requesting and is <strong>asked to confirm that the app is allowed to access their account with the given scope</strong>.</li>
 </ul>
 
@@ -365,9 +355,18 @@ using <a href="https://tools.ietf.org/html/rfc6749">OAuth 2</a>.</p>
 
 <h4 id="accountholder-redirect">Accountholder Redirect</h4>
 
-<p>In order to retrieve an OAuth  token to access an accountholder&rsquo;s account, first instruct your application to redirect the accountholder&rsquo;s browser to the <a href="#systems">request authorization endpoint</a>. Typically, this is done by returning an HTTP status of 3xx and the redirect location in an HTTP <code class="prettyprint">Location</code> header:</p>
+<blockquote>
+<p>https://apm.fidor.de/oauth/authorize?client_id=&lt;your client_id&gt;&amp;redirect_uri=&lt;your callback_uri&gt;&amp;state=99MagiCat99&amp;response_type=code</p>
 
-<p><code class="prettyprint">/oauth/authorize?redirect_uri=&lt;redirect_uri&gt;&amp;client_id=&lt;client_id&gt;&amp;state=&lt;state&gt;&amp;response_type=code</code></p>
+<p>Response with redirect to application if authentication and authorization was successful</p>
+</blockquote>
+<pre><code class="highlight plaintext">Status: 302 Found
+Location: &lt;callback_uri&gt;?code=db997fa3aaba429a1a331c3ad36484e1&amp;state=99MagicCat99
+</code></pre>
+
+<p>In order to retrieve an OAuth token to access an accountholder&rsquo;s account, first instruct your application to redirect the accountholder&rsquo;s browser to the request authorization endpoint.</p>
+
+<p><code class="prettyprint">/oauth/authorize?redirect_uri=&lt;callback_uri&gt;&amp;client_id=&lt;client_id&gt;&amp;state=&lt;state&gt;&amp;response_type=code</code></p>
 
 <p>you will need to provide the following values:</p>
 
@@ -395,6 +394,23 @@ you provided. Attached to this redirect uri will be the provided <code class="pr
 
 <h4 id="retrieve-the-oauth-token">Retrieve the OAuth Token</h4>
 
+<blockquote>
+<p>https://apm.fidor.de/oauth/token?grant_type=authorization_code&amp;code=db997fa3aaba429a1a331c3ad36484e1&amp;redirect_uri=&lt;callback_uri&gt;&amp;client_id=&lt;client_id&gt;</p>
+</blockquote>
+<pre><code class="highlight plaintext">Authorization: Basic 'base64 encoded "&lt;client_id&gt;:&lt;client_secret&gt;"'
+</code></pre>
+
+<blockquote>
+<p>Response</p>
+</blockquote>
+<pre><code class="highlight plaintext">{
+  "access_token":"2013a0a2c0257fe218cadc67b5b30bcf",
+  "token_type":"Bearer",
+  "state":"99MagiCat99",
+  "refresh_token":"Rc225c256efa3e6fa8e21e3e1ad3573cc"
+ }
+</code></pre>
+
 <p>After you extract the <code class="prettyprint">code</code> parameter from the server response, it is send via POST to the <a href="#systems">Access Token Request endpoint</a> <code class="prettyprint">oauth/token</code> as described in <a href="https://tools.ietf.org/html/rfc6749#section-4.1.3">OAuth2 sec 4.1.3</a>. This request also contains following parameters in the body of a <code class="prettyprint">POST</code> request, using <code class="prettyprint">application/x-www-form-urlencoded</code> encoding:</p>
 
 <ul>
@@ -406,7 +422,7 @@ you provided. Attached to this redirect uri will be the provided <code class="pr
 
 <p>This http request to the <code class="prettyprint">token</code> endpoint is authenticated using <a href="http://tools.ietf.org/html/rfc1945#section-11.1">HTTP Basic Authentication</a>. The <code class="prettyprint">client_id</code> and <code class="prettyprint">client_secret</code> parameters of your app are used as the basic <code class="prettyprint">userid-password</code> credentials.</p>
 
-<h3 id="bearer-and-refresh-tokens">Bearer and Refresh Tokens</h3>
+<h3 id="access-and-refresh-tokens">Access and Refresh Tokens</h3>
 
 <p>The server will either return  an error (described in <a href="https://tools.ietf.org/html/rfc6749#section-5.2">OAuth2 sec 5.2</a> or a JSON response containing the <code class="prettyprint">access_token</code>, token information and a <code class="prettyprint">refresh_token</code>.</p>
 
@@ -421,7 +437,13 @@ you provided. Attached to this redirect uri will be the provided <code class="pr
 
 <h3 id="token-revocation">Token Revocation</h3>
 
-<p>For security reasons, you should revoke a token after you no longer need it to ensure it is not misused. Token Revocation is handled according to <a href="https://tools.ietf.org/html/rfc7009">RFC 7009</a>. It&rsquo;s very simple, just post the token you wish to cancel to the revocation endpoint (<code class="prettyprint">/oauth/revoke</code>) in a paramter key called <code class="prettyprint">token</code>. This request needs to be authorized by <code class="prettyprint">client_id</code> and <code class="prettyprint">client_secret</code> parameters which are provided via HTTP Basic authentication. Both bearer tokens and refresh tokens can be canceled in the same manner.</p>
+<blockquote>
+<p>https://apm.fidor.de/oauth/revoke?token=2013a0a2c0257fe218cadc67b5b30bcf</p>
+</blockquote>
+<pre><code class="highlight plaintext">Authorization: Basic 'base64 encoded "&lt;client_id&gt;:&lt;client_secret&gt;"'
+</code></pre>
+
+<p>For security reasons, you should revoke a token after you no longer need it to ensure it is not misused. Token Revocation is handled according to <a href="https://tools.ietf.org/html/rfc7009">RFC 7009</a>. It&rsquo;s very simple, just post the token you wish to cancel to the revocation endpoint (<code class="prettyprint">/oauth/revoke</code>) in a paramter key called <code class="prettyprint">token</code>. This request needs to be authorized by <code class="prettyprint">client_id</code> and <code class="prettyprint">client_secret</code> parameters which are provided via HTTP Basic authentication. Both access tokens and refresh tokens can be canceled in the same manner.</p>
 
 <h3 id="overview-of-oauth-parameters">Overview of OAuth Parameters</h3>
 
@@ -2498,7 +2520,7 @@ The sum of all current preauths can be seen with <code class="prettyprint">accou
 <h2 id="internal-transfer---fidor-to-fidor">Internal Transfer - Fidor to Fidor</h2>
 
 <blockquote>
-<p>Request body</p>
+<p>POST https://api.fidor.de/internal_transfers</p>
 </blockquote>
 <pre><code class="highlight json"><span class="p">{</span><span class="w">
   </span><span class="s2">"account_id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"37635844"</span><span class="p">,</span><span class="w">
@@ -2543,7 +2565,7 @@ The sum of all current preauths can be seen with <code class="prettyprint">accou
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>Fidor offers you the possibility to transfer money to other Fidor users without even knowing their account number (&ldquo;Freunden Geld senden&rdquo;). To transfer the money you can use one of the following:</p>
+<p>Fidor offers you the possibility to transfer money to other Fidor users with the <code class="prettyprint">internal_transfers</code> endpoint without even knowing their account number (&ldquo;Freunden Geld senden&rdquo;). To transfer the money you can use one of the following:</p>
 
 <ul>
 <li>nickname</li>
@@ -2698,16 +2720,10 @@ The sum of all current preauths can be seen with <code class="prettyprint">accou
 
 <p><code class="prettyprint">POST https://api.fidor.de/internal_transfers</code>  <sub>create</sub></p>
 
-<h3 id="example:">Example:</h3>
-
-<p><code class="prettyprint">POST https://api.fidor.de/internal_transfers</code></p>
-
-<p>Request on <code class="prettyprint">/internal_transfers</code> with the method POST.</p>
-
 <h2 id="sepa-credit-transfer">SEPA Credit Transfer</h2>
 
 <blockquote>
-<p>Request body</p>
+<p>POST https://api.fidor.de/sepa_credit_transfers</p>
 </blockquote>
 <pre><code class="highlight json"><span class="p">{</span><span class="w">
   </span><span class="s2">"account_id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"123456789"</span><span class="p">,</span><span class="w">
@@ -2756,7 +2772,7 @@ The sum of all current preauths can be seen with <code class="prettyprint">accou
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>To transfer money to any country participating in the SEPA (Single Euro Payments Area) initiative use the <code class="prettyprint">sepa_credit_transfers</code> endpoint. If you want to send money to another bank account in Germany, you don&rsquo;t even have to provide the BIC. IBAN is enough in that case.</p>
+<p>To transfer money to any country participating in the SEPA (Single Euro Payments Area) Initiative use the <code class="prettyprint">sepa_credit_transfers</code> endpoint. If you want to send money to another bank account in Germany, you don&rsquo;t even have to provide the BIC. IBAN is enough in that case.</p>
 
 <table><thead>
 <tr>
@@ -2968,328 +2984,6 @@ The sum of all current preauths can be seen with <code class="prettyprint">accou
 <p><code class="prettyprint">GET https://api.fidor.de/batch_transfers/{id}</code>  <sub>self</sub></p>
 
 <p><code class="prettyprint">POST https://api.fidor.de/batch_transfers</code>  <sub>create</sub></p>
-
-<h2 id="global-money-transfers-(coming-soon)">Global Money Transfers (coming soon)</h2>
-
-<p>Fidor provides worldwide transfers in different currencies.</p>
-
-<p>In order to create one the user will need to accomplish the following steps:</p>
-
-<ol>
-<li><p><code class="prettyprint">GET /options</code> will give you the available countries, with their respective currencies.</p></li>
-<li><p><code class="prettyprint">GET /new</code> in order to retrieve the required fields for a transfer on the selected country.</p></li>
-<li><p>Proceeding with <code class="prettyprint">POST</code> and the filled form, will provide the fee and the exchange_rate.</p></li>
-<li><p>Once that everything is agreed just <code class="prettyprint">PUT</code> in order to execute the transfer.</p></li>
-</ol>
-
-<h3 id="properties">Properties</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-<th>Format</th>
-<th>Mandatory</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>beneficiary_name</td>
-<td>Beneficiary&rsquo;s full name</td>
-<td>String</td>
-<td></td>
-</tr>
-<tr>
-<td>iban</td>
-<td>IBAN of the recipient&rsquo;s bank account</td>
-<td>String</td>
-<td></td>
-</tr>
-<tr>
-<td>bic_swift</td>
-<td>BIC of the recipient&rsquo;s bank</td>
-<td>String</td>
-<td>x</td>
-</tr>
-<tr>
-<td>bank_account_type</td>
-<td>BIC of the recipient&rsquo;s bank account. Optional for transfers between two German bank accounts</td>
-<td>String (enum) - <code class="prettyprint">checking</code> or <code class="prettyprint">savings</code></td>
-<td></td>
-</tr>
-<tr>
-<td>beneficiary_entity_type</td>
-<td>Recipient&rsquo;s full name</td>
-<td>String (enum) - <code class="prettyprint">individual</code> or <code class="prettyprint">company</code></td>
-<td>x</td>
-</tr>
-<tr>
-<td>beneficiary_company_name</td>
-<td>Company name of the recipient</td>
-<td>String</td>
-<td></td>
-</tr>
-<tr>
-<td>beneficiary_first_name</td>
-<td>Beneficiary&rsquo;s first name</td>
-<td>String</td>
-<td></td>
-</tr>
-<tr>
-<td>beneficiary_last_name</td>
-<td>Beneficiary&rsquo;s last name</td>
-<td>String</td>
-<td></td>
-</tr>
-<tr>
-<td>beneficiary_address</td>
-<td>Beneficiary&rsquo;s address</td>
-<td>String</td>
-<td></td>
-</tr>
-<tr>
-<td>beneficiary_city</td>
-<td>City of the beneficiary</td>
-<td>String</td>
-<td></td>
-</tr>
-<tr>
-<td>beneficiary_postcode</td>
-<td>Beneficiary&rsquo;s postal code</td>
-<td>String</td>
-<td></td>
-</tr>
-<tr>
-<td>beneficiary_state_or_province</td>
-<td>State or province beneficiary is living in</td>
-<td>String</td>
-<td></td>
-</tr>
-<tr>
-<td>subject</td>
-<td>Subject of the transfer</td>
-<td>String</td>
-<td>x</td>
-</tr>
-<tr>
-<td>beneficiary_notification</td>
-<td>Indicates whether the recipient should be notified about the payment or not</td>
-<td>Boolean</td>
-<td></td>
-</tr>
-<tr>
-<td>beneficiary_email</td>
-<td>Beneficiary&rsquo;s email address</td>
-<td>String</td>
-<td></td>
-</tr>
-<tr>
-<td>amount</td>
-<td>Amount of money you would like to send in in account currency, in minor units, e.g. 1EUR is represented as 100.</td>
-<td>Integer</td>
-<td>x</td>
-</tr>
-<tr>
-<td>country</td>
-<td>Beneficiary&rsquo;s country of residence, 2 letters (ISO3166 alpha2), e.g &ldquo;DE&rdquo;, &ldquo;GB&rdquo;</td>
-<td>String</td>
-<td>x</td>
-</tr>
-<tr>
-<td>currency</td>
-<td>Currency of Account or Amount. ISO 4217 alpha-3 - 3 letter uppercase e.g &ldquo;EUR&rdquo;</td>
-<td>String (enum)</td>
-<td>x</td>
-</tr>
-<tr>
-<td>created_at</td>
-<td>Creation date-time, never changes</td>
-<td>String (date-time) ISO 8601 Date-Time</td>
-<td></td>
-</tr>
-<tr>
-<td>updated_at</td>
-<td>Last update date-time</td>
-<td>String (date-time) ISO 8601 Date-Time</td>
-<td></td>
-</tr>
-</tbody></table>
-
-<h3 id="get-existent-global-money-transfers">GET existent Global Money Transfers</h3>
-
-<p>List all the global money transfers for the current account.</p>
-
-<p><code class="prettyprint">GET http://api.fidor.de/global_money_transfers</code></p>
-
-<p>Show a specific one.</p>
-
-<p><code class="prettyprint">GET http://api.fidor.de/global_money_transfers/{id}</code></p>
-
-<h3 id="get-avaliable-countries-and-their-currencies">GET avaliable countries and their currencies</h3>
-
-<blockquote>
-<p>GET http://api.fidor.de/global_money_transfers/options</p>
-</blockquote>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"country_currency"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AU"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AUD"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CA"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CAD"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CH"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CHF"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DK"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DKK"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GB"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GBP"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NO"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NOK"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PL"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PLN"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SE"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SEK"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-
-<p>Will retrieve all the pairs country-currency available.</p>
-
-<p><code class="prettyprint">GET http://api.fidor.de/global_money_transfers/options</code></p>
-
-<h3 id="get-required-fields-for-a-specific-country">GET required fields for a specific country</h3>
-
-<p>It returns the required fields for the selected pair country-currency.</p>
-
-<p><code class="prettyprint">GET https://api.fidor.de/global_money_transfers/new?country={country}&amp;currency={currency}</code></p>
-
-<blockquote>
-<p>GET https://api.fidor.de/global_money_transfers/new?country=PL&amp;currency=PLN</p>
-</blockquote>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PL"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PLN"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"required_attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="s2">"aba"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"account_number"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"amount"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"bank_account_type"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"beneficiary_address"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"beneficiary_city"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"beneficiary_company_name"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"beneficiary_email"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"beneficiary_first_name"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"beneficiary_last_name"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"beneficiary_notification"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"beneficiary_postcode"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"beneficiary_state_or_province"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"beneficiary_type"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"subject"</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-
-<h3 id="create-a-global-money-transfer">Create a Global Money Transfer</h3>
-
-<p>Creates a global money transfer.
-Calculates the fee.
-Calculates the exchange rate.
-Calculates the transferred amount in the destination currency.</p>
-
-<p><code class="prettyprint">POST http://api.fidor.de/global_money_transfers</code></p>
-
-<blockquote>
-<p>Request body</p>
-</blockquote>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"iban"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"PL61109010140000071219812874"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"country"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"PL"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"currency"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"PLN"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"bic_swift"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"ALBPPLPW"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"bank_account_type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"checking"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"beneficiary_entity_type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"individual"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"beneficiary_company_name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"hola hola"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"beneficiary_first_name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"hola"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"beneficiary_last_name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"adios"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"beneficiary_address"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Unicorn Street 7"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"beneficiary_city"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Pontevedra"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"beneficiary_postcode"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"80805"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"beneficiary_state_or_province"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Ohio"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"subject"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"pay that"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"beneficiary_notification"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"what a joke"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"beneficiary_email"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"perico@delospalotes.com"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"amount"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"130"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-
-<blockquote>
-<p>Response body</p>
-</blockquote>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"aba"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"16820650"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">13000</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"amount_in_euro"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"bank_code"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"bank_account_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"beneficiary_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Unicorn Street 7"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"beneficiary_city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pontevedra"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"beneficiary_company_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hola hola"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"beneficiary_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"perico@delospalotes.com"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"beneficiary_first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hola"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"beneficiary_last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"adios"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"beneficiary_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hola adios"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"beneficiary_notification"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"beneficiary_postcode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"80805"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"beneficiary_state_or_province"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ohio"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"beneficiary_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"individual"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"bic_swift"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ALBPPLPW"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PL"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-07-13T14:49:07Z"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"destination_currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PLN"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"exchange_rate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4.0486"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"external_uid"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"failure_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fee"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"iban"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PL61109010140000071219812874"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4038</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"refund_payment_subject"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"refunded_amount"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"refunded_amount_in_destination_currency"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"refunded_exchange_rate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"subject"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pay that"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"transfered_amount"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"transfered_amount_in_destination_currency"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-07-13T14:49:07Z"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-
-<h3 id="put-executes-the-transfer">PUT Executes the Transfer</h3>
-
-<p>To confirm the execution of the previously created global money transfer.</p>
-
-<p><code class="prettyprint">PUT http://api.fidor.de/global_money_transfers/{id}/confirmation</code></p>
 
           <h1 id="sepa-mandates-and-direct-debits">Sepa Mandates and Direct Debits</h1>
 
