@@ -1,13 +1,17 @@
-#Develop and Debug
+# Develop and Debug
 
-The developer tools [API browser](https://developer.fidortecs.com/api-browser/), [Fidor schema](https://github.com/fidor/fidor_schema), [Fidor starter kits](https://github.com/fidor/fidor_starter_kits), [Application Manager](https://apm.fidor.de/), sandbox environment and [developer community](https://developer.fidor.de/)  are provided free of charge. You only pay for API usage once you submit your application for approval and it goes live.
+The developer tools [Fidor schema](https://github.com/fidor/fidor_schema), [Fidor starter kits](https://github.com/fidor/fidor_starter_kits), [Application Manager](https://apm.fidor.de/), sandbox environment and [developer community](https://developer.fidor.de/)  are provided free of charge. You only pay for API usage once you submit your application for approval and it goes live.
 
-##Add and Change Scopes
+## Add and Change Scopes
+
 Fidor APIs provide a wide range of functions and provide access to a wide range of banking services. In the Application Manager you have to decide and define the scope, i.e. the set of functions your application needs in order to work properly.
 Here your can also select whether your application only needs access to your own account or if you plan to provide the application to other people, so that the application needs access to their data and accounts.
 
-##Sandbox
-For every new application a dedicated sandbox environment (account simulation) is created. The sandbox comes with some test data, so that you can start developing your application against the sandbox immediately.
+## Sandbox
+
+Our sandbox environment offers an account simulation with the most important API functions. So once developed and tested with the sandbox environment, your application should be production ready.
+
+For every new application a dedicated sandbox account is automatically  created. The sandbox comes with some test data, so that you can start developing your application against the sandbox immediately.
 
 To connect your application to the sandbox use the following URLs:
 
@@ -18,8 +22,9 @@ Sandbox OAuth | https://aps.fidor.de/oauth
 
 Along with this simulated bank accounts a *sandbox user* (with login and password) is created. A sandbox user is required during the authentication against the sandbox. You can see the login credential of this sandbox user when you select the sandbox tab in the Application Manager.
 
-Our sandbox environment offers you the same functionality as the live API. So once developed and tested against the sandbox environment, your application will be production ready.
+There you also find a button to reset the sandbox data if needed, and to retrieve and reset OAuth access tokens (for the sandbox only).
 
+Please note that the sandbox is not (yet) a full CBS simulation. Restrictions include that you cannot create new customers, you cannot create accounts or sub accounts. And you cannot send money from one sandbox to another.
 
 ##Understand OAuth
 The Fidor API offers many functions to retrieve information from your and other people's bank accounts, community accounts and much more. The extent of access your application needs is configured when you define the *scope* of your application in the Application Manager.
