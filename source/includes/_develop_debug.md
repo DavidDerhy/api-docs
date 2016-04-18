@@ -22,21 +22,9 @@ Our sandbox environment offers you the same functionality as the live API. So on
 
 
 ##Understand OAuth
-```
-  /ffffff   /ffffff              /ff     /ff
- /ff__  ff /ff__  ff            | ff    | ff
-| ff  \ ff| ff  \ ff /ff   /ff /ffffff  | fffffff
-| ff  | ff| ffffffff| ff  | ff|_  ff_/  | ff__  ff
-| ff  | ff| ff__  ff| ff  | ff  | ff    | ff  \ ff
-| ff  | ff| ff  | ff| ff  | ff  | ff /ff| ff  | ff
-|  ffffff/| ff  | ff|  ffffff/  |  ffff/| ff  | ff
- \______/ |__/  |__/ \______/    \___/  |__/  |__/
-```
-
 The Fidor API offers many functions to retrieve information from your and other people's bank accounts, community accounts and much more. The extent of access your application needs is configured when you define the *scope* of your application in the Application Manager.
 
-In order to actually access the account and retrieve the requested data, the account holder needs to authorize your application and allow it to access their account. This is achieved
-using [OAuth 2](https://tools.ietf.org/html/rfc6749).
+In order to actually access the account and retrieve the requested data, the account holder needs to authorize your application and allow it to access their account. This is achieved using [OAuth 2](https://tools.ietf.org/html/rfc6749).
 
 
 ### Client facing apps vs. server side connection
@@ -44,12 +32,12 @@ Fidor customers have diverse use cases for the Fidor API, ranging from payment a
 
 The primarily supported authentication method from Fidor is the 3 legged OAuth2 flow, that is particularly useful for server based client-facing apps and supports 3rd party application providing. The following discussion and documentation is based on that mode.
 
-For applications to simply control your our own bank account via a pure server side connection we soon will provide an improved approval process, OAuth flow and OAuth features. Also mobile applications require special treatment. Please get in contact with us via e-mail or leave a message in the approval submission form.
+For applications to simply control your our own bank account via a pure server side connection we soon will provide an improved approval process, OAuth flow and OAuth features. Also mobile applications require special treatment. Please follow the discussion in the [Developer Community](https://developer.fidor.de/community/forum/api-discussion/), get in contact with us via e-mail or leave a message in the approval submission form.
 
 ###Accountholder perspective
 From the accountholder's perspective the process works as follows:
 
-- the accountholder using your application is redirected to Fidor. In case they are not already logged in, they are asked to **enter  username and password**
+- the accountholder using your application is redirected to Fidor. In case they are not already logged in, they are asked to **enter username and password**
 - in case the accountholder has not previously authorized your app, the user is displayed the list of permissions your application is requesting and is **asked to confirm that the app is allowed to access their account with the given scope**.
 
 Afterwards the accountholder is returned to your app which will make calls to the API and display the results.
@@ -66,7 +54,17 @@ This bearer token is used to authenticate calls to the API. These three steps ar
 
 #### Accountholder Redirect
 
-In order to retrieve an OAuth  token to access an accountholder's account, first instruct your application to redirect the accountholder's browser to the [request authorization endpoint](#systems). Typically, this is done by returning an HTTP status of 3xx and the redirect location in an HTTP `Location` header:
+> https://apm.fidor.de/oauth/authorize?client_id=7e046a3c7c297e6e&redirect_uri=http://localhost/gettoken.php&state=99MagiCat99&response_type=code
+
+> Response with redirect to application if authentication and authorization was successful
+
+```
+Status: 302 Found
+Location: http://localhost/gettoken.php?code=db997fa3aaba429a1a331c3ad36484e1&state=99MagicCat99
+```
+
+
+In order to retrieve an OAuth token to access an accountholder's account, first instruct your application to redirect the accountholder's browser to the request authorization endpoint.
 
       `/oauth/authorize?redirect_uri=<redirect_uri>&client_id=<client_id>&state=<state>&response_type=code`
 
@@ -94,6 +92,24 @@ Please refer to [OAuth2 sec 4.1.2](https://tools.ietf.org/html/rfc6749#section-4
 
 #### Retrieve the OAuth Token
 
+> https://apm.fidor.de/oauth/token?grant_type=authorization_code&code=db997fa3aaba429a1a331c3ad36484e1&redirect_uri=https://localhost/gettoken.php&client_id=7e046a3c7c297e6e
+
+```
+Authorization: Basic 'base64 encoded "7e046a3c7c297e6e:5678231eadc19002cea974dc527aeafe"'
+```
+
+> Response
+
+```JSON
+{
+  "access_token":"2013a0a2c0257fe218cadc67b5b30bcf",
+  "token_type":"Bearer",
+  "state":"99MagiCat99",
+  "refresh_token":"Rc225c256efa3e6fa8e21e3e1ad3573cc"
+ }
+```
+
+
 After you extract the `code` parameter from the server response, it is send via POST to the [Access Token Request endpoint](#systems) `oauth/token` as described in [OAuth2 sec 4.1.3](https://tools.ietf.org/html/rfc6749#section-4.1.3). This request also contains following parameters in the body of a `POST` request, using `application/x-www-form-urlencoded` encoding:
 
 - `grant_type` : "authorization_code"
@@ -103,7 +119,7 @@ After you extract the `code` parameter from the server response, it is send via 
 
 This http request to the `token` endpoint is authenticated using [HTTP Basic Authentication](http://tools.ietf.org/html/rfc1945#section-11.1). The `client_id` and `client_secret` parameters of your app are used as the basic `userid-password` credentials.
 
-### Bearer and Refresh Tokens
+### Access and Refresh Tokens
 
 The server will either return  an error (described in [OAuth2 sec 5.2](https://tools.ietf.org/html/rfc6749#section-5.2) or a JSON response containing the `access_token`, token information and a `refresh_token`.
 
@@ -116,7 +132,14 @@ Once the `access_token` has expired, the `refresh_token` may be used in order to
 
 ### Token Revocation
 
-For security reasons, you should revoke a token after you no longer need it to ensure it is not misused. Token Revocation is handled according to [RFC 7009](https://tools.ietf.org/html/rfc7009). It's very simple, just post the token you wish to cancel to the revocation endpoint (`/oauth/revoke`) in a paramter key called `token`. This request needs to be authorized by `client_id` and `client_secret` parameters which are provided via HTTP Basic authentication. Both bearer tokens and refresh tokens can be canceled in the same manner.
+> https://apm.fidor.de/oauth/revoke?token=2013a0a2c0257fe218cadc67b5b30bcf
+
+```
+Authorization: Basic 'base64 encoded "7e046a3c7c297e6e:5678231eadc19002cea974dc527aeafe"'
+```
+
+
+For security reasons, you should revoke a token after you no longer need it to ensure it is not misused. Token Revocation is handled according to [RFC 7009](https://tools.ietf.org/html/rfc7009). It's very simple, just post the token you wish to cancel to the revocation endpoint (`/oauth/revoke`) in a paramter key called `token`. This request needs to be authorized by `client_id` and `client_secret` parameters which are provided via HTTP Basic authentication. Both access tokens and refresh tokens can be canceled in the same manner.
 
 
 ### Overview of OAuth Parameters
