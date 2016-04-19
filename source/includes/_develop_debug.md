@@ -258,5 +258,6 @@ total_entries | Total number of entries found
 total_pages | Total number of pages based on the given pagination
 
 
-##Manage Teams
-To help you develop your apps faster, we've built the team management functionality directly into the Application Manager. To invite your fellow developers just open the team management view and start typing the email address or the name of the developer you would like to invite to your team. If the developer with provided email address already has a Fidor account, she can start to help you with your app immediately. In other cases, the invited developer will be notified by email.
+## Manage Teams
+
+To help you develop your apps faster, we've built the team management functionality directly into the Application Manager. To invite your fellow developers just open the team management view and enter the email address or the name of the developer you would like to invite to your team. Make sure that he or she logged in to the Application Manager before at least once.
