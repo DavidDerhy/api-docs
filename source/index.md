@@ -4,7 +4,6 @@ title: Fidor API Reference
 toc_footers:
   - <a href='https://apm.fidor.de'>Application Manager</a>
   - <a href='https://developer.fidor.de/community/'>Developer Community</a>
-  - <a href='https://developer.fidor.de/api-browser/'>API Browser</a>
   - <a href="https://www.fidor.de/impressum">Imprint</a>
 
 includes:
