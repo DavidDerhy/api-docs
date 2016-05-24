@@ -306,3 +306,221 @@ PREVIEW: A batch transfer can contain multiple transfers which are processed asy
 `GET https://api.fidor.de/batch_transfers/{id}`  <sub>self</sub>
 
 `POST https://api.fidor.de/batch_transfers`  <sub>create</sub>
+
+
+## Global Money Transfers (coming soon)
+
+Fidor provides worldwide transfers in different currencies.
+
+In order to create one the user will need to accomplish the following steps:
+
+1. `GET /options` will give you the available countries, with their respective currencies.
+
+2. `GET /new` in order to retrieve the required fields for a transfer on the selected country.
+
+3. Proceeding with `POST` and the filled form, will provide the fee and the exchange_rate.
+
+4. Once that everything is agreed just `PUT` in order to execute the transfer.
+
+
+### Properties
+
+Parameter | Description | Format | Mandatory
+--------- | ----------- | ----------- | -----------
+beneficiary_name | Beneficiary's full name | String |
+iban | IBAN of the recipient's bank account | String |
+bic_swift | BIC of the recipient's bank | String | x
+bank_account_type | BIC of the recipient's bank account. Optional for transfers between two German bank accounts | String (enum) - `checking` or `savings` |
+beneficiary_entity_type | Recipient's full name | String (enum) - `individual` or `company` | x
+beneficiary_company_name | Company name of the recipient | String |
+beneficiary_first_name | Beneficiary's first name | String |
+beneficiary_last_name | Beneficiary's last name | String |
+beneficiary_address | Beneficiary's address | String |
+beneficiary_city | City of the beneficiary | String |
+beneficiary_postcode | Beneficiary's postal code | String |
+beneficiary_state_or_province | State or province beneficiary is living in | String |
+subject | Subject of the transfer | String | x
+beneficiary_notification | Indicates whether the recipient should be notified about the payment or not | Boolean |
+beneficiary_email | Beneficiary's email address | String |
+amount | Amount of money you would like to send in in account currency, in minor units, e.g. 1EUR is represented as 100. | Integer | x
+country | Beneficiary's country of residence, 2 letters (ISO3166 alpha2), e.g "DE", "GB" | String | x
+currency | Currency of Account or Amount. ISO 4217 alpha-3 - 3 letter uppercase e.g "EUR" | String (enum) | x
+created_at | Creation date-time, never changes | String (date-time) ISO 8601 Date-Time |
+updated_at | Last update date-time | String (date-time) ISO 8601 Date-Time |
+
+
+### GET existent Global Money Transfers
+
+List all the global money transfers for the current account.
+
+`GET http://api.fidor.de/global_money_transfers`
+
+Show a specific one.
+
+`GET http://api.fidor.de/global_money_transfers/{id}`
+
+### GET avaliable countries and their currencies
+
+> GET http://api.fidor.de/global_money_transfers/options
+
+```json
+{
+  "country_currency": [
+    {
+      "country": "AU",
+      "currency": "AUD"
+    },
+    {
+      "country": "CA",
+      "currency": "CAD"
+    },
+    {
+      "country": "CH",
+      "currency": "CHF"
+    },
+    {
+      "country": "DK",
+      "currency": "DKK"
+    },
+    {
+      "country": "GB",
+      "currency": "GBP"
+    },
+    {
+      "country": "NO",
+      "currency": "NOK"
+    },
+    {
+      "country": "PL",
+      "currency": "PLN"
+    },
+    {
+      "country": "SE",
+      "currency": "SEK"
+    },
+    {
+      "country": "US",
+      "currency": "USD"
+    }
+  ]
+}
+```
+Will retrieve all the pairs country-currency available.
+
+`GET http://api.fidor.de/global_money_transfers/options`
+
+
+### GET required fields for a specific country
+
+It returns the required fields for the selected pair country-currency.
+
+`GET https://api.fidor.de/global_money_transfers/new?country={country}&currency={currency}`
+
+> GET https://api.fidor.de/global_money_transfers/new?country=PL&currency=PLN
+
+```json
+{
+  "country": "PL",
+  "currency": "PLN",
+  "required_attributes": [
+    "aba",
+    "account_number",
+    "amount",
+    "bank_account_type",
+    "beneficiary_address",
+    "beneficiary_city",
+    "beneficiary_company_name",
+    "beneficiary_email",
+    "beneficiary_first_name",
+    "beneficiary_last_name",
+    "beneficiary_notification",
+    "beneficiary_postcode",
+    "beneficiary_state_or_province",
+    "beneficiary_type",
+    "subject"
+  ]
+}
+```
+
+### Create a Global Money Transfer
+
+Creates a global money transfer.
+Calculates the fee.
+Calculates the exchange rate.
+Calculates the transferred amount in the destination currency.
+
+`POST http://api.fidor.de/global_money_transfers`
+
+> Request body
+
+```json
+{
+  "iban" : "PL61109010140000071219812874",
+  "country" : "PL",
+  "currency" : "PLN",
+  "bic_swift" : "ALBPPLPW",
+  "bank_account_type" : "checking",
+  "beneficiary_entity_type" : "individual",
+  "beneficiary_company_name" : "hola hola",
+  "beneficiary_first_name" : "hola",
+  "beneficiary_last_name" : "adios",
+  "beneficiary_address" : "Unicorn Street 7",
+  "beneficiary_city" : "Pontevedra",
+  "beneficiary_postcode" : "80805",
+  "beneficiary_state_or_province" : "Ohio",
+  "subject" : "pay that",
+  "beneficiary_notification" : "what a joke",
+  "beneficiary_email" : "perico@delospalotes.com",
+  "amount" : "130"
+}
+```
+
+> Response body
+
+```json
+{
+  "aba": null,
+  "account_id": "16820650",
+  "account_number": null,
+  "amount": 13000,
+  "amount_in_euro": false,
+  "bank_code": null,
+  "bank_account_type": "test",
+  "beneficiary_address": "Unicorn Street 7",
+  "beneficiary_city": "Pontevedra",
+  "beneficiary_company_name": "hola hola",
+  "beneficiary_email": "perico@delospalotes.com",
+  "beneficiary_first_name": "hola",
+  "beneficiary_last_name": "adios",
+  "beneficiary_name": "hola adios",
+  "beneficiary_notification": false,
+  "beneficiary_postcode": "80805",
+  "beneficiary_state_or_province": "Ohio",
+  "beneficiary_type": "individual",
+  "bic_swift": "ALBPPLPW",
+  "branch_code": null,
+  "country": "PL",
+  "created_at": "2015-07-13T14:49:07Z",
+  "destination_currency": "PLN",
+  "exchange_rate": "4.0486",
+  "external_uid": null,
+  "failure_reason": null,
+  "fee": 500,
+  "iban": "PL61109010140000071219812874",
+  "id": 4038,
+  "refund_payment_subject": null,
+  "refunded_amount": null,
+  "refunded_amount_in_destination_currency": null,
+  "refunded_exchange_rate": null,
+  "state": "pending",
+  "subject": "pay that",
+  "transfered_amount": null,
+  "transfered_amount_in_destination_currency": null,
+  "updated_at": "2015-07-13T14:49:07Z"
+}
+```
+
+### PUT Executes the Transfer
+To confirm the execution of the previously created global money transfer.
+
+`PUT http://api.fidor.de/global_money_transfers/{id}/confirmation`
