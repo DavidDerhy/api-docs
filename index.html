@@ -3577,6 +3577,47 @@ To get the information about Creditor Identifiers available for your use, you ha
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
+<blockquote>
+<p>GET https://api.fidor.de/sepa_direct_debits</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"66666666"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">6666</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"collection_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-09T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"creditor_identity_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DE37ZZZ08000000001"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EUR"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"eref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"IS-20160608-XLBFSY"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"external_uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d9de75bf-d381-49d7-92a5-666666666666"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"mandate_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"66666"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"subject"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Heisenbergio: 123456789"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"666666"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"66666"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-08T09:41:15Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-08T09:41:19Z"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"66666666"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">66666666666</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"collection_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-09T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"creditor_identity_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DE37ZZZ08000000001"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EUR"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"eref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"IS-20160608-FCLPXF"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"external_uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d9de75bf-d381-49d7-92a5-666666666667"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"mandate_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"66666"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"subject"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Heisenbergio: 123456790"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"666666"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"66667"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-08T08:11:48Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-08T08:11:51Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
 <p>Once you created a <code class="prettyprint">sepa_mandate</code> you can go on and create a corresponding <code class="prettyprint">sepa_direct_debit</code>. In order to do so you have to make a <code class="prettyprint">POST</code> request to <code class="prettyprint">/sepa_direct_debits</code> endpoint with following request body.</p>
 
 <table><thead>
@@ -3586,6 +3627,11 @@ To get the information about Creditor Identifiers available for your use, you ha
 <th>Format</th>
 </tr>
 </thead><tbody>
+<tr>
+<td>id</td>
+<td>Unique Direct Debit identifier</td>
+<td>String</td>
+</tr>
 <tr>
 <td>external_uid</td>
 <td>Unique ID of the creator of the transfer. In case a uid is reused for a transfer, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transfer status is unknown</td>
@@ -3620,6 +3666,41 @@ To get the information about Creditor Identifiers available for your use, you ha
 <td>collection_date</td>
 <td>Date of the money collection</td>
 <td>String (Date)</td>
+</tr>
+<tr>
+<td>creditor_identity_id</td>
+<td>Unique Creditor Identifier</td>
+<td>String</td>
+</tr>
+<tr>
+<td>currency</td>
+<td>Currency of amount. ISO 4217 alpha-3 - 3 letter upcase e.g EUR</td>
+<td>String</td>
+</tr>
+<tr>
+<td>eref</td>
+<td>And end-to-end reference of the created direct debit</td>
+<td>String</td>
+</tr>
+<tr>
+<td>state</td>
+<td>A status indicator. Following statuses are supported: <code class="prettyprint">received</code>, <code class="prettyprint">processing</code>, <code class="prettyprint">success</code>, <code class="prettyprint">failure</code></td>
+<td>String (enum)</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>User ID of the Direct Debit creator</td>
+<td>String</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>Creation date-time, never changes</td>
+<td>String (date-time) ISO 8601 Date-Time</td>
+</tr>
+<tr>
+<td>updated_at</td>
+<td>Last update date-time</td>
+<td>String (date-time) ISO 8601 Date-Time</td>
 </tr>
 </tbody></table>
 
