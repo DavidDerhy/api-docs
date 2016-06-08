@@ -175,10 +175,52 @@ valid_from_date | Date, mandate is valid from | String (Date)
 }
 ```
 
+> GET https://api.fidor.de/sepa_direct_debits
+
+```
+{
+  "data": [
+    {
+      "account_id": "66666666",
+      "amount": 6666,
+      "collection_date": "2016-06-09T00:00:00+00:00",
+      "creditor_identity_id": "DE37ZZZ08000000001",
+      "currency": "EUR",
+      "eref": "IS-20160608-XLBFSY",
+      "external_uid": "d9de75bf-d381-49d7-92a5-666666666666",
+      "mandate_id": "66666",
+      "state": "success",
+      "subject": "Heisenbergio: 123456789",
+      "user_id": "666666",
+      "id": "66666",
+      "created_at": "2016-06-08T09:41:15Z",
+      "updated_at": "2016-06-08T09:41:19Z"
+    },
+    {
+      "account_id": "66666666",
+      "amount": 66666666666,
+      "collection_date": "2016-06-09T00:00:00+00:00",
+      "creditor_identity_id": "DE37ZZZ08000000001",
+      "currency": "EUR",
+      "eref": "IS-20160608-FCLPXF",
+      "external_uid": "d9de75bf-d381-49d7-92a5-666666666667",
+      "mandate_id": "66666",
+      "state": "success",
+      "subject": "Heisenbergio: 123456790",
+      "user_id": "666666",
+      "id": "66667",
+      "created_at": "2016-06-08T08:11:48Z",
+      "updated_at": "2016-06-08T08:11:51Z"
+    }
+  ]
+}
+```
+
 Once you created a `sepa_mandate` you can go on and create a corresponding `sepa_direct_debit`. In order to do so you have to make a `POST` request to `/sepa_direct_debits` endpoint with following request body.
 
 Parameter | Description | Format
 --------- | ----------- | -----------
+id | Unique Direct Debit identifier | String
 external_uid | Unique ID of the creator of the transfer. In case a uid is reused for a transfer, it is not executed, this mechanism can be used to prevent double bookings in case of network failure or similar event where transfer status is unknown | String
 mandate_id | Unique Reference of the Mandate | String
 account_id | Account identifier of the sender | String
@@ -186,6 +228,13 @@ amount | Amount of money you would like to debit from the debtor, in minor units
 currency |Currency of Account or Amount. ISO 4217 alpha-3 - 3 letter upcase e.g EUR | String (enum)
 subject | Subject of the direct debit | String
 collection_date | Date of the money collection | String (Date)
+creditor_identity_id | Unique Creditor Identifier | String
+currency | Currency of amount. ISO 4217 alpha-3 - 3 letter upcase e.g EUR| String
+eref | And end-to-end reference of the created direct debit | String
+state | A status indicator. Following statuses are supported: `received`, `processing`, `success`, `failure` | String (enum)
+user_id | User ID of the Direct Debit creator | String
+created_at | Creation date-time, never changes | String (date-time) ISO 8601 Date-Time
+updated_at | Last update date-time | String (date-time) ISO 8601 Date-Time
 
 ##Batch Direct Debit
 
