@@ -53,7 +53,7 @@ POST | [`/batch_transfers`](#batch-transfer) | Send money in batch either with i
 GET | [`/batch_transfers`](#batch-transfer) | Get all batch transfers for the current user | batch transfer
 GET | [`/transactions`](#transactions) | Get all transactions for the current user | transaction
 GET | [`/creditor_identities`](#creditor-identifiers) | Get all UCIs you can use to create SEPA Mandates | creditor_identities
-GET | [`/sepa_mandates/`](#creating-sepa-mandate) | GET previously created SEPA Mandates | sepa_mandates
+GET | [`/sepa_mandates`](#creating-sepa-mandate) | GET previously created SEPA Mandates | sepa_mandates
 POST | [`/sepa_mandates`](#creating-sepa-mandate) | Create a SEPA Mandate | sepa_mandate
 PUT | [`/sepa_mandates/:id`](#creating-sepa-mandate) | Update previously created SEPA Mandate | sepa_mandate
 GET | [`sepa_direct_debits`](#creating-sepa-direct-debit) | GET previously created SEPA Direct Debit | sepa_direct_debits
