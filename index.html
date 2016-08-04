@@ -1499,8 +1499,8 @@ https://api.fidor.de/preauths?page=1&amp;per_page=20</p>
   </span><span class="s2">"subject"</span><span class="p">:</span><span class="w"> </span><span class="s2">"\"Send money to Friends\" recipient: Walter White: Heisenberg"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">-100000</span><span class="p">,</span><span class="w">
   </span><span class="s2">"booking_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"725"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"booking_date"</span><span class="p">:</span><span class="w"> </span><span class="mi">2015-03-01</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"value_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-02"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"booking_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-01T12:55:59+01:00"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"value_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-02T13:58:59+01:00"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"return_transaction_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
   </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-02T13:58:59+01:00"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-03-02T13:58:59+01:00"</span><span class="p">,</span><span class="w">
@@ -1555,13 +1555,13 @@ https://api.fidor.de/preauths?page=1&amp;per_page=20</p>
 </tr>
 <tr>
 <td>booking_date</td>
-<td>Date the transaction was booked. ISO 8601 Date</td>
-<td>String (date)</td>
+<td>Date the transaction was booked. ISO 8601 Datetime e.g. &ldquo;2016-01-22T00:00:00+00:00&rdquo;</td>
+<td>String</td>
 </tr>
 <tr>
 <td>value_date</td>
-<td>Date the amount was credited to the account. ISO 8601 Date</td>
-<td>String (date)</td>
+<td>Date the amount was credited to the account. ISO 8601 Datetime e.g. &ldquo;2016-01-22T00:00:00+00:00&rdquo;</td>
+<td>String</td>
 </tr>
 <tr>
 <td>return_transaction_id</td>
@@ -1571,12 +1571,12 @@ https://api.fidor.de/preauths?page=1&amp;per_page=20</p>
 <tr>
 <td>created_at</td>
 <td>Creation date-time, never changes. ISO 8601 Date-Time e.g. &ldquo;2014-10-10T17:41:58+02:00&rdquo;</td>
-<td>Datetime</td>
+<td>String</td>
 </tr>
 <tr>
 <td>updated_at</td>
 <td>Last update date-time. ISO 8601 Date-Time e.g. &ldquo;2015-02-04T04:08:54+01:00&rdquo;</td>
-<td>Datetime</td>
+<td>String</td>
 </tr>
 <tr>
 <td>currency</td>
