@@ -358,8 +358,8 @@ Transactions gives you a list of financial transactions that happened on the giv
   "subject": "\"Send money to Friends\" recipient: Walter White: Heisenberg",
   "amount": -100000,
   "booking_code": "725",
-  "booking_date": 2015-03-01,
-  "value_date": "2015-03-02",
+  "booking_date": "2015-03-01T12:55:59+01:00",
+  "value_date": "2015-03-02T13:58:59+01:00",
   "return_transaction_id": "",
   "created_at": "2015-03-02T13:58:59+01:00",
   "updated_at": "2015-03-02T13:58:59+01:00",
@@ -383,11 +383,11 @@ transaction_type | Type of the transaction | String (enum)
 subject | Transfer subject (reference) | String
 amount | The transferred amount in account currency, in minor units, e.g. 1EUR is represented as 100. Can be negative e.g. if something was withdrawn from an account. | Integer
 booking_code | Accounting transaction code in the central banking system | String
-booking_date | Date the transaction was booked. ISO 8601 Date | String (date)
-value_date | Date the amount was credited to the account. ISO 8601 Date | String (date)
+booking_date | Date the transaction was booked. ISO 8601 Datetime e.g. "2016-01-22T00:00:00+00:00" | String
+value_date | Date the amount was credited to the account. ISO 8601 Datetime e.g. "2016-01-22T00:00:00+00:00"| String
 return_transaction_id | If the transaction was marked for return, this references the new return transaction | String
-created_at | Creation date-time, never changes. ISO 8601 Date-Time e.g. "2014-10-10T17:41:58+02:00" | Datetime
-updated_at | Last update date-time. ISO 8601 Date-Time e.g. "2015-02-04T04:08:54+01:00" | Datetime
+created_at | Creation date-time, never changes. ISO 8601 Date-Time e.g. "2014-10-10T17:41:58+02:00" | String
+updated_at | Last update date-time. ISO 8601 Date-Time e.g. "2015-02-04T04:08:54+01:00" | String
 currency | Currency of Account or Amount. ISO 4217 alpha-3 - 3 letter upcase e.g EUR | String (enum)
 transaction_type_details | Details specific to this transaction type are collected here |
 
