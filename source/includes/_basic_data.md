@@ -162,7 +162,7 @@ msisdn | Mobile phone Number in MSISDN format | String in <a href='http://www.ms
 code | Verification code you acquired in the `/msisdn/check` step | String
 
 <aside class="notice">
-  As a result of this call you will get a code back that you have to send alongside the `POST /users` call.
+  As a result of this call you will get a code back that you have to send alongside the `POST /customers` call.
 </aside>
 
 
