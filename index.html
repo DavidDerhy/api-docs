@@ -1077,7 +1077,7 @@ https://api.fidor.de/preauths?page=1&amp;per_page=20</p>
 </tbody></table>
 
 <aside class="notice">
-  As a result of this call you will get a code back that you have to send alongside the `POST /users` call.
+  As a result of this call you will get a code back that you have to send alongside the `POST /customers` call.
 </aside>
 
 <h3 id="create-customer-object">Create Customer Object</h3>
@@ -2121,7 +2121,7 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 </tr>
 </tbody></table>
 
-<h2 id="transactions-filter">Transactions Filter</h2>
+<h2 id="transactions-filtering">Transactions Filtering</h2>
 
 <p>There are many ways to filter the output of <code class="prettyprint">transactions</code>.</p>
 
@@ -2139,6 +2139,11 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 </tr>
 </thead><tbody>
 <tr>
+<td>filter[account_ids]</td>
+<td>string (integer)</td>
+<td>Find transactions belonging to the given account ids. Single id or multiple ids comma-separated</td>
+</tr>
+<tr>
 <td>filter[id_from]</td>
 <td>string (integer)</td>
 <td>&hellip; ids &gt;= the given id</td>
@@ -2150,13 +2155,43 @@ All types share use the same  <code class="prettyprint">credit_card</code> objec
 </tr>
 <tr>
 <td>filter[booking_date_from]</td>
-<td>string (date-time)</td>
+<td>string (date-time) ISO 8601 Date</td>
 <td>&hellip; booking_date &gt;= the given date</td>
 </tr>
 <tr>
 <td>filter[booking_date_to]</td>
-<td>string (date-time)</td>
+<td>string (date-time) ISO 8601 Date</td>
 <td>&hellip; booking_date &lt;= the given date</td>
+</tr>
+<tr>
+<td>filter[value_date_from]</td>
+<td>string (date-time) ISO 8601 Date</td>
+<td>&hellip; value_date &gt;= the given date</td>
+</tr>
+<tr>
+<td>filter[value_date_to]</td>
+<td>string (date-time) ISO 8601 Date</td>
+<td>&hellip; value_date &lt;= the given date</td>
+</tr>
+<tr>
+<td>filter[created_at_from]</td>
+<td>string (date-time) ISO 8601 Date</td>
+<td>&hellip; created_at &gt;= the given date</td>
+</tr>
+<tr>
+<td>filter[created_at_to]</td>
+<td>string (date-time) ISO 8601 Date</td>
+<td>&hellip; created_at &lt;= the given date</td>
+</tr>
+<tr>
+<td>filter[updated_at_from]</td>
+<td>string (date-time) ISO 8601 Date</td>
+<td>&hellip; updated_at &gt;= the given date</td>
+</tr>
+<tr>
+<td>filter[updated_at_to]</td>
+<td>string (date-time) ISO 8601 Date</td>
+<td>&hellip; updated_at &lt;= the given date</td>
 </tr>
 <tr>
 <td>filter[transaction_types]</td>
