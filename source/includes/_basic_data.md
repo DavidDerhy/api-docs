@@ -613,7 +613,7 @@ provider | name of the mobile network operator | String
 phone_number | Mobile phone number user for topup | String
 topup_subject | Subject of the mobile topup | String
 
-##Transactions Filter
+##Transactions Filtering
 There are many ways to filter the output of `transactions`.
 > GET https://api.fidor.de/transactions?filter[transaction_types]=Value&filter[booking_date_from]=Value
 
@@ -621,10 +621,17 @@ Using the filter returns only entries with ... (see description)
 
 Name | Type | Description
 --------- | ----------- | -----------
+filter[account_ids] | string (integer) | Find transactions belonging to the given account ids. Single id or multiple ids comma-separated
 filter[id_from] | string (integer) | ... ids >= the given id
 filter[id_to] | string (integer) | ... ids <= the given id
-filter[booking_date_from] | string (date-time) | ... booking_date >= the given date
-filter[booking_date_to] | string (date-time)  | ... booking_date <= the given date
+filter[booking_date_from] | string (date-time) ISO 8601 Date | ... booking_date >= the given date
+filter[booking_date_to] | string (date-time) ISO 8601 Date | ... booking_date <= the given date
+filter[value_date_from] | string (date-time) ISO 8601 Date | ... value_date >= the given date
+filter[value_date_to] | string (date-time) ISO 8601 Date | ... value_date <= the given date
+filter[created_at_from] | string (date-time) ISO 8601 Date | ... created_at >= the given date
+filter[created_at_to] | string (date-time) ISO 8601 Date | ... created_at <= the given date
+filter[updated_at_from] | string (date-time) ISO 8601 Date | ... updated_at >= the given date
+filter[updated_at_to] | string (date-time) ISO 8601 Date | ... updated_at <= the given date
 filter[transaction_types]  | string (enum), see transaction_types | ... the given type
 
 ## Preauths
